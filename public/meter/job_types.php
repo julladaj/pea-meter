@@ -101,37 +101,50 @@ $job_type_reparation = $meter->getJobInstallationPrices(['enum' => 2]);
                         <div class="kt-portlet__body">
                             <form class="kt-form kt-form--label-right" action method="POST">
                                 <div class="form-group row">
-                                    <label class="col-md-5 col-sm-12 col-form-label"></label>
-                                    <div class="col-md-5 col-sm-12">
-                                        <a href="/meter/admin.php" class="btn btn-danger"><i
-                                                    class="la la-angle-left"></i>
+                                    <label class="col-md-4 col-sm-12 col-form-label"></label>
+                                    <div class="col-md-8 col-sm-12">
+                                        <a href="/meter/admin.php" class="btn btn-danger"><i class="la la-angle-left"></i>
                                             กลับสู่หน้าหลัก</a>
-                                        <button type="submit" class="btn btn-primary"><i class="la la-save"></i>
-                                            บันทึกข้อมูล
-                                        </button>
+                                        <button type="submit" class="btn btn-primary"><i class="la la-save"></i>บันทึกข้อมูล</button>
                                     </div>
                                 </div>
                                 <hr/>
 
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-sm-12 col-form-label"></label>
+                                    <div class="col-md-8 col-sm-12">
+                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">1. งานติดตั้ง</span>
+                                    </div>
+                                </div>
 
                                 <div class="form-group row">
-                                    <label class="col-md-5 col-sm-12 col-form-label"></label>
-                                    <div class="col-md-7 col-sm-12">
-                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">1. งานติดตั้ง</span>
+                                    <label class="col-md-4 col-sm-12 col-form-label"></label>
+                                    <div class="col-md-2 col-sm-12">
+                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">ราคาปกติ หัวสายอื่นฯ</span>
+                                    </div>
+                                    <div class="col-md-2 col-sm-12">
+                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">ราคาพื้นที่พิเศษ</span>
                                     </div>
                                 </div>
 
                                 <?php
                                 foreach ($job_type_installation['items'] as $item) { ?>
                                     <div class="form-group row">
-                                        <label for="example-search-input"
-                                               class="col-md-5 col-sm-12 col-form-label"><?php
+                                        <label for="example-search-input" class="col-md-4 col-sm-12 col-form-label"><?php
                                             echo $item['description']; ?>:</label>
-                                        <div class="col-md-5 col-sm-12 input-group">
+                                        <div class="col-md-2 col-sm-12 input-group">
                                             <input type="number" class="form-control" aria-describedby="basic-addon2"
                                                    name="price['<?php
-                                                   echo $item['id']; ?>']" value="<?php
+                                                   echo $item['id']; ?>'][price]" value="<?php
                                             echo $item['price'] ?? 0; ?>"/>
+                                            <div class="input-group-append"><span class="input-group-text">บาท</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-12 input-group">
+                                            <input type="number" class="form-control" aria-describedby="basic-addon2"
+                                                   name="price['<?php
+                                                   echo $item['id']; ?>'][price_special]" value="<?php
+                                            echo $item['price_special'] ?? 0; ?>"/>
                                             <div class="input-group-append"><span class="input-group-text">บาท</span>
                                             </div>
                                         </div>
@@ -141,9 +154,19 @@ $job_type_reparation = $meter->getJobInstallationPrices(['enum' => 2]);
 
                                 <hr/>
                                 <div class="form-group row">
-                                    <label class="col-md-5 col-sm-12 col-form-label"></label>
+                                    <label class="col-md-4 col-sm-12 col-form-label"></label>
                                     <div class="col-md-7 col-sm-12">
                                         <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">2. งานสับเปลี่ยน ย้าย ถอนคืน</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-sm-12 col-form-label"></label>
+                                    <div class="col-md-2 col-sm-12">
+                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">ราคาปกติ หัวสายอื่นฯ</span>
+                                    </div>
+                                    <div class="col-md-2 col-sm-12">
+                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">ราคาพื้นที่พิเศษ</span>
                                     </div>
                                 </div>
 
@@ -151,13 +174,22 @@ $job_type_reparation = $meter->getJobInstallationPrices(['enum' => 2]);
                                 foreach ($job_type_reparation['items'] as $item) { ?>
                                     <div class="form-group row">
                                         <label for="example-search-input"
-                                               class="col-md-5 col-sm-12 col-form-label"><?php
+                                               class="col-md-4 col-sm-12 col-form-label"><?php
                                             echo $item['description']; ?>:</label>
-                                        <div class="col-md-5 col-sm-12 input-group">
+                                        <div class="col-md-2 col-sm-12 input-group">
                                             <input type="number" class="form-control" aria-describedby="basic-addon2"
                                                    name="price['<?php
-                                                   echo $item['id']; ?>']" value="<?php
+                                                   echo $item['id']; ?>'][price]" value="<?php
                                             echo $item['price'] ?? 0; ?>"/>
+                                            <div class="input-group-append"><span class="input-group-text">บาท</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2 col-sm-12 input-group">
+                                            <input type="number" class="form-control" aria-describedby="basic-addon2"
+                                                   name="price['<?php
+                                                   echo $item['id']; ?>'][price_special]" value="<?php
+                                            echo $item['price_special'] ?? 0; ?>"/>
                                             <div class="input-group-append"><span class="input-group-text">บาท</span>
                                             </div>
                                         </div>
@@ -168,8 +200,8 @@ $job_type_reparation = $meter->getJobInstallationPrices(['enum' => 2]);
                                 <hr/>
                                 <div class="form-group row">
                                     <label for="example-search-input"
-                                           class="col-md-5 col-sm-12 col-form-label"></label>
-                                    <div class="col-md-5 col-sm-12">
+                                           class="col-md-4 col-sm-12 col-form-label"></label>
+                                    <div class="col-md-4 col-sm-12">
                                         <a href="/meter/admin.php" class="btn btn-danger"><i
                                                     class="la la-angle-left"></i>
                                             กลับสู่หน้าหลัก</a>

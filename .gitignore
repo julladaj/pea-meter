@@ -8,4 +8,9 @@
 /public/meter.zip
 /public/meter.tar
 /public/log.txt
+/public/config.php
 /backup/
+/file from customer/
+/public/meter/config.php
+/public/meter/log/
+/.idea

@@ -3,114 +3,6 @@
 class _Meter extends Database
 {
 
-    public function getJSONMeter($filter = array())
-    {
-        $rows = array(
-            'total' => 0,
-            'items' => array()
-        );
-
-        try {
-            //file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", print_r($filter, true));
-
-            $sql_command = "
-SELECT SQL_CALC_FOUND_ROWS 
-	m.*,
-	mc.`meter_category_detail`,
-	mq.`meter_qc_detail`,
-	msz.`meter_size_detail`,
-	msf.`meter_staff_name` AS `recipient_name`,
-	msf2.`meter_staff_name` AS `officer_name`
-FROM `meter` m
-LEFT JOIN `meter_category` mc
-	ON mc.`meter_category_id` = m.`meter_category_id`
-LEFT JOIN `meter_qc` mq
-	ON mq.`meter_qc_id` = m.`meter_qc_id`
-LEFT JOIN `meter_size` msz
-	ON msz.`meter_size_id` = m.`meter_size_id`
-LEFT JOIN `meter_staff` msf
-	ON msf.`meter_staff_id` = m.`recipient_id`
-LEFT JOIN `meter_staff` msf2
-	ON msf2.`meter_staff_id` = m.`officer_id`";
-
-            $implode = array();
-            if (isset($filter['filter'])) {
-                $filter['filter'] = json_decode($filter['filter'], true);
-
-                foreach ($filter['filter'] as $field => $value) {
-                    switch ($field) {
-                        case 'date_add':
-                        case 'date_appoint':
-                        case 'date_payment':
-                        case 'date_install':
-                        case 'date_deathline':
-                        case 'date_finish':
-                            //$implode[] = "DATE_FORMAT(m.`" . $field . "`, '%m/%d/%Y') = '" . $this->mysqli->real_escape_string($value) . "'";
-                            $implode[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
-                            break;
-                        case 'date_range':
-                            $date_tange = explode(" | ", $value);
-                            if (isset($date_tange[0]) && isset($date_tange[1])) {
-                                $implode[] = "m.`date_add` BETWEEN '" . $this->mysqli->real_escape_string(
-                                        $date_tange[0]
-                                    ) . "' AND '" . $this->mysqli->real_escape_string($date_tange[1]) . "' ";
-                            }
-                            break;
-                        case 'recipient_id':
-                        case 'officer_id':
-                        case 'meter_qc_id':
-                        case 'meter_category_id':
-                            $implode[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
-                            break;
-                        default:
-                            $implode[] = "LOWER(`" . $field . "`) LIKE '%" . strtolower(
-                                    $this->mysqli->real_escape_string($value)
-                                ) . "%'";
-                            break;
-                    }
-                }
-
-                if (count($implode)) {
-                    $sql_command .= " WHERE " . implode(" AND ", $implode);
-                }
-            }
-
-            $implode = array();
-
-            if (isset($filter['sort']) and isset($filter['order']) and $filter['sort']) {
-                $implode[] = "`" . $filter['sort'] . "` " . strtoupper($filter['order']);
-            }
-            if (isset($filter['multiSort'])) {
-                foreach ($filter['multiSort'] as $value) {
-                    if (isset($value['sortName'])) {
-                        $implode[] = "`" . $value['sortName'] . "` " . strtoupper(
-                                isset($value['sortOrder']) ? $value['sortOrder'] : ''
-                            );
-                    }
-                }
-            }
-            if (count($implode)) {
-                $sql_command .= " ORDER BY " . implode(", ", $implode);
-            } else {
-                $sql_command .= " ORDER BY m.`date_add` ASC, m.`auto_id` ASC";
-            }
-
-
-            if (isset($filter['offset']) and isset($filter['limit'])) {
-                $sql_command .= " LIMIT " . $filter['offset'] . ", " . $filter['limit'];
-            }
-
-            //file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", $sql_command, FILE_APPEND);
-
-            $rows = $this->getRowsWithPaginate($sql_command, $rows);
-        } catch (Exception $e) {
-            $_SESSION['error'][] = "log/class." . get_class() . "." . __FUNCTION__ . ".txt<br>" . $e->getMessage();
-            file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
-        }
-
-        return $rows;
-    }
-
     public function getMeterClient($search)
     {
         try {
@@ -166,7 +58,6 @@ WHERE
         return false;
     }
 
-
     public function getMeterStaff()
     {
         $rows = array(
@@ -183,6 +74,32 @@ WHERE
             file_put_contents("log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
         }
 
+        return $rows;
+    }
+
+    /**
+     * @param $sql_command
+     * @param  array  $rows
+     * @return array
+     * @throws Exception
+     */
+    private function getRowsWithPaginate($sql_command, array $rows)
+    {
+        $query = $this->mysqli->query($sql_command);
+        if (!$query) {
+            throw new Exception($this->mysqli->error);
+        }
+        while ($row = $query->fetch_array(MYSQLI_ASSOC)) {
+            $rows['items'][] = $row;
+        }
+
+        $query = $this->mysqli->query("SELECT FOUND_ROWS() AS `total_rows`;");
+        if (!$query) {
+            throw new Exception($this->mysqli->error);
+        }
+        while ($row = $query->fetch_array(MYSQLI_ASSOC)) {
+            $rows['total'] = $row['total_rows'];
+        }
         return $rows;
     }
 
@@ -236,7 +153,8 @@ WHERE
 SELECT 
        j.`id`,
        j.`description`,
-       it.`price`
+       it.`price`,
+       it.`price_special`
 FROM `job_type` j
 LEFT JOIN `installation_price` it ON 
 	it.`job_type_id` = j.`id`
@@ -261,10 +179,10 @@ LEFT JOIN `installation_price` it ON
         return $rows;
     }
 
-    public function postJobInstallationPrices(array $data): bool
+    public function postJobInstallationPrices(array $prices): bool
     {
         try {
-            if (!count($data)) {
+            if (!count($prices)) {
                 throw new Exception('Value is empty!');
             }
 
@@ -273,10 +191,13 @@ LEFT JOIN `installation_price` it ON
                 throw new Exception($this->mysqli->error);
             }
 
-            $sql_command = "INSERT INTO `installation_price` (`job_type_id`, `price`) VALUES ";
+            $sql_command = "INSERT INTO `installation_price` (`job_type_id`, `price`, `price_special`) VALUES ";
             $implode = [];
-            foreach ($data as $key => $value) {
-                $implode[] = "($key, $value)";
+            foreach ($prices as $key => $value) {
+                $price = $value['price'] ?? 0;
+                $price_special = $value['price_special'] ?? 0;
+
+                $implode[] = '(' . $key . ', ' . $price . ', ' . $price_special . ')';
             }
 
             if (!$implode) {
@@ -469,6 +390,120 @@ SET
         return $rows;
     }
 
+    public function getJSONMeter($filter = array())
+    {
+        $rows = array(
+            'total' => 0,
+            'items' => array()
+        );
+
+        try {
+            //file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", print_r($filter, true));
+
+            $sql_command = "
+SELECT SQL_CALC_FOUND_ROWS 
+	m.*,
+	mc.`meter_category_detail`,
+	mq.`meter_qc_detail`,
+	msz.`meter_size_detail`,
+	msf.`meter_staff_name` AS `recipient_name`,
+	msf2.`meter_staff_name` AS `officer_name`,
+	jt.`description` AS `job_type_name`,
+    ip.`price` AS `installation_price`,
+    ip.`price_special` AS `installation_price_special`
+FROM `meter` m
+LEFT JOIN `meter_category` mc
+	ON mc.`meter_category_id` = m.`meter_category_id`
+LEFT JOIN `meter_qc` mq
+	ON mq.`meter_qc_id` = m.`meter_qc_id`
+LEFT JOIN `meter_size` msz
+	ON msz.`meter_size_id` = m.`meter_size_id`
+LEFT JOIN `meter_staff` msf
+	ON msf.`meter_staff_id` = m.`recipient_id`
+LEFT JOIN `meter_staff` msf2
+	ON msf2.`meter_staff_id` = m.`officer_id`
+LEFT JOIN `job_type` jt
+	ON jt.`id` = m.`job_type_id`
+LEFT JOIN `installation_price` ip 
+    ON ip.`job_type_id` = jt.`id`";
+
+            $implode = array();
+            if (isset($filter['filter'])) {
+                $filter['filter'] = json_decode($filter['filter'], true);
+
+                foreach ($filter['filter'] as $field => $value) {
+                    switch ($field) {
+                        case 'date_add':
+                        case 'date_appoint':
+                        case 'date_payment':
+                        case 'date_install':
+                        case 'date_deathline':
+                        case 'date_finish':
+                            //$implode[] = "DATE_FORMAT(m.`" . $field . "`, '%m/%d/%Y') = '" . $this->mysqli->real_escape_string($value) . "'";
+                            $implode[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
+                            break;
+                        case 'start':
+                            $implode[] = "m.`date_add` >=  '" . $this->mysqli->real_escape_string($value) . "'";
+                            break;
+                        case 'end':
+                            $implode[] = "m.`date_add` <=  '" . $this->mysqli->real_escape_string($value) . "'";
+                            break;
+                        case 'date_range':
+                            $date_tange = explode(" | ", $value);
+                            if (isset($date_tange[0], $date_tange[1])) {
+                                $implode[] = "m.`date_add` BETWEEN '" . $this->mysqli->real_escape_string($date_tange[0]) . "' AND '" . $this->mysqli->real_escape_string($date_tange[1]) . "' ";
+                            }
+                            break;
+                        case 'recipient_id':
+                        case 'officer_id':
+                        case 'meter_qc_id':
+                        case 'meter_category_id':
+                            $implode[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
+                            break;
+                        default:
+                            $implode[] = "LOWER(`" . $field . "`) LIKE '%" . strtolower(
+                                    $this->mysqli->real_escape_string($value)
+                                ) . "%'";
+                            break;
+                    }
+                }
+
+                if (count($implode)) {
+                    $sql_command .= " WHERE " . implode(" AND ", $implode);
+                }
+            }
+
+            $implode = array();
+
+            if (isset($filter['sort'], $filter['order']) && $filter['sort']) {
+                $implode[] = "`" . $filter['sort'] . "` " . strtoupper($filter['order']);
+            }
+            if (isset($filter['multiSort'])) {
+                foreach ($filter['multiSort'] as $value) {
+                    if (isset($value['sortName'])) {
+                        $implode[] = "`" . $value['sortName'] . "` " . strtoupper($value['sortOrder'] ?? '');
+                    }
+                }
+            }
+            if (count($implode)) {
+                $sql_command .= " ORDER BY " . implode(", ", $implode);
+            } else {
+                $sql_command .= " ORDER BY m.`date_add` ASC, m.`auto_id` ASC";
+            }
+
+            if (isset($filter['offset']) and isset($filter['limit'])) {
+                $sql_command .= " LIMIT " . $filter['offset'] . ", " . $filter['limit'];
+            }
+
+            $rows = $this->getRowsWithPaginate($sql_command, $rows);
+        } catch (Exception $e) {
+            $_SESSION['error'][] = "log/class." . get_class() . "." . __FUNCTION__ . ".txt<br>" . $e->getMessage();
+            file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
+        }
+
+        return $rows;
+    }
+
     public function deleteMeter($auto_id, $token)
     {
         $rows = array(
@@ -496,32 +531,6 @@ WHERE
             );
         }
 
-        return $rows;
-    }
-
-    /**
-     * @param $sql_command
-     * @param  array  $rows
-     * @return array
-     * @throws Exception
-     */
-    private function getRowsWithPaginate($sql_command, array $rows)
-    {
-        $query = $this->mysqli->query($sql_command);
-        if (!$query) {
-            throw new Exception($this->mysqli->error);
-        }
-        while ($row = $query->fetch_array(MYSQLI_ASSOC)) {
-            $rows['items'][] = $row;
-        }
-
-        $query = $this->mysqli->query("SELECT FOUND_ROWS() AS `total_rows`;");
-        if (!$query) {
-            throw new Exception($this->mysqli->error);
-        }
-        while ($row = $query->fetch_array(MYSQLI_ASSOC)) {
-            $rows['total'] = $row['total_rows'];
-        }
         return $rows;
     }
 

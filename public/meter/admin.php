@@ -132,7 +132,7 @@ if (isset($_POST['auto_id'], $_POST['token'])) {
                                             <i class="la la-plus"></i>
                                             เพิ่มข้อมูล
                                         </a>
-                                    <?php
+                                        <?php
                                     } ?>
                                     <?php
                                     if ($user->can(['admin', 'meter'])) { ?>
@@ -140,14 +140,9 @@ if (isset($_POST['auto_id'], $_POST['token'])) {
                                             <i class="la la-pencil"></i>
                                             แก้ไขราคาจ้างเหมาติดตั้งมิเตอร์
                                         </a>
-                                        <?php
-                                    } ?>
-                                    <?php
-                                    if ($user->can('joe')) { ?>
-                                        <a href="/meter/job_types.php" class="btn btn-warning">
-                                            <i class="la la-pencil"></i>
-                                            พิมพ์รายงาน
-                                        </a>
+
+                                        <!-- Button trigger modal-->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_report"><i class="la la-print"></i> พิมพ์แบบฟอร์ม</button>
                                         <?php
                                     } ?>
                                 </div>
@@ -301,6 +296,44 @@ if (isset($_POST['auto_id'], $_POST['token'])) {
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิดหน้าต่าง</button>
                     <button type="submit" class="btn btn-primary"><i class="far fa-file-excel"></i> Export ข้อมูล
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_report" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Report</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <form action="/meter/report.php" method="POST">
+                <div class="modal-body">
+                    <label><b>ช่วงเวลาที่แสดงผลข้อมูล:</b></label>
+                    <div class='input-group' id='kt_daterangepicker_2'>
+                        <input type="text" name="date_range" class="form-control" placeholder="เลือกช่วงวันที่เอกสาร"
+                               value="<?php
+                               echo date("Y-01-01") . " to " . date("Y-m-d"); ?>"/>
+                        <div class="input-group-append"><span class="input-group-text"><i
+                                        class="la la-calendar-check-o"></i></span></div>
+                    </div>
+                    <label style="margin-top: 20px;"><b>ประเภทรายงาน:</b></label>
+                    <div class='input-group'>
+                        <select class="form-control" name="form_name">
+                            <option value="replacement_report">สรุปจ้างติดตั้งรายเดือน</option>
+                            <option value="replacement_report">พิมพ์ใบสั่งจ้างสับเปลี่ยน</option>
+                            <option value="replacement_report">สรุปจ้างสับเปลี่ยนรายเดือน</option>
+                            <option value="replacement_report">พิมพ์กระบวนงาน P3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิดหน้าต่าง</button>
+                    <button type="submit" class="btn btn-primary"><i class="far fa-file-pdf"></i> แสดงรายงาน
                     </button>
                 </div>
             </form>
@@ -504,6 +537,27 @@ if (isset($_POST['auto_id'], $_POST['token'])) {
             }
         }, function (start, end, label) {
             $('#kt_daterangepicker_1 .form-control').val(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+
+        $('#kt_daterangepicker_2').daterangepicker({
+            buttonClasses: ' btn',
+            applyClass: 'btn-primary',
+            cancelClass: 'btn-secondary',
+
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                'This Year': [moment().startOf('year'), moment().endOf('year')],
+                'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+            }
+        }, function (start, end, label) {
+            $('#kt_daterangepicker_2 .form-control').val(start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
 
     });

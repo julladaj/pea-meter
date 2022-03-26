@@ -668,13 +668,12 @@ if ($auto_id && $token) {
                                         if ($auto_id && $token) { ?>
                                             <a href="javascript:window.location.href=window.location.href"
                                                class="btn btn-success"><i class="la la-refresh"></i> คืนค่าตั้งต้น</a>
-                                            <a href="/meter/" class="btn btn-warning" target="_BLANK"><i
-                                                        class="la la-plus"></i> เพิ่มข้อมูลใหม่</a>
-                                            <a href="/pdf/?id=<?php
+                                            <a href="/meter/" class="btn btn-warning" target="_BLANK"><i class="la la-plus"></i> เพิ่มข้อมูลใหม่</a>
+
+                                            <a class="btn btn-primary" target="_BLANK" href="/pdf/?id=<?php
                                             echo $auto_id; ?>&token=<?php
-                                            echo $token; ?>"
-                                               class="btn btn-primary" target="_BLANK"><i class="la la-print"></i>
-                                                พิมพ์แบบฟอร์ม</a>
+                                            echo $token; ?>"><i class="la la-print"></i> พิมพ์แบบฟอร์ม</a>
+
                                             <?php
                                         } ?>
                                     </div>
