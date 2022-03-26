@@ -226,6 +226,54 @@ LEFT JOIN `installation_price` it ON
         return false;
     }
 
+    public function getMetaData()
+    {
+        $rows = [];
+
+        try {
+            $sql_command = "SELECT `meta_key`, `meta_value` FROM `meta_data`";
+
+            $query = $this->mysqli->query($sql_command);
+            if (!$query) {
+                throw new Exception($this->mysqli->error);
+            }
+            while ($row = $query->fetch_array(MYSQLI_ASSOC)) {
+                $rows[$row['meta_key']] = json_decode($row['meta_value'], true, 512, JSON_THROW_ON_ERROR);
+            }
+        } catch (Exception $e) {
+            $_SESSION['error'][] = "log/class." . get_class() . "." . __FUNCTION__ . ".txt<br>" . $e->getMessage();
+            file_put_contents("log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
+        }
+
+        return $rows;
+    }
+
+    public function updateMetaData(array $meta_data): bool
+    {
+        try {
+            foreach ($meta_data as $meta_key => $meta_value) {
+                $meta_key = $this->mysqli->real_escape_string($meta_key);
+                if (is_string($meta_value)) {
+                    $meta_value = $this->mysqli->real_escape_string($meta_value);
+                    if (!$meta_value) {
+                        continue;
+                    }
+                }
+                $meta_value = json_encode($meta_value, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+
+                $sql_command = "INSERT INTO `meta_data` (`meta_key`, `meta_value`) VALUES ('$meta_key', '$meta_value') ON DUPLICATE KEY UPDATE `meta_value` = '$meta_value'";
+                $this->mysqli->query($sql_command);
+            }
+
+            return true;
+        } catch (Exception $e) {
+            $_SESSION['error'][] = "log/class." . get_class() . "." . __FUNCTION__ . ".txt<br>" . $e->getMessage();
+            file_put_contents("log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
+        }
+
+        return false;
+    }
+
     public function getMeterCategory()
     {
         $rows = array(
@@ -450,10 +498,10 @@ LEFT JOIN `installation_price` ip
                             $implode[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
                         case 'start':
-                            $implode[] = "m.`date_add` >=  '" . $this->mysqli->real_escape_string($value) . "'";
+                            $implode[] = "m.`date_workorder` >=  '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
                         case 'end':
-                            $implode[] = "m.`date_add` <=  '" . $this->mysqli->real_escape_string($value) . "'";
+                            $implode[] = "m.`date_workorder` <=  '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
                         case 'date_range':
                             $date_tange = explode(" | ", $value);

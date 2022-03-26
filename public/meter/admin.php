@@ -315,7 +315,7 @@ $meter_qc = $meter->getMeterQC();
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 </button>
             </div>
-            <form action="/meter/report.php" method="POST">
+            <form action="/meter/report.php" method="POST" target="_blank">
                 <div class="modal-body">
                     <label><b>ช่วงเวลาที่แสดงผลข้อมูล:</b></label>
                     <div class='input-group' id='kt_daterangepicker_2'>

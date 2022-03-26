@@ -19,12 +19,10 @@ if (!$result['total']) {
     die('ไม่พบข้อมูล');
 }
 
-$meter_staff_id = $_GET['meter_staff_id'] ?? 1;
-$pea_staff = $meter->getMeterStaff([
-    'meter_staff_id' => $meter_staff_id
-]);
-
-$pea_staff_name = $pea_staff['items'][0]['meter_staff_name'] ?? '';
+$meta_data = $meter->getMetaData();
+$contract_no = $meta_data['contract_no'] ?? '';
+$contractor_name = $meta_data['contractor_name'] ?? '';
+$special_ford_no = $meta_data['ford_no'] ?? [];
 
 function date_thai_format($strDate): string
 {
@@ -155,11 +153,11 @@ $html = <<<EOD
 		<td colspan="25" class="b-1" style="text-align: center;"><b>{$PEA_NAME}</b>&nbsp;&nbsp;&nbsp;&nbsp;ใบสั่งจ้างประจำวันที่<u>&nbsp;&nbsp;&nbsp;&nbsp;<b>{$thaiStartDate} - {$thaiEndDate}</b>&nbsp;&nbsp;&nbsp;&nbsp;</u></td>
 	</tr>
 	<tr>
-		<td colspan="25" style="text-align: center;">ใบสั่งจ้างปฏิบัติงานเกี่ยวกับมิเตอร์ <span style="color: red;"><u>กรณีรื้อถอน ย้าย สับเปลี่ยน เพิ่ม/ลด ขนาดมิเตอร์</u></span> ยกเว้นกรณี งดจ่ายไฟฟ้า<span style="color: red;">(งบทำการ)</span>ตามสัญญาจ้างเลขที่<u></u></td>
+		<td colspan="25" style="text-align: center;">ใบสั่งจ้างปฏิบัติงานเกี่ยวกับมิเตอร์ <span style="color: red;"><u>กรณีรื้อถอน ย้าย สับเปลี่ยน เพิ่ม/ลด ขนาดมิเตอร์</u></span> ยกเว้นกรณี งดจ่ายไฟฟ้า<span style="color: red;">(งบทำการ)</span>ตามสัญญาจ้างเลขที่<u>&nbsp;{$contract_no}&nbsp;</u></td>
 	</tr>
 	<tr>
 		<td colspan="25" style="text-align: center;">
-		(ผู้รับจ้าง)<u>&nbsp;&nbsp;&nbsp;&nbsp;<b>{$pea_staff_name}</b>&nbsp;&nbsp;&nbsp;&nbsp;</u>
+		(ผู้รับจ้าง)<u>&nbsp;&nbsp;&nbsp;&nbsp;<b>{$contractor_name}</b>&nbsp;&nbsp;&nbsp;&nbsp;</u>
 		</td>
 	</tr>
 	<tr>
@@ -188,29 +186,39 @@ EOD;
 $i = 1;
 $total = 0;
 foreach ($result['items'] as $item) {
-    //dd($item);
-    $thaiDate = $item['date_add'] ? date_thai_format($item['date_add']) : '';
+    $thaiDateWorkOrder = $item['date_workorder'] ? date_thai_format($item['date_workorder']) : '';
     $thaiDueDate = $item['due_date'] ? date_thai_format($item['due_date']) : '';
     $thaiDateFinish = $item['date_finish'] ? date_thai_format($item['date_finish']) : '';
 
-    $price = $item['installation_price'] ?? 0;
+    $fort_cable = $item['fort_cable'] ?? '';
+    $fort_no = $item['fort_no'] ?? '';
+
+    // @TODO: need it later
+    $meter_number = '';
+
+    if ($is_special_ford_no = in_array($fort_cable, $special_ford_no, true)) {
+        $price = $item['installation_price_special'] ?? 0;
+    } else {
+        $price = $item['installation_price'] ?? 0;
+    }
+
+    $highlight = $is_special_ford_no ? 'background-color: yellow;' : '';
+
     $formatted_price = number_format($price, 0);
     $total += $price;
 
-    $fort_cable = $item['fort_cable'] ?? '';
-    $meter_number = '';
     $html .= <<<EOD
 <tr>
     <td style="text-align: center; border: 1px solid black;">{$i}</td>
-    <td colspan="2" style="text-align: center; border: 1px solid black;">{$thaiDate}</td>
+    <td colspan="2" style="text-align: center; border: 1px solid black;">{$thaiDateWorkOrder}</td>
     <td colspan="2" style="text-align: center; border: 1px solid black;">{$item['number1']}</td>
     <td colspan="3" style="text-align: left; border: 1px solid black;">{$item['fname']}</td>
-    <td style="text-align: center; border: 1px solid black;">{$fort_cable}</td>
-    <td colspan="2" style="text-align: center; border: 1px solid black;"></td>
+    <td style="text-align: center; border: 1px solid black; {$highlight}">{$fort_cable}</td>
+    <td colspan="2" style="text-align: center; border: 1px solid black;">{$fort_no}</td>
     <td colspan="2" style="text-align: center; border: 1px solid black;">{$item['meter_size_detail']}</td>
     <td colspan="2" style="text-align: center; border: 1px solid black;">{$meter_number}</td>
     <td colspan="3" style="text-align: center; border: 1px solid black;">{$item['job_type_name']}</td>
-    <td style="text-align: right; border: 1px solid black;">{$formatted_price}</td>
+    <td style="text-align: right; border: 1px solid black; {$highlight}">{$formatted_price}</td>
     <td colspan="2" style="text-align: center; border: 1px solid black;">{$thaiDueDate}</td>
     <td colspan="2" style="text-align: center; border: 1px solid black;">{$thaiDateFinish}</td>
     <td colspan="2" style="text-align: center; border: 1px solid black;">{$item['meter_comment']}</td>
@@ -236,7 +244,7 @@ $html .= <<<EOD
         <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
         <td colspan="6" style="text-align: left;">ผู้สั่งจ้าง</td>
         <td colspan="3" style="text-align: right;">(ลงชื่อ)</td>
-        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"><b>{$pea_staff_name}</b></td>
+        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"><b>{$contractor_name}</b></td>
         <td colspan="3" style="text-align: left;">ผู้รับจ้าง</td>
     </tr>
     <tr>

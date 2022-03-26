@@ -444,6 +444,8 @@ if ($auto_id && $token) {
                                         <input type="date" class="form-control"
                                                value="<?= $data['due_date'] ?? '' ?>" <?= ($isMeter) ? 'name="due_date"' : 'readonly' ?>/>
                                     </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="meter_comment"
                                            class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label">หมายเหตุ:</label>
                                     <div class="col-xl-11 col-lg-10 col-md-10 col-sm-8">

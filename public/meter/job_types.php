@@ -13,14 +13,16 @@ if (!$user->can(['admin', 'meter'])) {
 
 $meter = new _Meter();
 
-if (isset($_POST['price']) && $_POST['price']) {
+if (isset($_POST['price'], $_POST['meta_data']) && $_POST['price']) {
     $meter->postJobInstallationPrices($_POST['price']);
+    $meter->updateMetaData($_POST['meta_data']);
     header('location: ' . $_SERVER['PHP_SELF']);
     exit;
 }
 
 $job_type_installation = $meter->getJobInstallationPrices(['enum' => 1]);
 $job_type_reparation = $meter->getJobInstallationPrices(['enum' => 2]);
+$meta_data = $meter->getMetaData();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,7 +115,43 @@ $job_type_reparation = $meter->getJobInstallationPrices(['enum' => 2]);
                                 <div class="form-group row">
                                     <label class="col-md-4 col-sm-12 col-form-label"></label>
                                     <div class="col-md-8 col-sm-12">
-                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">1. งานติดตั้ง</span>
+                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">1. รายละเอียดประกอบรายงาน</span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-sm-12 col-form-label">สัญญาจ้างเลขที่:</label>
+                                    <div class="col-md-4 col-sm-12 ">
+                                        <input type="text" class="form-control" name="meta_data[contract_no]" value="<?= $meta_data['contract_no'] ?? '' ?>"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-sm-12 col-form-label">ผู้รับจ้าง:</label>
+                                    <div class="col-md-4 col-sm-12 ">
+                                        <input type="text" class="form-control" name="meta_data[contractor_name]" value="<?= $meta_data['contractor_name'] ?? '' ?>"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-sm-12 col-form-label">หัวสายพื้นที่พิเศษ:</label>
+                                    <div class="col-md-4 col-sm-12 ">
+                                        <select class="form-control kt-select2" id="kt_select2_11" multiple name="meta_data[ford_no][]">
+                                            <?php
+                                            if (isset($meta_data['ford_no'])) {
+                                                foreach ($meta_data['ford_no'] as $ford_no) {
+                                                    echo '<option value="' . $ford_no . '" selected>' . $ford_no . '</option>';
+                                                }
+                                            } else {
+                                                echo '<option></option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr/>
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-sm-12 col-form-label"></label>
+                                    <div class="col-md-8 col-sm-12">
+                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">2. งานติดตั้ง</span>
                                     </div>
                                 </div>
 
@@ -156,7 +194,7 @@ $job_type_reparation = $meter->getJobInstallationPrices(['enum' => 2]);
                                 <div class="form-group row">
                                     <label class="col-md-4 col-sm-12 col-form-label"></label>
                                     <div class="col-md-7 col-sm-12">
-                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">2. งานสับเปลี่ยน ย้าย ถอนคืน</span>
+                                        <span style="font-size: 1.2rem;font-weight: 500;color: #48465b;">3. งานสับเปลี่ยน ย้าย ถอนคืน</span>
                                     </div>
                                 </div>
 
@@ -298,7 +336,7 @@ $job_type_reparation = $meter->getJobInstallationPrices(['enum' => 2]);
 <!--end::Page Vendors -->
 
 <!--begin::Page Scripts(used by this page) -->
-
+<script src="assets/js/pages/crud/forms/widgets/select2.js" type="text/javascript"></script>
 
 <script>
 
