@@ -21,6 +21,10 @@ if (isset($_POST['auto_id'], $_POST['token'])) {
     }
     header('location: /meter/admin.php');
 }
+
+$meter_category = $meter->getMeterCategory();
+$meter_staff = $meter->getMeterStaff();
+$meter_qc = $meter->getMeterQC();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -330,6 +334,15 @@ if (isset($_POST['auto_id'], $_POST['token'])) {
                             <option value="replacement_report">พิมพ์กระบวนงาน P3</option>
                         </select>
                     </div>
+                    <label style="margin-top: 20px;"><b>ผู้รับจ้าง:</b></label>
+                    <div class='input-group'>
+                        <select class="form-control" name="meter_staff_id">
+                            <?php foreach ($meter_staff['items'] as $m) { ?>
+                                <option value="<?= $m['meter_staff_id'] ?>"><?= $m['meter_staff_name'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิดหน้าต่าง</button>
@@ -473,10 +486,6 @@ if (isset($_POST['auto_id'], $_POST['token'])) {
     }
 
     <?php
-    $meter_category = $meter->getMeterCategory();
-    $meter_staff = $meter->getMeterStaff();
-    $meter_qc = $meter->getMeterQC();
-
     $meter_category_list = array();
     foreach ($meter_category['items'] as $m) {
         $meter_category_list[$m['meter_category_id']] = $m['meter_category_detail'];

@@ -19,6 +19,13 @@ if (!$result['total']) {
     die('ไม่พบข้อมูล');
 }
 
+$meter_staff_id = $_GET['meter_staff_id'] ?? 1;
+$pea_staff = $meter->getMeterStaff([
+    'meter_staff_id' => $meter_staff_id
+]);
+
+$pea_staff_name = $pea_staff['items'][0]['meter_staff_name'] ?? '';
+
 function date_thai_format($strDate): string
 {
     $strYear = date("Y", strtotime($strDate)) + 543;
@@ -152,7 +159,7 @@ $html = <<<EOD
 	</tr>
 	<tr>
 		<td colspan="25" style="text-align: center;">
-		(ผู้รับจ้าง)<u>&nbsp;&nbsp;&nbsp;&nbsp;<b>sdfsdfsdf</b>&nbsp;&nbsp;&nbsp;&nbsp;</u>
+		(ผู้รับจ้าง)<u>&nbsp;&nbsp;&nbsp;&nbsp;<b>{$pea_staff_name}</b>&nbsp;&nbsp;&nbsp;&nbsp;</u>
 		</td>
 	</tr>
 	<tr>
@@ -221,6 +228,32 @@ $html .= <<<EOD
         <td colspan="14" style="text-align: center; border: 1px solid black; background-color: yellow;">{$totalThaiBaht}</td>
         <td colspan="2" style="text-align: right; border: 1px solid black;">{$formatted_total}</td>
         <td colspan="6" style="text-align: left; border: 1px solid black;">บาท</td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+        <td colspan="3" style="text-align: right;">(ลงชื่อ)</td>
+        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+        <td colspan="6" style="text-align: left;">ผู้สั่งจ้าง</td>
+        <td colspan="3" style="text-align: right;">(ลงชื่อ)</td>
+        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"><b>{$pea_staff_name}</b></td>
+        <td colspan="3" style="text-align: left;">ผู้รับจ้าง</td>
+    </tr>
+    <tr>
+        <td colspan="3" style="text-align: right;">(</td>
+        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+        <td colspan="6" style="text-align: left;">)</td>
+        <td colspan="3" style="text-align: right;">(</td>
+        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+        <td colspan="3" style="text-align: left;">)</td>
+    </tr>
+    <tr>
+        <td colspan="3" style="text-align: right;">ลว.</td>
+        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+        <td colspan="6" style="text-align: left;"></td>
+        <td colspan="3" style="text-align: right;">ลว.</td>
+        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+        <td colspan="3" style="text-align: left;"></td>
     </tr>
 </tbody>
 </table>

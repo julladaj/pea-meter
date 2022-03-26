@@ -58,7 +58,7 @@ WHERE
         return false;
     }
 
-    public function getMeterStaff()
+    public function getMeterStaff(?array $filters = [])
     {
         $rows = array(
             'total' => 0,
@@ -67,6 +67,13 @@ WHERE
 
         try {
             $sql_command = "SELECT * FROM `meter_staff` WHERE `meter_staff_active` = 1";
+
+            if ($filters) {
+                foreach ($filters as $column => $value) {
+                    $value = $this->mysqli->real_escape_string($value);
+                    $sql_command .= " AND `$column` = '$value'";
+                }
+            }
 
             $rows = $this->getRowsWithPaginate($sql_command, $rows);
         } catch (Exception $e) {
