@@ -1,0 +1,6 @@
+Data too long for column 'telephone' at row 1
+Leatest SQ:
+
+INSERT INTO `meter`
+SET 
+	`token` = 'a82d41dce3a5676f',`fname` = 'นางศศิวิมล จักร์คร่อง',`telephone` = '20025517046',`date_add` = '2022-03-21',`number1` = '20025517046',`meter_category_id` = '3',`meter_size_id` = '2',`recipient_id` = '9',`date_appoint` = '2022-03-22',`officer_id` = '2',`fort_cable` = NULL,`fort_no` = NULL,`meter_qc_id` = '1',`date_payment` = NULL,`date_install` = NULL,`payment_value` = '642',`job_type_id` = NULL,`cause` = NULL,`cause1` = NULL

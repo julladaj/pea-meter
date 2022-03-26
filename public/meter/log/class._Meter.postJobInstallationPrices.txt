@@ -1,0 +1,1 @@
+Cannot add or update a child row: a foreign key constraint fails (`chai-van_peachm01`.`installation_price`, CONSTRAINT `installation_price_ibfk_1` FOREIGN KEY (`job_type_id`) REFERENCES `job_type` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT)

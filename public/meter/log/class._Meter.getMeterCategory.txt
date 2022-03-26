@@ -1,0 +1,1 @@
+You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM `meter_category` ORDER BY `sort_index` ASC, `meter_category_id` ASC' at line 1
