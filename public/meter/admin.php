@@ -321,16 +321,17 @@ $meter_qc = $meter->getMeterQC();
                     <div class='input-group' id='kt_daterangepicker_2'>
                         <input type="text" name="date_range" class="form-control" placeholder="เลือกช่วงวันที่เอกสาร"
                                value="<?php
-                               echo date("Y-01-01") . " to " . date("Y-m-d"); ?>"/>
+                               echo date("Y-m-01") . " to " . date("Y-m-d"); ?>"/>
                         <div class="input-group-append"><span class="input-group-text"><i
                                         class="la la-calendar-check-o"></i></span></div>
                     </div>
                     <label style="margin-top: 20px;"><b>ประเภทรายงาน:</b></label>
                     <div class='input-group'>
                         <select class="form-control" name="form_name">
-                            <option value="replacement_report">สรุปจ้างติดตั้งรายเดือน</option>
+                            <option value="replacement_report">พิมพ์ใบสั่งจ้างติดตั้ง</option>
+                            <option value="replacement_report_monthly">สรุปจ้างติดตั้งรายเดือน</option>
                             <option value="replacement_report2">พิมพ์ใบสั่งจ้างสับเปลี่ยน</option>
-<!--                            <option value="replacement_report">สรุปจ้างสับเปลี่ยนรายเดือน</option>-->
+                            <option value="replacement_report_monthly2">สรุปจ้างสับเปลี่ยนรายเดือน</option>
 <!--                            <option value="replacement_report">พิมพ์กระบวนงาน P3</option>-->
                         </select>
                     </div>
@@ -514,9 +515,9 @@ $meter_qc = $meter->getMeterQC();
 
 
         //var start = moment().subtract(29, 'days');
-        var start = moment().startOf('year');
+        const start = moment().startOf('month');
         //var end = moment();
-        var end = moment();
+        const end = moment();
 
         $('#kt_daterangepicker_1').daterangepicker({
             buttonClasses: ' btn',

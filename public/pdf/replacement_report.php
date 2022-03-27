@@ -15,88 +15,25 @@ $result = $user->authentication();
 
 $meter = new _Meter();
 
+$enum = $_GET['enum'] ?? '1';
+
 $filter = [
     'date_workorder_start' => $_GET['start'],
     'date_workorder_end' => $_GET['end'],
-    'job_type_enum' => $_GET['enum']
+    'job_type_enum' => $enum
 ];
 $result = $meter->getJSONMeter(array('filter' => json_encode($filter)));
 if (!$result['total']) {
     die('ไม่พบข้อมูล');
 }
 
-$report_type = ($_GET['enum'] === '1')? 'กรณีติดตั้งใหม่' : 'กรณีรื้อถอน ย้าย สับเปลี่ยน เพิ่ม/ลด ขนาดมิเตอร์';
-$budget_type = ($_GET['enum'] === '1')? 'งบลงทุน' : 'งบทำการ';
+$report_type = ($enum === '1') ? 'กรณีติดตั้งใหม่' : 'กรณีรื้อถอน ย้าย สับเปลี่ยน เพิ่ม/ลด ขนาดมิเตอร์';
+$budget_type = ($enum === '1') ? 'งบลงทุน' : 'งบทำการ';
 
 $meta_data = $meter->getMetaData();
 $contract_no = $meta_data['contract_no'] ?? '';
 $contractor_name = $meta_data['contractor_name'] ?? '';
 $special_ford_no = $meta_data['ford_no'] ?? [];
-
-function date_thai_format($strDate): string
-{
-    $strYear = date("Y", strtotime($strDate)) + 543;
-    $strMonth = date("n", strtotime($strDate));
-    $strDay = date("j", strtotime($strDate));
-
-    $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
-    $strMonthThai = $strMonthCut[$strMonth];
-    return "$strDay $strMonthThai $strYear";
-}
-
-function numtothaistring($num)
-{
-    $return_str = "";
-    $txtnum1 = array('', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า');
-    $txtnum2 = array('', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน');
-    $num_arr = str_split($num);
-    $count = count($num_arr);
-    foreach ($num_arr as $key => $val) {
-        if ($count > 1 && $val == 1 && $key == ($count - 1)) {
-            $return_str .= "เอ็ด";
-        } else {
-            $return_str .= $txtnum1[$val] . $txtnum2[$count - $key - 1];
-        }
-    }
-    return $return_str;
-}
-
-function numtothai($num)
-{
-    if ($num === 0) {
-        return "ศูนย์บาทถ้วน";
-    }
-    $return = "";
-    $num = str_replace(",", "", $num);
-    $number = explode(".", $num);
-    if (count($number) > 2) {
-        return 'รูปแบบข้อมุลไม่ถูกต้อง';
-    }
-    $return .= numtothaistring($number[0]) . "บาท";
-    $stang = $number[1] ?? 0;
-    $stang = (int)$stang;
-    if ($stang > 0) {
-        $return .= numtothaistring($stang) . "สตางค์";
-    } else {
-        $return .= "ถ้วน";
-    }
-    return $return;
-}
-
-$thai_month = array(
-    'มกราคม',
-    'กุมภาพันธ์',
-    'มีนาคม',
-    'เมษายน',
-    'พฤษภาคม',
-    'มิถุนายน',
-    'กรกฎาคม',
-    'สิงหาคม',
-    'กันยายน',
-    'ตุลาคม',
-    'พฤษจิกายน',
-    'ธันวาคม'
-);
 
 $thaiStartDate = date_thai_format($_GET['start']);
 $thaiEndDate = date_thai_format($_GET['end']);
