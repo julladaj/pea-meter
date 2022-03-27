@@ -497,11 +497,14 @@ LEFT JOIN `installation_price` ip
                             //$implode[] = "DATE_FORMAT(m.`" . $field . "`, '%m/%d/%Y') = '" . $this->mysqli->real_escape_string($value) . "'";
                             $implode[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
-                        case 'start':
+                        case 'date_workorder_start':
                             $implode[] = "m.`date_workorder` >=  '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
-                        case 'end':
+                        case 'date_workorder_end':
                             $implode[] = "m.`date_workorder` <=  '" . $this->mysqli->real_escape_string($value) . "'";
+                            break;
+                        case 'job_type_enum':
+                            $implode[] = "jt.`enum` =  '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
                         case 'date_range':
                             $date_tange = explode(" | ", $value);

@@ -329,20 +329,11 @@ $meter_qc = $meter->getMeterQC();
                     <div class='input-group'>
                         <select class="form-control" name="form_name">
                             <option value="replacement_report">สรุปจ้างติดตั้งรายเดือน</option>
-                            <option value="replacement_report">พิมพ์ใบสั่งจ้างสับเปลี่ยน</option>
-                            <option value="replacement_report">สรุปจ้างสับเปลี่ยนรายเดือน</option>
-                            <option value="replacement_report">พิมพ์กระบวนงาน P3</option>
+                            <option value="replacement_report2">พิมพ์ใบสั่งจ้างสับเปลี่ยน</option>
+<!--                            <option value="replacement_report">สรุปจ้างสับเปลี่ยนรายเดือน</option>-->
+<!--                            <option value="replacement_report">พิมพ์กระบวนงาน P3</option>-->
                         </select>
                     </div>
-                    <label style="margin-top: 20px;"><b>ผู้รับจ้าง:</b></label>
-                    <div class='input-group'>
-                        <select class="form-control" name="meter_staff_id">
-                            <?php foreach ($meter_staff['items'] as $m) { ?>
-                                <option value="<?= $m['meter_staff_id'] ?>"><?= $m['meter_staff_name'] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิดหน้าต่าง</button>

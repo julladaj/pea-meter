@@ -6,18 +6,27 @@ if (!isset($_GET['start'], $_GET['end'])) {
 
 // Include the main TCPDF library (search for installation path).
 @require('../meter/config.php');
+@require('../meter/class/user.php');
+
+$user = new User();
+$result = $user->authentication();
+
 @require('../meter/class/meter.php');
 
 $meter = new _Meter();
 
 $filter = [
-    'start' => $_GET['start'],
-    'end' => $_GET['end']
+    'date_workorder_start' => $_GET['start'],
+    'date_workorder_end' => $_GET['end'],
+    'job_type_enum' => $_GET['enum']
 ];
 $result = $meter->getJSONMeter(array('filter' => json_encode($filter)));
 if (!$result['total']) {
     die('ไม่พบข้อมูล');
 }
+
+$report_type = ($_GET['enum'] === '1')? 'กรณีติดตั้งใหม่' : 'กรณีรื้อถอน ย้าย สับเปลี่ยน เพิ่ม/ลด ขนาดมิเตอร์';
+$budget_type = ($_GET['enum'] === '1')? 'งบลงทุน' : 'งบทำการ';
 
 $meta_data = $meter->getMetaData();
 $contract_no = $meta_data['contract_no'] ?? '';
@@ -153,7 +162,7 @@ $html = <<<EOD
 		<td colspan="25" class="b-1" style="text-align: center;"><b>{$PEA_NAME}</b>&nbsp;&nbsp;&nbsp;&nbsp;ใบสั่งจ้างประจำวันที่<u>&nbsp;&nbsp;&nbsp;&nbsp;<b>{$thaiStartDate} - {$thaiEndDate}</b>&nbsp;&nbsp;&nbsp;&nbsp;</u></td>
 	</tr>
 	<tr>
-		<td colspan="25" style="text-align: center;">ใบสั่งจ้างปฏิบัติงานเกี่ยวกับมิเตอร์ <span style="color: red;"><u>กรณีรื้อถอน ย้าย สับเปลี่ยน เพิ่ม/ลด ขนาดมิเตอร์</u></span> ยกเว้นกรณี งดจ่ายไฟฟ้า<span style="color: red;">(งบทำการ)</span>ตามสัญญาจ้างเลขที่<u>&nbsp;{$contract_no}&nbsp;</u></td>
+		<td colspan="25" style="text-align: center;">ใบสั่งจ้างปฏิบัติงานเกี่ยวกับมิเตอร์ <span style="color: red;"><u>{$report_type}</u></span> ยกเว้นกรณี งดจ่ายไฟฟ้า&nbsp;<span style="color: red;">({$budget_type})</span>&nbsp;ตามสัญญาจ้างเลขที่<u>&nbsp;{$contract_no}&nbsp;</u></td>
 	</tr>
 	<tr>
 		<td colspan="25" style="text-align: center;">
