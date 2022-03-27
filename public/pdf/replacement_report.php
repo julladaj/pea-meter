@@ -22,6 +22,10 @@ $filter = [
     'date_workorder_end' => $_GET['end'],
     'job_type_enum' => $enum
 ];
+if (isset($_GET['recipient_id']) && $_GET['recipient_id']) {
+    $filter['recipient_id'] = $_GET['recipient_id'];
+}
+
 $result = $meter->getJSONMeter(array('filter' => json_encode($filter)));
 if (!$result['total']) {
     die('ไม่พบข้อมูล');

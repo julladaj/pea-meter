@@ -21,6 +21,10 @@ $filter = [
     'date' => $_GET['date'],
     'job_type_enum' => $enum
 ];
+if (isset($_GET['recipient_id']) && $_GET['recipient_id']) {
+    $filter['recipient_id'] = $_GET['recipient_id'];
+}
+
 $result = $report->getMonthlyReplacement($filter);
 if (!$result) {
     die('ไม่พบข้อมูล');

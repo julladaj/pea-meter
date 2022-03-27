@@ -41,7 +41,13 @@ CASE WHEN DAY(m.`date_workorder`) = '$i' AND m.`fort_cable` IN ($special_ford_no
     ip.`price_special`
 FROM `job_type` jt
 LEFT JOIN `meter` m
-	ON jt.`id` = m.`job_type_id` AND m.`date_workorder` BETWEEN '$first_day_of_month' AND '$last_day_of_month'
+	ON jt.`id` = m.`job_type_id` AND m.`date_workorder` BETWEEN '$first_day_of_month' AND '$last_day_of_month'";
+
+            if (isset($filter['recipient_id']) && $filter['recipient_id']) {
+                $sql_command .= " AND m.`recipient_id` = " . $filter['recipient_id'];
+            }
+
+            $sql_command .= "
 LEFT JOIN `installation_price` ip 
     ON ip.`job_type_id` = jt.`id`
 WHERE jt.`enum` = '$job_type_enum'

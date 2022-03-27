@@ -332,7 +332,18 @@ $meter_qc = $meter->getMeterQC();
                             <option value="replacement_report_monthly">สรุปจ้างติดตั้งรายเดือน</option>
                             <option value="replacement_report2">พิมพ์ใบสั่งจ้างสับเปลี่ยน</option>
                             <option value="replacement_report_monthly2">สรุปจ้างสับเปลี่ยนรายเดือน</option>
-<!--                            <option value="replacement_report">พิมพ์กระบวนงาน P3</option>-->
+                            <!--                            <option value="replacement_report">พิมพ์กระบวนงาน P3</option>-->
+                        </select>
+                    </div>
+                    <label style="margin-top: 20px;"><b>การไฟฟ้าย่อย / ชื่อผู้รับ:</b></label>
+                    <div class='input-group'>
+                        <select class="form-control" name="recipient_id">
+                            <option></option>
+                            <?php
+                            foreach ($meter_staff['items'] as $m) {
+                                echo '<option value="' . $m['meter_staff_id'] . '">' . $m['meter_staff_name'] . '</option>';
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
