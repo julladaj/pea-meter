@@ -181,37 +181,43 @@ $totalThaiBaht = numtothai($total);
 $formatted_total = number_format($total, 0);
 
 $html .= <<<EOD
-    <tr style="font-weight: bold;">
+    <tr style="font-weight: bold;" nobr="true">
         <td colspan="3" style="text-align: right; border: 1px solid black;">รวมเงินทั้งหมด</td>
         <td colspan="14" style="text-align: center; border: 1px solid black; background-color: yellow;">{$totalThaiBaht}</td>
         <td colspan="2" style="text-align: right; border: 1px solid black;">{$formatted_total}</td>
         <td colspan="6" style="text-align: left; border: 1px solid black;">บาท</td>
     </tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr>
-        <td colspan="3" style="text-align: right;">(ลงชื่อ)</td>
-        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
-        <td colspan="6" style="text-align: left;">ผู้สั่งจ้าง</td>
-        <td colspan="3" style="text-align: right;">(ลงชื่อ)</td>
-        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"><b>{$contractor_name}</b></td>
-        <td colspan="3" style="text-align: left;">ผู้รับจ้าง</td>
-    </tr>
-    <tr>
-        <td colspan="3" style="text-align: right;">(</td>
-        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
-        <td colspan="6" style="text-align: left;">)</td>
-        <td colspan="3" style="text-align: right;">(</td>
-        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
-        <td colspan="3" style="text-align: left;">)</td>
-    </tr>
-    <tr>
-        <td colspan="3" style="text-align: right;">ลว.</td>
-        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
-        <td colspan="6" style="text-align: left;"></td>
-        <td colspan="3" style="text-align: right;">ลว.</td>
-        <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
-        <td colspan="3" style="text-align: left;"></td>
+    <tr nobr="true">
+        <td colspan="25" style="text-align: center;">
+            <table nobr="true">
+                <tr nobr="true"><td colspan="25">&nbsp;</td></tr>
+                <tr nobr="true"><td colspan="25">&nbsp;</td></tr>
+                <tr nobr="true">
+                    <td colspan="3" style="text-align: right;">(ลงชื่อ)</td>
+                    <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+                    <td colspan="6" style="text-align: left;">ผู้สั่งจ้าง</td>
+                    <td colspan="3" style="text-align: right;">(ลงชื่อ)</td>
+                    <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"><b>{$contractor_name}</b></td>
+                    <td colspan="3" style="text-align: left;">ผู้รับจ้าง</td>
+                </tr>
+                <tr nobr="true">
+                    <td colspan="3" style="text-align: right;">(</td>
+                    <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+                    <td colspan="6" style="text-align: left;">)</td>
+                    <td colspan="3" style="text-align: right;">(</td>
+                    <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+                    <td colspan="3" style="text-align: left;">)</td>
+                </tr>
+                <tr nobr="true">
+                    <td colspan="3" style="text-align: right;">ลว.</td>
+                    <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+                    <td colspan="6" style="text-align: left;"></td>
+                    <td colspan="3" style="text-align: right;">ลว.</td>
+                    <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+                    <td colspan="3" style="text-align: left;"></td>
+                </tr>
+            </table>
+        </td>
     </tr>
 </tbody>
 </table>
