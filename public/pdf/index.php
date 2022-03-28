@@ -1,56 +1,37 @@
 <?php
-if (!isset($_GET['id']) || !isset($_GET['token'])) die('');
+if (!isset($_GET['id'], $_GET['token'])) {
+    die('');
+}
 
 // Include the main TCPDF library (search for installation path).
-@require_once('../meter/config.php');
-@require_once('../meter/class/meter.php');
+@require('../meter/config.php');
+@require('../meter/class/meter.php');
 
 $meter = new _Meter();
 
 $data = array();
 $filter = array('auto_id' => $_GET['id'], 'token' => $_GET['token']);
-$result = $meter->getJSONMeter(array('filter'=> json_encode($filter)));
-if ($result['total']) $data = $result['items'][0];
+$result = $meter->getJSONMeter(array('filter' => json_encode($filter)));
 
-function date_thai_format($strDate) {
-	$strYear = date("Y", strtotime($strDate)) + 543;
-	$strMonth = date("n", strtotime($strDate));
-	$strDay = date("j", strtotime($strDate));
-	
-	$strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
-	$strMonthThai = $strMonthCut[$strMonth];
-	return "$strDay $strMonthThai $strYear";
+if ($result['total']) {
+    $data = $result['items'][0];
 }
 
-//file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/log/log.txt", print_r($data, true));
+@require('tcpdf.php');
 
-@require_once('tcpdf.php');
+class MYPDF extends TCPDF
+{
 
-$thai_month = array(
-	'มกราคม',
-	'กุมภาพันธ์',
-	'มีนาคม',
-	'เมษายน',
-	'พฤษภาคม',
-	'มิถุนายน',
-	'กรกฎาคม',
-	'สิงหาคม',
-	'กันยายน',
-	'ตุลาคม',
-	'พฤษจิกายน',
-	'ธันวาคม'
-);
+    //Page header
+    public function Header()
+    {
+    }
 
-class MYPDF extends TCPDF {
+    // Page footer
+    public function Footer()
+    {
+    }
 
-	//Page header
-	public function Header() {
-	}
-
-	// Page footer
-	public function Footer() {
-	}
-	
 }
 
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -70,7 +51,7 @@ $pdf->SetHeaderMargin(0);
 $pdf->SetFooterMargin(0);
 
 // set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, 20);
+$pdf->SetAutoPageBreak(true, 20);
 
 // set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -246,7 +227,7 @@ $html = <<<EOD
 EOD;
 $pdf->writeHTMLCell(40, '', $x, $y, $html, 0, 1, 0, true, 'J', true);
 
-$date_add = (isset($data['date_add']))? date_thai_format($data['date_add']) : '';
+$date_add = (isset($data['date_add'])) ? date_thai_format($data['date_add']) : '';
 $y = 23;
 $html = <<<EOD
 <b style="font-size: 16px; font-weight: 900;">{$date_add}</b>
@@ -280,7 +261,7 @@ $html = <<<EOD
 EOD;
 $pdf->writeHTMLCell(40, '', $x, $y, $html, 0, 1, 0, true, 'J', true);
 
-$date_appoint = (isset($data['date_appoint']))? date_thai_format($data['date_appoint']) : '';
+$date_appoint = (isset($data['date_appoint'])) ? date_thai_format($data['date_appoint']) : '';
 $x = 59;
 $y = 81;
 $html = <<<EOD
@@ -300,7 +281,7 @@ $y = 106;
 $html = <<<EOD
 <b style="font-size: 16px; font-weight: 900;">{$data['meter_category_detail']}</b>
 EOD;
-$pdf->writeHTMLCell(40, '', $x, $y, $html, 0, 1, 0, true, 'J', true);
+$pdf->writeHTMLCell(50, '', $x, $y, $html, 0, 1, 0, true, 'J', true);
 
 $x = 94;
 $y = 106;
@@ -326,13 +307,13 @@ $pdf->writeHTMLCell(80, '', $x, $y, $html, 0, 1, 0, true, 'J', true);
 
 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/meter/?id=" . $_GET['id'];
 $style = array(
-	'border' => 0,
-	'vpadding' => '0',
-	'hpadding' => '0',
-	'fgcolor' => array(0, 0, 0),
-	'bgcolor' => false, //array(255, 255, 255)
-	'module_width' => 1, // width of a single module in points
-	'module_height' => 1 // height of a single module in points
+    'border' => 0,
+    'vpadding' => '0',
+    'hpadding' => '0',
+    'fgcolor' => array(0, 0, 0),
+    'bgcolor' => false, //array(255, 255, 255)
+    'module_width' => 1, // width of a single module in points
+    'module_height' => 1 // height of a single module in points
 );
 $pdf->write2DBarcode($actual_link, 'QRCODE,L', 115, 242, 30, 30, $style, 'N');
 

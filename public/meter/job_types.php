@@ -64,6 +64,14 @@ $meta_data = $meter->getMetaData();
         .kt-portlet {
             background-color: #e2e5ec;
         }
+        .select2-container--default .select2-selection--multiple .select2-selection__rendered .select2-selection__choice .select2-selection__choice__remove {
+            color: white;
+        }
+        .select2-container--default .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
+            color: white;
+            background: #5d78ff;
+            border: 1px solid white;
+        }
     </style>
 </head>
 
