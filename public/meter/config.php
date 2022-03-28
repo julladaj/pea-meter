@@ -72,7 +72,8 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_EXTRA_PHONE', '053-896020');
 }
 
-define('DIR_ROOT', '/var/www/pea-meter.com/public_html/meter/');
+//define('DIR_ROOT', '/var/www/pea-meter.com/public_html/meter/');
+define('DIR_ROOT', '/Users/devilpooh/www/pea-meter.test.com/public/meter/');
 define('ENABLE_SLIPT_UPLOAD', 1);
 
 $thai_month = array(
