@@ -159,5 +159,5 @@ function numtothai($num)
 }
 
 session_start();
-@require_once('class/database.php');
+@require('class/database.php');
 
