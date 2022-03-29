@@ -1,33 +1,28 @@
-<?php 
-	@require_once('config.php');
-	@require_once('class/meter.php');
-	
-	$uploaded_image_path = '';
-	$url_name = '';
-	if (isset($_GET['id']) && $_GET['id']) {
-		$_POST['search'] = $_GET['id'];
-	}
-	
-	$result = array();
-	if (isset($_POST['search']) && $_POST['search']) {
-		$meter = new _Meter();
-		$result = $meter->getMeterClient($_POST['search']);
-		
-		$uploaded_image_path = DIR_UPLOAD . $result['auto_id'] . ".jpg";
-		if (file_exists($uploaded_image_path)) {
-			$url_name = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/" . $result['auto_id'] . ".jpg";
-		} else $uploaded_image_path = '';
-	}
-	
-	function date_thai_format($strDate) {
-		$strYear = date("Y", strtotime($strDate)) + 543;
-		$strMonth = date("n", strtotime($strDate));
-		$strDay = date("j", strtotime($strDate));
-		
-		$strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
-		$strMonthThai = $strMonthCut[$strMonth];
-		return "$strDay $strMonthThai $strYear";
-	}
+<?php
+
+@require('config.php');
+@require('class/meter.php');
+
+$uploaded_image_path = '';
+$url_name = '';
+if (isset($_GET['id']) && $_GET['id']) {
+    $_POST['search'] = $_GET['id'];
+}
+
+$result = array();
+if (isset($_POST['search']) && $_POST['search']) {
+    $meter = new _Meter();
+    $result = $meter->getMeterClient($_POST['search']);
+
+    if (!isset($result['auto_id']) || !$result['auto_id']) {
+        die('ไม่พบข้อมูล');
+    }
+
+    $uploaded_image_path = DIR_UPLOAD . $result['auto_id'] . ".jpg";
+    if (file_exists($uploaded_image_path)) {
+        $url_name = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/" . $result['auto_id'] . ".jpg";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
