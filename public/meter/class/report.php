@@ -69,6 +69,57 @@ ORDER BY jt.`id` ASC";
         return $rows;
     }
 
+    public function getMetersP3($startDate, $endDate, $filter = []): array {
+        $rows = [];
+
+        try {
+            $startDate = $this->mysqli->real_escape_string($startDate);
+            $endDate = $this->mysqli->real_escape_string($endDate);
+
+            $sql_command = "
+SELECT 
+       ms.`meter_staff_name`, 
+       m.`number1` AS `pea_no`,
+       m.`fname` AS `customer_name`,
+       m.`date_payment`,
+       m.`date_install`,
+       m.`meter_accept_date`,
+       m.`meter_store_date`,
+       m.`account_receive_date`,
+       m.`account_reject_date`,
+       m.`account_accept_date`
+FROM `meter` m
+LEFT JOIN meter_staff ms ON 
+    m.`recipient_id` = ms.`meter_staff_id`
+WHERE m.`date_payment` BETWEEN '$startDate' AND '$endDate'";
+
+            if ($filter && is_array($filter)) {
+                $implode = [];
+                foreach ($filter as $key => $value) {
+                    $value = $this->mysqli->real_escape_string($value);
+                    $key = $this->mysqli->real_escape_string($key);
+                    $implode[] = "`$key` = '$value'";
+                }
+                if ($implode) {
+                    $sql_command .= " AND " . implode(' AND ', $implode);
+                }
+            }
+
+            $sql_command .= " ORDER BY m.`date_payment` ASC";
+
+            $query = $this->mysqli->query($sql_command);
+            if (!$query) {
+                throw new Exception($this->mysqli->error);
+            }
+            $rows = $query->fetch_all(MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            $_SESSION['error'][] = "log/class." . get_class() . "." . __FUNCTION__ . ".txt<br>" . $e->getMessage();
+            file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
+        }
+
+        return $rows;
+    }
+
     public function getMetaData($filter = null): array
     {
         $rows = [];
