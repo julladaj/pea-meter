@@ -33,12 +33,13 @@ class p3 extends TCPDF
     //Page header
     public function Header()
     {
+        $pea_name = ACCOUNT_NAME;
         $THSarabunBold = TCPDF_FONTS::addTTFfont('fonts/THSarabunNew Bold.ttf', 'TrueTypeUnicode', '', 96);
         $this->SetFont($THSarabunBold, '', 11, '', true);
 
         $html = <<<EOD
-<br><div style="width: 100%;"><b>กระบวนงาน P3 : กระบวนงานการขอใช้ไฟฟ้า การไฟฟ้าส่วนภูมิภาคสาขาอำเภอป่าซาง</b><br></div>
-<table border="1" nobr="true" style="border: 1px solid;">
+<br><div style="width: 100%;"><b>กระบวนงาน P3 : กระบวนงานการขอใช้ไฟฟ้า {$pea_name}</b><br></div>
+<table border="1" nobr="true">
 <thead>
     <tr>
 		<td rowspan="2" style="text-align: center; width: 3%; border: 1px solid #333;">ที่</td>
