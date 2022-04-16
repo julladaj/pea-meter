@@ -154,7 +154,7 @@ foreach ($result as $row) {
 </tr>';
 }
 
-$html .= '<tr><td colspan="' . $job_type_name_colspan . '" style="text-align: center; border: 1px solid black; background-color: yellow;">ลักษณะงาน พื้นที่พิเศษ</td></tr>';
+$html .= '<tr><td colspan="' . $job_type_name_colspan . '" style="text-align: center; border: 1px solid black;">ลักษณะงาน พื้นที่พิเศษ</td></tr>';
 
 foreach ($result as $row) {
     $html .= '
