@@ -152,7 +152,8 @@ foreach ($result['items'] as $item) {
         $price = $item['installation_price'] ?? 0;
     }
 
-    $highlight = $is_special_ford_no ? 'background-color: yellow;' : '';
+//    $highlight = $is_special_ford_no ? 'background-color: yellow;' : '';
+    $highlight = '';
 
     $formatted_price = number_format($price, 0);
     $total += $price;
@@ -183,7 +184,7 @@ $formatted_total = number_format($total, 0);
 $html .= <<<EOD
     <tr style="font-weight: bold;" nobr="true">
         <td colspan="3" style="text-align: right; border: 1px solid black;">รวมเงินทั้งหมด</td>
-        <td colspan="14" style="text-align: center; border: 1px solid black; background-color: yellow;">{$totalThaiBaht}</td>
+        <td colspan="14" style="text-align: center; border: 1px solid black;">{$totalThaiBaht}</td>
         <td colspan="2" style="text-align: right; border: 1px solid black;">{$formatted_total}</td>
         <td colspan="6" style="text-align: left; border: 1px solid black;">บาท</td>
     </tr>

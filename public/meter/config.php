@@ -41,9 +41,9 @@ switch ($_SERVER['SERVER_NAME']) {
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอหางดง');
         define('ACCOUNT_NO', '538-1-11485-0');
-        define('PEA_PHONE', 'โทร 053-441-776 , 053-106-510');
-        define('PEA_METER_PHONE', '053-106-703');
-        define('PEA_EXTRA_PHONE', '053-106-510');
+        define('PEA_PHONE', 'โทร 0-5344-1776');
+        define('PEA_METER_PHONE', '0-5310-6703');
+        define('PEA_EXTRA_PHONE', '0-5344-1776');
         break;
     case 'peapas23.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peapas23');
@@ -57,6 +57,19 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_PHONE', 'โทร 053-520-636');
         define('PEA_METER_PHONE', '053-520-636');
         define('PEA_EXTRA_PHONE', '053-555-381');
+        break;
+    case 'peadst01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peadst01');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอดอยสะเก็ด จังหวัดเชียงใหม่');
+        define('DIR_NAME', 'PEADST01');
+        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEADST01/');
+        define('LINE_TOKEN', 'ryMweSHqxun4y3spS6oVL4tcx21X0oT5NC4KhaXfH9j');
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค สาขาอำเภอดอยสะเก็ด');
+        define('ACCOUNT_NO', '983-4-94181-1');
+        define('PEA_PHONE', 'โทร 053-104-842');
+        define('PEA_METER_PHONE', '053-104-840 ต่อ 14814');
+        define('PEA_EXTRA_PHONE', '053-104-842');
         break;
     default:
         define('DB_DATABASE', 'chai-van_pea');
@@ -72,8 +85,8 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_EXTRA_PHONE', '053-896020');
 }
 
-//define('DIR_ROOT', '/var/www/pea-meter.com/public_html/meter/');
-define('DIR_ROOT', '/Users/devilpooh/www/pea-meter.test.com/public/meter/');
+define('DIR_ROOT', '/var/www/pea-meter.com/public_html/meter/');
+//define('DIR_ROOT', '/Users/devilpooh/www/pea-meter.test.com/public/meter/');
 define('ENABLE_SLIPT_UPLOAD', 1);
 
 $thai_month = array(
