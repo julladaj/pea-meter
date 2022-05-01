@@ -299,7 +299,7 @@ EOD;
 $pdf->writeHTMLCell(40, '', $x, $y, $html, 0, 1, 0, true, 'J', true);
 
 $x = 110;
-$y = 235;
+$y = 225;
 $html = <<<EOD
 <b style="font-size: 16px; font-weight: 900;">QR CODE ติดตามสถานะคำร้อง</b>
 EOD;
@@ -315,7 +315,14 @@ $style = array(
     'module_width' => 1, // width of a single module in points
     'module_height' => 1 // height of a single module in points
 );
-$pdf->write2DBarcode($actual_link, 'QRCODE,L', 115, 242, 30, 30, $style, 'N');
+$pdf->write2DBarcode($actual_link, 'QRCODE,L', 115, 232, 30, 30, $style, 'N');
+
+$x = 110;
+$y = 265;
+$html = <<<EOD
+<a href="$actual_link">$actual_link</a>
+EOD;
+$pdf->writeHTMLCell(80, '', $x, $y, $html, 0, 1, 0, true, 'J', true);
 
 //Close and output PDF document
 $pdf->Output('meter_form.pdf', 'I');
