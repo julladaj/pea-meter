@@ -19,10 +19,10 @@ switch ($_POST['form_name']) {
         header('location: /pdf/replacement_report.php?start=' . $start_date . '&end=' . $end_date . '&enum=2' . $recipient);
         break;
     case 'replacement_report_monthly':
-        header('location: /pdf/replacement_report_monthly.php?date=' . $start_date . '&enum=1' . $recipient);
+        header('location: /pdf/replacement_report_monthly.php?start=' . $start_date . '&end=' . $end_date . '&enum=1' . $recipient);
         break;
     case 'replacement_report_monthly2':
-        header('location: /pdf/replacement_report_monthly.php?date=' . $start_date . '&enum=2' . $recipient);
+        header('location: /pdf/replacement_report_monthly.php?start=' . $start_date . '&end=' . $end_date . '&enum=2' . $recipient);
         break;
     case 'p3_report':
         header('location: /pdf/p3.php?start=' . $start_date . '&end=' . $end_date);

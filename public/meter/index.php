@@ -237,7 +237,7 @@ if (isset($_POST['search']) && $_POST['search']) {
 												<progress value="0" max="100" class="form-control"></progress>
 												<span class="form-text text-muted">รองรับไฟล์นามสกุล: png, jpg.</span>
 												<span class="form-text text-success" id="upload_status"></span>
-												<span class="form-text" id="upload_url"><?php echo ($uploaded_image_path)? '<a href="' . $url_name . '" target="_BLANK">' . $url_name . '</a>' : '';?></span>
+												<span class="form-text" id="upload_url"><?php echo ($uploaded_image_path)? '<a href="' . $url_name . '?t=' . time() . '" target="_BLANK">' . $url_name . '</a>' : '';?></span>
 											</div>
 										</div>
 <?php } ?>
@@ -582,8 +582,12 @@ if (isset($_POST['search']) && $_POST['search']) {
 						processData: false,  // tell jQuery not to process the data
 						contentType: false,  // tell jQuery not to set contentType
 						success: function(data) {
-							$('#silpt_display').css('background-image', 'url(' + data.url + ')');
-							alert("อัพโหลดสำเร็จ หลักฐานได้เข้าสู่ระบบแล้วเรียบร้อย");
+                            if (data) {
+                                $('#silpt_display').css('background-image', 'url(' + data.url + ')');
+                                alert("อัพโหลดสำเร็จ หลักฐานได้เข้าสู่ระบบแล้วเรียบร้อย");
+                            } else {
+                                alert("ไม่สามารถดำเนินการได้ โปรดติดต่อเจ้าหน้าที่เพื่อดำเนินการ");
+                            }
 						}
 					});
 				});

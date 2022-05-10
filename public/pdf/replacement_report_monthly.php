@@ -1,6 +1,6 @@
 <?php
 
-if (!isset($_GET['date'])) {
+if (!isset($_GET['start'])) {
     die('');
 }
 
@@ -18,7 +18,8 @@ $report = new report();
 $enum = $_GET['enum'] ?? '1';
 
 $filter = [
-    'date' => $_GET['date'],
+    'date_workorder_start' => $_GET['start'],
+    'date_workorder_end' => $_GET['end'],
     'job_type_enum' => $enum
 ];
 if (isset($_GET['recipient_id']) && $_GET['recipient_id']) {
@@ -38,16 +39,23 @@ $contract_no = $meta_data['contract_no'] ?? '';
 $contractor_name = $meta_data['contractor_name'] ?? '';
 $special_ford_no = $meta_data['ford_no'] ?? [];
 
-$time = strtotime($_GET['date']);
-$first_day_of_month = date("Y-m-1", $time);
-$last_day_of_month = date("Y-m-t", $time);
-$last_day = (int)date("t", $time);
+//$time = strtotime($_GET['start']);
+//$first_day_of_month = date("Y-m-1", $time);
+//$last_day_of_month = date("Y-m-t", $time);
+//$last_day = (int)date("t", $time);
+
+$start_date = date("Y-m-d", strtotime($filter['date_workorder_start']));
+$end_date = date("Y-m-d", strtotime($filter['date_workorder_end']));
+
+$datediff = strtotime($filter['date_workorder_end']) - strtotime($filter['date_workorder_start']);
+$daydiff = round($datediff / (60 * 60 * 24));
+$daydiff = ($daydiff > 31) ? 31 : $daydiff + 1;
 
 $total_colspan = 31 + 16; // days + extra columns
-$job_type_name_colspan = 31 - $last_day + 8;
+$job_type_name_colspan = 31 - $daydiff + 8;
 
-$thaiStartDate = date_thai_format($first_day_of_month);
-$thaiEndDate = date_thai_format($last_day_of_month);
+$thaiStartDate = date_thai_format($start_date);
+$thaiEndDate = date_thai_format($end_date);
 
 @require('tcpdf.php');
 
@@ -114,7 +122,7 @@ $html = <<<EOD
 	</tr>
 	<tr>
 		<td colspan="{$job_type_name_colspan}" style="text-align: center; border: 1px solid black;">รายการ</td>
-		<td colspan="{$last_day}" style="text-align: center; border: 1px solid black;">วันที่ออกใบสั่งจ้าง ประจำเดือน<u>&nbsp;&nbsp;&nbsp;&nbsp;<b>{$thaiStartDate} - {$thaiEndDate}</b>&nbsp;&nbsp;&nbsp;&nbsp;</u></td>
+		<td colspan="{$daydiff}" style="text-align: center; border: 1px solid black;">วันที่ออกใบสั่งจ้าง ประจำเดือน<u>&nbsp;&nbsp;&nbsp;&nbsp;<b>{$thaiStartDate} - {$thaiEndDate}</b>&nbsp;&nbsp;&nbsp;&nbsp;</u></td>
 		<td rowspan="2" colspan="2" style="text-align: center; border: 1px solid black;">รวม<br>(เครื่อง)</td>
 		<td rowspan="2" colspan="3" style="text-align: center; border: 1px solid black;">ราคา/หน่วย<br>(บาท)</td>
 		<td rowspan="2" colspan="3" style="text-align: center; border: 1px solid black;">เป็นเงิน<br>(บาท)</td>
@@ -122,8 +130,15 @@ $html = <<<EOD
 	<tr>
 		<td colspan="{$job_type_name_colspan}" style="text-align: center; border: 1px solid black; background-color: yellow;">ลักษณะงาน ปกติ</td>
 EOD;
-for ($i = 1; $i <= $last_day; $i++) {
-    $html .= '<td style="text-align: center; border: 1px solid black;">' . $i . '</td>';
+for ($i = 0; $i <= 30; $i++) {
+    $time = strtotime($start_date . "+$i day");
+    $current_date = date("Y-m-d", $time);
+
+    $html .= '<td style="text-align: center; border: 1px solid black;">' . date("d", $time) . '</td>';
+
+    if ($current_date === $end_date) {
+        break;
+    }
 }
 $html .= <<<EOD
 	</tr>
@@ -139,7 +154,10 @@ foreach ($result as $row) {
 <tr>
 <td colspan="' . $job_type_name_colspan . '" style="text-align: left; border: 1px solid black;">' . $row['job_type_name'] . '</td>';
     $row_sum = 0;
-    for ($i = 1; $i <= $last_day; $i++) {
+    for ($i = 0; $i <= 30; $i++) {
+        $time = strtotime($start_date . "+$i day");
+        $current_date = date("Y-m-d", $time);
+
         $meter_count = $row['d_' . $i] ?? 0;
         $html .= '<td style="text-align: center; border: 1px solid black;">' . ($meter_count ?: '') . '</td>';
         $row_sum += $meter_count;
@@ -147,6 +165,10 @@ foreach ($result as $row) {
         $key_count = 'count_' . $i;
         $summarize[$key_count] = isset($summarize[$key_count]) ? $summarize[$key_count] + $meter_count : $meter_count;
         $grand_total_price += ($row['price'] * $meter_count);
+
+        if ($current_date === $end_date) {
+            break;
+        }
     }
     $html .= '<td colspan="2" style="text-align: right; border: 1px solid black;">' . $row_sum . '</td>
 <td colspan="3" style="text-align: right; border: 1px solid black;">' . number_format($row['price'], 0) . '</td>
@@ -161,7 +183,10 @@ foreach ($result as $row) {
 <tr>
 <td colspan="' . $job_type_name_colspan . '" style="text-align: left; border: 1px solid black;">' . $row['job_type_name'] . '</td>';
     $row_sum = 0;
-    for ($i = 1; $i <= $last_day; $i++) {
+    for ($i = 0; $i <= 30; $i++) {
+        $time = strtotime($start_date . "+$i day");
+        $current_date = date("Y-m-d", $time);
+
         $meter_count = $row['d_s_' . $i] ?? 0;
         $html .= '<td style="text-align: center; border: 1px solid black;">' . ($meter_count ?: '') . '</td>';
         $row_sum += $meter_count;
@@ -169,6 +194,10 @@ foreach ($result as $row) {
         $key_count = 'count_' . $i;
         $summarize[$key_count] = isset($summarize[$key_count]) ? $summarize[$key_count] + $meter_count : $meter_count;
         $grand_total_price += ($row['price_special'] * $meter_count);
+
+        if ($current_date === $end_date) {
+            break;
+        }
     }
     $html .= '<td colspan="2" style="text-align: right; border: 1px solid black;">' . $row_sum . '</td>
 <td colspan="3" style="text-align: right; border: 1px solid black;">' . number_format($row['price_special'], 0) . '</td>
@@ -180,10 +209,17 @@ $html .= '<tr style="font-weight: bold;">
 		<td colspan="' . $job_type_name_colspan . '" style="text-align: center; border: 1px solid black;">รายการรวม</td>';
 
 $grand_total_meter_count = 0;
-for ($i = 1; $i <= $last_day; $i++) {
+for ($i = 0; $i <= 30; $i++) {
+    $time = strtotime($start_date . "+$i day");
+    $current_date = date("Y-m-d", $time);
+
     $meter_count = $summarize['count_' . $i] ?? 0;
     $grand_total_meter_count += $meter_count;
     $html .= '<td style="text-align: center; border: 1px solid black;">' . number_format($meter_count, 0) . '</td>';
+
+    if ($current_date === $end_date) {
+        break;
+    }
 }
 
 $grand_total_meter_count_formatted = number_format($grand_total_meter_count, 0);

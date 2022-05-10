@@ -85,7 +85,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 $THSarabunNew = TCPDF_FONTS::addTTFfont('fonts/THSarabunNew.ttf', 'TrueTypeUnicode', '', 96);
 $THSarabunBold = TCPDF_FONTS::addTTFfont('fonts/THSarabunNew Bold.ttf', 'TrueTypeUnicode', '', 96);
-$pdf->SetFont($THSarabunNew, '', 14, '', true);
+$pdf->SetFont($THSarabunNew, '', 10, '', true);
 
 $pdf->AddPage();
 
@@ -115,17 +115,17 @@ $html = <<<EOD
 		<td rowspan="2" colspan="2" style="text-align: center; border: 1px solid black;">ใบสั่งจ้าง<br>ประจำวันที่</td>
 		<td rowspan="2" colspan="2" style="text-align: center; border: 1px solid black;">หมายเลข<br>ผู้ใช้ไฟฟ้า</td>
 		<td rowspan="2" colspan="3" style="text-align: center; border: 1px solid black;">ชื่อผู้ใช้ไฟฟ้า</td>
-		<td colspan="3" style="text-align: center; border: 1px solid black;">หมายเลขฟอร์ด</td>
-		<td colspan="4" style="text-align: center; border: 1px solid black;">หมายเลขมิเตอร์</td>
+		<td colspan="4" style="text-align: center; border: 1px solid black;">หมายเลขฟอร์ด</td>
+		<td colspan="3" style="text-align: center; border: 1px solid black;">หมายเลขมิเตอร์</td>
 		<td colspan="4" style="text-align: center; border: 1px solid black;">รายละเอียดงาน<br>ที่ให้ดำเนินการ</td>
 		<td rowspan="2" colspan="2" style="text-align: center; border: 1px solid black;">วันครบกำหนด<br>ส่งงาน</td>
 		<td rowspan="2" colspan="2" style="text-align: center; border: 1px solid black;">วันที่<br>ส่งมอบงาน</td>
 		<td rowspan="2" colspan="2" style="text-align: center; border: 1px solid black;">หมายเหตุ</td>
 	</tr>
 	<tr>
-	    <td style="text-align: center; border: 1px solid black;">สาย</td>
+	    <td colspan="2" style="text-align: center; border: 1px solid black;">สาย</td>
 	    <td colspan="2" style="text-align: center; border: 1px solid black;">หมายเลข</td>
-	    <td colspan="2" style="text-align: center; border: 1px solid black;">ขนาดมิเตอร์</td>
+	    <td style="text-align: center; border: 1px solid black;">ขนาด<br>มิเตอร์</td>
 	    <td colspan="2" style="text-align: center; border: 1px solid black;">PEA</td>
 	    <td colspan="3" style="text-align: center; border: 1px solid black;">ลักษณะงาน</td>
 	    <td style="text-align: center; border: 1px solid black;">ค่าจ้าง</td>
@@ -164,9 +164,9 @@ foreach ($result['items'] as $item) {
     <td colspan="2" style="text-align: center; border: 1px solid black;">{$thaiDateWorkOrder}</td>
     <td colspan="2" style="text-align: center; border: 1px solid black;">{$item['number1']}</td>
     <td colspan="3" style="text-align: left; border: 1px solid black;">{$item['fname']}</td>
-    <td style="text-align: center; border: 1px solid black; {$highlight}">{$fort_cable}</td>
+    <td colspan="2" style="text-align: center; border: 1px solid black; {$highlight}">{$fort_cable}</td>
     <td colspan="2" style="text-align: center; border: 1px solid black;">{$fort_no}</td>
-    <td colspan="2" style="text-align: center; border: 1px solid black;">{$item['meter_size_detail']}</td>
+    <td style="text-align: center; border: 1px solid black;">{$item['meter_size_detail']}</td>
     <td colspan="2" style="text-align: center; border: 1px solid black;">{$meter_number}</td>
     <td colspan="3" style="text-align: center; border: 1px solid black;">{$item['job_type_name']}</td>
     <td style="text-align: right; border: 1px solid black; {$highlight}">{$formatted_price}</td>

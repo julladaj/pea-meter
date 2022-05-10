@@ -7,15 +7,11 @@ class report extends Database
         $rows = [];
 
         try {
-            if (!isset($filter['date'])) {
+            if (!isset($filter['date_workorder_start'])) {
                 return [];
             }
-
-            $time = strtotime($filter['date']);
-            $first_day_of_month = date("Y-m-1", $time);
-            $first_day = 1;
-            $last_day_of_month = date("Y-m-t", $time);
-            $last_day = (int)date("t", $time);
+            $start_date = date("Y-m-d", strtotime($filter['date_workorder_start']));
+            $end_date = date("Y-m-d", strtotime($filter['date_workorder_end']));
 
             $special_ford_no = $this->getMetaData('ford_no');
             $special_ford_no = $special_ford_no['ford_no'] ?? [];
@@ -23,16 +19,23 @@ class report extends Database
 
             $job_type_enum = $filter['job_type_enum'] ?? '1';
 
+            $sql_command = "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));";
+            $this->mysqli->query($sql_command);
+
             $sql_command = "
 SELECT 
     jt.`enum`,
     jt.`description` AS `job_type_name`,";
 
-            for ($i = $first_day; $i <= $last_day; $i++) {
+            for ($i = 0; $i <= 30; $i++) {
+                $current_date = date("Y-m-d", strtotime($start_date . "+$i day"));
                 $sql_command .= "
-CASE WHEN DAY(m.`date_workorder`) = '$i' THEN COUNT(m.`auto_id`) ELSE 0 END AS d_$i,
-CASE WHEN DAY(m.`date_workorder`) = '$i' AND m.`fort_cable` IN ($special_ford_no_list) THEN COUNT(m.`auto_id`) ELSE 0 END AS d_s_$i,
+CASE WHEN DATE(m.`date_workorder`) = '$current_date' THEN COUNT(m.`auto_id`) ELSE 0 END AS d_$i,
+CASE WHEN DATE(m.`date_workorder`) = '$current_date' AND m.`fort_cable` IN ($special_ford_no_list) THEN COUNT(m.`auto_id`) ELSE 0 END AS d_s_$i,
 ";
+                if ($current_date === $end_date) {
+                    break;
+                }
             }
 
             $sql_command .= "
@@ -41,7 +44,7 @@ CASE WHEN DAY(m.`date_workorder`) = '$i' AND m.`fort_cable` IN ($special_ford_no
     ip.`price_special`
 FROM `job_type` jt
 LEFT JOIN `meter` m
-	ON jt.`id` = m.`job_type_id` AND m.`date_workorder` BETWEEN '$first_day_of_month' AND '$last_day_of_month'";
+	ON jt.`id` = m.`job_type_id` AND DATE(m.`date_workorder`) BETWEEN '$start_date' AND '$end_date'";
 
             if (isset($filter['recipient_id']) && $filter['recipient_id']) {
                 $sql_command .= " AND m.`recipient_id` = " . $filter['recipient_id'];
@@ -54,6 +57,7 @@ WHERE jt.`enum` = '$job_type_enum'
 GROUP BY jt.`id`
 ORDER BY jt.`id` ASC";
 
+//            dd($sql_command);
             $query = $this->mysqli->query($sql_command);
             if (!$query) {
                 throw new Exception($this->mysqli->error);
