@@ -5,6 +5,11 @@
 
 $uploaded_image_path = '';
 $url_name = '';
+
+if (isset($_GET['hash']) && $_GET['hash']) {
+    $_GET['id'] = hex2bin($_GET['hash']);
+}
+
 if (isset($_GET['id']) && $_GET['id']) {
     $_POST['search'] = $_GET['id'];
 }
@@ -21,6 +26,8 @@ if (isset($_POST['search']) && $_POST['search']) {
     $uploaded_image_path = DIR_UPLOAD . $result['auto_id'] . ".jpg";
     if (file_exists($uploaded_image_path)) {
         $url_name = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/" . $result['auto_id'] . ".jpg";
+    } else {
+        $uploaded_image_path = '';
     }
 }
 ?>
