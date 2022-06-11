@@ -2,6 +2,7 @@
 
 @require('config.php');
 @require('class/meter.php');
+@require('class/MeterClient.php');
 
 $uploaded_image_path = '';
 $url_name = '';
@@ -15,6 +16,11 @@ if (isset($_GET['hash']) && $_GET['hash']) {
 
 if (isset($_GET['id']) && $_GET['id']) {
     $_POST['search'] = $_GET['id'];
+}
+
+if (isset($_POST['search'], $_POST['date_finish']) && $_POST['search'] && $_POST['date_finish']) {
+    $meterClient = new MeterClient();
+    $meterClient->updateMeterClient($_POST['search'], $_POST['date_finish']);
 }
 
 $result = array();
@@ -330,8 +336,15 @@ if (isset($_POST['search']) && $_POST['search']) {
                                     </div>
                                     <label for="example-search-input" class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label">วันที่ติดตั้ง แล้วเสร็จ:</label>
                                     <div class="col-xl-3 col-lg-4 col-md-10 col-sm-8">
-                                        <input type="text" class="form-control" name="date_finish" value="<?php
-                                        echo (isset($result['date_finish'])) ? $result['date_finish'] : ''; ?>"/>
+                                        <form method="post" action="">
+                                            <div class="input-group">
+                                                <input type="hidden" name="search" value="<?= $_POST['search'] ?? '' ?>"/>
+                                                <input type="date" class="form-control" name="date_finish" value="<?= $result['date_finish'] ?? '' ?>"/>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary" type="submit"><i class="la la-save" style="color:white;"></i> บันทึก</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
 
@@ -356,8 +369,7 @@ if (isset($_POST['search']) && $_POST['search']) {
                                             <progress value="0" max="100" class="form-control" id="meter_installation_progress"></progress>
                                             <span class="form-text text-muted">รองรับไฟล์นามสกุล: png, jpg.</span>
                                             <span class="form-text text-success" id="meter_installation_status"></span>
-                                            <span class="form-text" id="meter_installation_url"><?php
-                                                echo ($meter_install_image_path) ? '<a href="' . $meter_install_url . '?t=' . time() . '" target="_BLANK">' . $meter_install_url . '</a>' : ''; ?></span>
+                                            <span class="form-text" id="meter_installation_url"><?= ($meter_install_image_path) ? '<a href="' . $meter_install_url . '?t=' . time() . '" target="_BLANK">ดูภาพต้นฉบับ</a>' : '' ?> | <?= ($meter_install_image_path) ? '<a href="' . $meter_install_url . '?t=' . time() . '" download>ดาวน์โหลด</a>' : '' ?></span>
                                         </div>
                                     </div>
                                 <?php
