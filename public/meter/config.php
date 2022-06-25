@@ -83,12 +83,13 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_PHONE', 'โทร 053-555-381');
         define('PEA_METER_PHONE', '053-555-381');
         define('PEA_EXTRA_PHONE', '053-555-381');
-        case 'peangao37.pea-meter.com':
+        break;
+    case 'peangao37.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peangao37');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค สาขาอำเภองาว จังหวัดลำปาง');
         define('DIR_NAME', 'PEANGAO37');
         define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEANGAO37/');
-        define('LINE_TOKEN', '');
+        define('LINE_TOKEN', '4u7EaZUN36l5VcTpKpwazWUleAxd8QpfnQhfNIgsWrR');
         define('BANK_NAME', 'ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภองาว');
         define('ACCOUNT_NO', '013-292-505-883');
