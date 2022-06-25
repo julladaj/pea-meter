@@ -63,13 +63,38 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอดอยสะเก็ด จังหวัดเชียงใหม่');
         define('DIR_NAME', 'PEADST01');
         define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEADST01/');
-        define('LINE_TOKEN', 'ryMweSHqxun4y3spS6oVL4tcx21X0oT5NC4KhaXfH9j');
+        define('LINE_TOKEN', 'jv8IRjAkypZot2FdHbHxWT5PdwCaBDycqZ8Vs4kLu4Z');
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค สาขาอำเภอดอยสะเก็ด');
         define('ACCOUNT_NO', '983-4-94181-1');
         define('PEA_PHONE', 'โทร 053-104-842');
         define('PEA_METER_PHONE', '053-104-840 ต่อ 14814');
         define('PEA_EXTRA_PHONE', '053-104-842');
+        break;
+    case 'peanjd23.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peanjd23');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค สาขาย่อยตำบลนครเจดีย์ อำเภอป่าซาง จังหวัดลำพูน');
+        define('DIR_NAME', 'PEANJD23');
+        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEANJD23/');
+        define('LINE_TOKEN', 'ZVVfbrCI4CLfpOdD8tp0ONL0h4fpJkqgkPQFl90aE1I');
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอป่าซาง');
+        define('ACCOUNT_NO', '798-0-01616-5');
+        define('PEA_PHONE', 'โทร 053-555-381');
+        define('PEA_METER_PHONE', '053-555-381');
+        define('PEA_EXTRA_PHONE', '053-555-381');
+        case 'peangao37.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peangao37');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค สาขาอำเภองาว จังหวัดลำปาง');
+        define('DIR_NAME', 'PEANGAO37');
+        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEANGAO37/');
+        define('LINE_TOKEN', '');
+        define('BANK_NAME', 'ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภองาว');
+        define('ACCOUNT_NO', '013-292-505-883');
+        define('PEA_PHONE', 'โทร 054-261-542');
+        define('PEA_METER_PHONE', '054-261-542');
+        define('PEA_EXTRA_PHONE', '054-261-542');
         break;
     default:
         define('DB_DATABASE', 'chai-van_pea');

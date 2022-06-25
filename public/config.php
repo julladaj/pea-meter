@@ -22,6 +22,12 @@ switch ($_SERVER['SERVER_NAME']) {
     case 'peadst01.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peadst01');
         break;
+    case 'peanjd23.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peanjd23');
+        break;
+    case 'peangao37.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peangao37');
+        break;
 }
 
 session_start();
