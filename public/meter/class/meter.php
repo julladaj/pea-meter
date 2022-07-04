@@ -255,9 +255,9 @@ LEFT JOIN `installation_price` it ON
                 $meta_key = $this->mysqli->real_escape_string($meta_key);
                 if (is_string($meta_value)) {
                     $meta_value = $this->mysqli->real_escape_string($meta_value);
-                    if (!$meta_value) {
-                        continue;
-                    }
+//                    if (!$meta_value) {
+//                        continue;
+//                    }
                 }
                 $meta_value = json_encode($meta_value, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
 

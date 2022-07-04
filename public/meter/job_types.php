@@ -15,6 +15,9 @@ $meter = new _Meter();
 
 if (isset($_POST['price'], $_POST['meta_data']) && $_POST['price']) {
     $meter->postJobInstallationPrices($_POST['price']);
+    if (!isset($_POST['meta_data']['ford_no'])) {
+        $_POST['meta_data']['ford_no'] = [];
+    }
     $meter->updateMetaData($_POST['meta_data']);
     header('location: ' . $_SERVER['PHP_SELF']);
     exit;
