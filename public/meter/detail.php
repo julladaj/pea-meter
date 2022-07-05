@@ -490,26 +490,10 @@ if ($auto_id && $token) {
                                                value="<?= $data['number2'] ?? '' ?>" <?= ($isMeter) ? 'name="number2"' : 'readonly' ?>/>
                                     </div>
                                     <label
-                                            class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label">วันที่ติดตั้ง
-                                        แล้วเสร็จ:</label>
+                                            class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label">วันที่ติดตั้ง แล้วเสร็จ:</label>
                                     <div class="col-xl-3 col-lg-4 col-md-10 col-sm-8">
-                                        <div class="input-group">
-                                            <input type="date" class="form-control"
-                                                   value="<?= $data['date_finish'] ?? '' ?>" <?= ($isMeter) ? 'name="date_finish"' : '' ?>
-                                                   readonly/>
-                                            <?php
-                                            if ($isMeter) { ?>
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-warning clear-today-button" type="button"
-                                                            update_target="date_finish">ยกเลิก
-                                                    </button>
-                                                    <button class="btn btn-primary today-button" type="button"
-                                                            update_target="date_finish">วันนี้
-                                                    </button>
-                                                </div>
-                                                <?php
-                                            } ?>
-                                        </div>
+                                        <input type="date" class="form-control"
+                                               value="<?= $data['date_finish'] ?? '' ?>" <?= ($isMeter) ? 'name="date_finish"' : 'readonly' ?>/>
                                     </div>
                                     <label for="meter_send_check_date"
                                            class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label">ผมต/ผบต
