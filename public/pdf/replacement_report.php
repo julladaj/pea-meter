@@ -198,7 +198,7 @@ $html .= <<<EOD
                     <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
                     <td colspan="6" style="text-align: left;">ผู้สั่งจ้าง</td>
                     <td colspan="3" style="text-align: right;">(ลงชื่อ)</td>
-                    <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"><b>{$contractor_name}</b></td>
+                    <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
                     <td colspan="3" style="text-align: left;">ผู้รับจ้าง</td>
                 </tr>
                 <tr nobr="true">
@@ -206,7 +206,7 @@ $html .= <<<EOD
                     <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
                     <td colspan="6" style="text-align: left;">)</td>
                     <td colspan="3" style="text-align: right;">(</td>
-                    <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"></td>
+                    <td colspan="5" style="text-align: center; border-bottom: 0.5px dotted black;"><b>{$contractor_name}</b></td>
                     <td colspan="3" style="text-align: left;">)</td>
                 </tr>
                 <tr nobr="true">

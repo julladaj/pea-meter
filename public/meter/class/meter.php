@@ -546,10 +546,10 @@ LEFT JOIN `installation_price` ip
             if (count($implode)) {
                 $sql_command .= " ORDER BY " . implode(", ", $implode);
             } else {
-                $sql_command .= " ORDER BY m.`date_add` ASC, m.`auto_id` ASC";
+                $sql_command .= " ORDER BY m.`date_workorder` ASC, m.`auto_id` ASC";
             }
 
-            if (isset($filter['offset']) and isset($filter['limit'])) {
+            if (isset($filter['offset'], $filter['limit'])) {
                 $sql_command .= " LIMIT " . $filter['offset'] . ", " . $filter['limit'];
             }
 

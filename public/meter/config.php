@@ -102,11 +102,11 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอเกาะคา จังหวัดลำปาง');
         define('DIR_NAME', 'PEAKOK131');
         define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEAKOK131/');
-        define('LINE_TOKEN', '');
+        define('LINE_TOKEN', 'C55z757SMjwW0S4eqknQ5ogiCpvDGDEyVFheVXWg3kN');
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอเกาะคา');
         define('ACCOUNT_NO', '552-0-22593-1');
-        define('PEA_PHONE', 'โทร 054-284-807');
+        define('PEA_PHONE', 'โทร 054-284-807, 099-097-9008');
         define('PEA_METER_PHONE', '054-284-838');
         define('PEA_EXTRA_PHONE', '054-284-807');
         break;
