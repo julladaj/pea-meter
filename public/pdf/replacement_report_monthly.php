@@ -12,8 +12,10 @@ $user = new User();
 $result = $user->authentication();
 
 @require('../meter/class/report.php');
-
 $report = new report();
+
+@require('../meter/class/meter.php');
+$meter = new _Meter();
 
 $enum = $_GET['enum'] ?? '1';
 
@@ -24,11 +26,6 @@ $filter = [
 ];
 if (isset($_GET['recipient_id']) && $_GET['recipient_id']) {
     $filter['recipient_id'] = $_GET['recipient_id'];
-}
-
-$result = $report->getMonthlyReplacement($filter);
-if (!$result) {
-    die('ไม่พบข้อมูล');
 }
 
 $report_type = ($enum === '1') ? 'กรณีติดตั้งใหม่' : 'กรณีรื้อถอน ย้าย สับเปลี่ยน เพิ่ม/ลด ขนาดมิเตอร์';
@@ -149,59 +146,72 @@ EOD;
 $summarize = [];
 $grand_total_price = 0;
 
-foreach ($result as $row) {
+$job_types = $meter->getJobInstallationPrices(['enum' => $enum]);
+foreach ($job_types['items'] as $job_type) {
+    $results = $report->getMonthlyReportFromJobTypeId($job_type['id'], $start_date, $end_date);
     $html .= '
 <tr>
-<td colspan="' . $job_type_name_colspan . '" style="text-align: left; border: 1px solid black;">' . $row['job_type_name'] . '</td>';
+<td colspan="' . $job_type_name_colspan . '" style="text-align: left; border: 1px solid black;">' . $job_type['description'] . '</td>';
     $row_sum = 0;
     for ($i = 0; $i <= 30; $i++) {
         $time = strtotime($start_date . "+$i day");
         $current_date = date("Y-m-d", $time);
 
-        $meter_count = $row['d_' . $i] ?? 0;
+        $meter_count = 0;
+        foreach($results as $result) {
+            if ($result['date_workorder'] === $current_date) {
+                $meter_count = $result['count_auto_id'];
+            }
+        }
         $html .= '<td style="text-align: center; border: 1px solid black;">' . ($meter_count ?: '') . '</td>';
         $row_sum += $meter_count;
 
         $key_count = 'count_' . $i;
         $summarize[$key_count] = isset($summarize[$key_count]) ? $summarize[$key_count] + $meter_count : $meter_count;
-        $grand_total_price += ($row['price'] * $meter_count);
+        $grand_total_price += ($job_type['price'] * $meter_count);
 
         if ($current_date === $end_date) {
             break;
         }
     }
     $html .= '<td colspan="2" style="text-align: right; border: 1px solid black;">' . $row_sum . '</td>
-<td colspan="3" style="text-align: right; border: 1px solid black;">' . number_format($row['price'], 0) . '</td>
-<td colspan="3" style="text-align: right; border: 1px solid black;">' . number_format($row['price'] * $row_sum, 0) . '</td>
+<td colspan="3" style="text-align: right; border: 1px solid black;">' . number_format($job_type['price'], 0) . '</td>
+<td colspan="3" style="text-align: right; border: 1px solid black;">' . number_format($job_type['price'] * $row_sum, 0) . '</td>
 </tr>';
 }
 
 $html .= '<tr><td colspan="' . $job_type_name_colspan . '" style="text-align: center; border: 1px solid black;">ลักษณะงาน พื้นที่พิเศษ</td></tr>';
 
-foreach ($result as $row) {
+foreach ($job_types['items'] as $job_type) {
+    $results = $report->getMonthlyReportFromJobTypeId($job_type['id'], $start_date, $end_date, true);
     $html .= '
 <tr>
-<td colspan="' . $job_type_name_colspan . '" style="text-align: left; border: 1px solid black;">' . $row['job_type_name'] . '</td>';
+<td colspan="' . $job_type_name_colspan . '" style="text-align: left; border: 1px solid black;">' . $job_type['description'] . '</td>';
     $row_sum = 0;
     for ($i = 0; $i <= 30; $i++) {
         $time = strtotime($start_date . "+$i day");
         $current_date = date("Y-m-d", $time);
 
-        $meter_count = $row['d_s_' . $i] ?? 0;
+        $meter_count = 0;
+        foreach($results as $result) {
+            if ($result['date_workorder'] === $current_date) {
+                $meter_count = $result['count_auto_id'];
+            }
+        }
         $html .= '<td style="text-align: center; border: 1px solid black;">' . ($meter_count ?: '') . '</td>';
         $row_sum += $meter_count;
 
         $key_count = 'count_' . $i;
         $summarize[$key_count] = isset($summarize[$key_count]) ? $summarize[$key_count] + $meter_count : $meter_count;
-        $grand_total_price += ($row['price_special'] * $meter_count);
+        $grand_total_price += ($job_type['price'] * $meter_count);
 
         if ($current_date === $end_date) {
             break;
         }
     }
     $html .= '<td colspan="2" style="text-align: right; border: 1px solid black;">' . $row_sum . '</td>
-<td colspan="3" style="text-align: right; border: 1px solid black;">' . number_format($row['price_special'], 0) . '</td>
-<td colspan="3" style="text-align: right; border: 1px solid black;">' . number_format($row['price_special'] * $row_sum, 0) . '</td>
+<td colspan="3" style="text-align: right; border: 1px solid black;">' . number_format($job_type['price'], 0) . '</td>
+<td colspan="3" style="text-align: right; border: 1px solid black;">' . number_format($job_type['price'] * $row_sum, 0) . '</td>
 </tr>';
 }
 

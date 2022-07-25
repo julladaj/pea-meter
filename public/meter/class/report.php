@@ -162,4 +162,52 @@ WHERE m.`date_payment` BETWEEN '$startDate' AND '$endDate'";
 
         return $rows;
     }
+
+    public function getMonthlyReportFromJobTypeId($jobTypeId, $dateStart, $dateEnd, $checkFord = false): array
+    {
+        $rows = [];
+        try {
+            $sql_command = <<<SQL
+SELECT 
+    DATE(m.`date_workorder`) AS 'date_workorder',
+    COUNT(`auto_id`) AS count_auto_id
+FROM `meter` m
+LEFT JOIN `job_type` jt
+    ON jt.`id` = m.`job_type_id`
+WHERE
+    (DATE(m.`date_workorder`) BETWEEN '{$dateStart}' AND '{$dateEnd}') AND
+    jt.`id` = {$jobTypeId}
+SQL;
+
+            if ($checkFord) {
+                $special_ford_no = $this->getMetaData('ford_no');
+                $special_ford_no = $special_ford_no['ford_no'] ?? [];
+                $special_ford_no_list = "'" . implode("','", $special_ford_no) . "'";
+
+                $sql_command .= <<<SQL
+
+    AND m.`fort_cable` IN ({$special_ford_no_list})
+SQL;
+            }
+
+            $sql_command .= <<<SQL
+
+GROUP BY DATE(m.`date_workorder`)
+ORDER BY DATE(m.`date_workorder`)
+SQL;
+
+            $query = $this->mysqli->query($sql_command);
+            if (!$query) {
+                throw new Exception($this->mysqli->error);
+            }
+            while ($row = $query->fetch_array(MYSQLI_ASSOC)) {
+                $rows[] = $row;
+            }
+        } catch (Exception $e) {
+            $_SESSION['error'][] = "log/class." . get_class() . "." . __FUNCTION__ . ".txt<br>" . $e->getMessage();
+            file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
+        }
+
+        return $rows;
+    }
 }
