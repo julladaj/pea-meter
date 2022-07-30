@@ -143,8 +143,7 @@ foreach ($result['items'] as $item) {
     $fort_cable = $item['fort_cable'] ?? '';
     $fort_no = $item['fort_no'] ?? '';
 
-    // @TODO: need it later
-    $meter_number = '';
+    $meter_number = $item['number2'] ?? '';
 
     if ($is_special_ford_no = in_array($fort_cable, $special_ford_no, true)) {
         $price = $item['installation_price_special'] ?? 0;
