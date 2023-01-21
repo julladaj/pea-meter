@@ -7,6 +7,7 @@ define('DB_PASSWORD', 'u3a2epe7a');
 define('DIR_ROOT', '/var/www/pea-meter.com/public_html/meter/');
 //define('DIR_ROOT', '/Users/devilpooh/www/pea-meter.test.com/public/meter/');
 define('ENABLE_SLIPT_UPLOAD', 1);
+define('LINE_NOTIFICATION', 1);
 
 switch ($_SERVER['SERVER_NAME']) {
     case 'pea-meter.com':
