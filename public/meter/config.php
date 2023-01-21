@@ -9,6 +9,8 @@ define('DIR_ROOT', '/var/www/pea-meter.com/public_html/meter/');
 define('ENABLE_SLIPT_UPLOAD', 1);
 define('LINE_NOTIFICATION', 1);
 
+$REPORT_P3_LAST_ACCEPT_DATE = 'ผบห/ผบง รับงาน';
+
 switch ($_SERVER['SERVER_NAME']) {
     case 'pea-meter.com':
     case 'peachm02.pea-meter.com':
@@ -49,6 +51,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_PHONE', 'โทร 0-5344-1776');
         define('PEA_METER_PHONE', '0-5310-6703');
         define('PEA_EXTRA_PHONE', '0-5344-1776');
+        $REPORT_P3_LAST_ACCEPT_DATE =  'ผบค รับงาน';
         break;
     case 'peapas23.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peapas23');

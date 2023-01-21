@@ -29,10 +29,11 @@ if (!$result) {
 
 class p3 extends TCPDF
 {
-
     //Page header
     public function Header()
     {
+        global $REPORT_P3_LAST_ACCEPT_DATE;
+
         $pea_name = ACCOUNT_NAME;
         $THSarabunBold = TCPDF_FONTS::addTTFfont('fonts/THSarabunNew Bold.ttf', 'TrueTypeUnicode', '', 96);
         $this->SetFont($THSarabunBold, '', 11, '', true);
@@ -59,7 +60,7 @@ class p3 extends TCPDF
 	    <td style="text-align: center;">ผบป/ผบง ส่งงาน</td>
 	    <td style="text-align: center;">ผมต/ผบต รับงาน</td>
 	    <td style="text-align: center;">ผมต/ผบต ส่งงาน</td>
-	    <td style="text-align: center;">ผบห/ผบง รับงาน</td>
+	    <td style="text-align: center;">{$REPORT_P3_LAST_ACCEPT_DATE}</td>
 	</tr>
 </thead>
 </table>
