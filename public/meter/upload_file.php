@@ -8,6 +8,7 @@ $result = array();
 
 $id = $_POST['id'] ?? 0;
 $file_name = ($_POST['file_name'] ?? $id);
+$lineNotification = (int)($_POST['lineNotification'] ?? 1);
 
 if (isset($_FILES['file'])) {
     file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/log/log.txt', "Log Clear!\n");
@@ -67,7 +68,7 @@ if (isset($_FILES['file'])) {
 curl -X POST -H 'Authorization: Bearer {$line_token}' -F 'message={$message}' https://notify-api.line.me/api/notify
 EOD;
 
-        if (LINE_NOTIFICATION) {
+        if (LINE_NOTIFICATION && $lineNotification) {
             exec($command, $result);
         }
 

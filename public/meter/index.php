@@ -288,6 +288,72 @@ if (isset($_POST['search']) && $_POST['search']) {
                                     </div>
                                     <?php
                                 } ?>
+
+                                <div class="form-group row">
+                                    <?php
+                                    $filename = $result['auto_id'] . '_fee';
+                                    $feeImageUrl = '';
+                                    $uploaded_fee_image_path = DIR_UPLOAD . $filename . ".jpg";
+                                    if (file_exists($uploaded_fee_image_path)) {
+                                        $feeImageUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/" . $filename . ".jpg";
+                                    } else {
+                                        $uploaded_fee_image_path = '';
+                                    }
+                                    if ($uploaded_fee_image_path) {
+                                        ?>
+                                        <label for="example-search-input" class="col-xl-1 col-lg-2 col-md-2 col-form-label">รูปค่าธรรมเนียม:</label>
+                                        <div class="col-xl-3 col-lg-4 col-md-10">
+                                            <div class="kt-avatar kt-avatar--outline">
+                                                <div class="kt-avatar__holder" style="background-position: center; background-size: cover; background-image: url(<?php
+                                                echo ($uploaded_fee_image_path) ? $feeImageUrl : 'assets/media/users/default.jpg'; ?>)"></div>
+                                                <span class="form-text" id="upload_insurance_url">
+                                                <?php
+                                                if ($uploaded_fee_image_path) {
+                                                    ?>
+                                                    <a href="<?= $feeImageUrl ?>?t=<?= time() ?>" target="_BLANK">ดูภาพต้นฉบับ</a> | <a href="<?= $feeImageUrl ?>?t=<?= time() ?>" download="">ดาวน์โหลด</a>
+                                                    <?php
+                                                }
+                                                ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+
+
+                                    <?php
+                                    $filename = $result['auto_id'] . '_insurance';
+                                    $insuranceImageUrl = '';
+                                    $uploaded_insurance_image_path = DIR_UPLOAD . $filename . ".jpg";
+                                    if (file_exists($uploaded_insurance_image_path)) {
+                                        $insuranceImageUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/" . $filename . ".jpg";
+                                    } else {
+                                        $uploaded_insurance_image_path = '';
+                                    }
+                                    if ($uploaded_insurance_image_path) {
+                                        ?>
+                                        <label for="example-search-input" class="col-xl-1 col-lg-2 col-md-2 col-form-label">รูปค่าประกัน:</label>
+                                        <div class="col-xl-3 col-lg-4 col-md-10">
+                                            <div class="kt-avatar kt-avatar--outline">
+                                                <div class="kt-avatar__holder" style="background-position: center; background-size: cover; background-image: url(<?php
+                                                echo ($uploaded_insurance_image_path) ? $insuranceImageUrl : 'assets/media/users/default.jpg'; ?>)"></div>
+                                                <span class="form-text" id="upload_insurance_url">
+                                                <?php
+                                                if ($uploaded_insurance_image_path) {
+                                                    ?>
+                                                    <a href="<?= $insuranceImageUrl ?>?t=<?= time() ?>" target="_BLANK">ดูภาพต้นฉบับ</a> | <a href="<?= $insuranceImageUrl ?>?t=<?= time() ?>" download="">ดาวน์โหลด</a>
+                                                    <?php
+                                                }
+                                                ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label">สาเหตุ:</label>
                                     <div class="col-xl-11 col-lg-10 col-md-10 col-sm-8">
@@ -369,10 +435,11 @@ if (isset($_POST['search']) && $_POST['search']) {
                                             <progress value="0" max="100" class="form-control" id="meter_installation_progress"></progress>
                                             <span class="form-text text-muted">รองรับไฟล์นามสกุล: png, jpg.</span>
                                             <span class="form-text text-success" id="meter_installation_status"></span>
-                                            <span class="form-text" id="meter_installation_url"><?= ($meter_install_image_path) ? '<a href="' . $meter_install_url . '?t=' . time() . '" target="_BLANK">ดูภาพต้นฉบับ</a>' : '' ?> | <?= ($meter_install_image_path) ? '<a href="' . $meter_install_url . '?t=' . time() . '" download>ดาวน์โหลด</a>' : '' ?></span>
+                                            <span class="form-text" id="meter_installation_url"><?= ($meter_install_image_path) ? '<a href="' . $meter_install_url . '?t=' . time(
+                                                    ) . '" target="_BLANK">ดูภาพต้นฉบับ</a>' : '' ?> | <?= ($meter_install_image_path) ? '<a href="' . $meter_install_url . '?t=' . time() . '" download>ดาวน์โหลด</a>' : '' ?></span>
                                         </div>
                                     </div>
-                                <?php
+                                    <?php
                                 } ?>
                                 <?php
                             } else { ?>

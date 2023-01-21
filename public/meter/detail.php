@@ -562,7 +562,80 @@ if ($auto_id && $token) {
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <?php
+                                    if ($data['meter_qc_id'] === '2') {
+                                        $filename = $auto_id . '_fee';
+                                        $feeImageUrl = '';
+                                        $uploaded_fee_image_path = DIR_UPLOAD . $filename . ".jpg";
+                                        if (file_exists($uploaded_fee_image_path)) {
+                                            $feeImageUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/" . $filename . ".jpg";
+                                        } else {
+                                            $uploaded_fee_image_path = '';
+                                        }
+                                        ?>
+                                        <div class="col-xl-1 col-lg-3">
+                                            <div class="kt-avatar kt-avatar--outline">
+                                                <div class="kt-avatar__holder" id="upload_fee_display" style="background-position: center; background-size: cover; background-image: url(<?php
+                                                echo ($uploaded_fee_image_path) ? $feeImageUrl : 'assets/media/users/default.jpg'; ?>)"></div>
+                                                <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="ยกเลิกหลักฐานการชำระเงิน"><i class="fa fa-times"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-5 col-lg-3">
+                                            <input type="file" id="upload_fee" accept="image/jpg, image/jpeg, image/png"/><br>
+                                            <input type="button" value="แนบรูปค่าธรรมเนียม" id="button_upload_fee"/>
+                                            <progress id="upload_fee_progress" value="0" max="100" class="form-control"></progress>
+                                            <span class="form-text text-muted">รองรับไฟล์นามสกุล: png, jpg.</span>
+                                            <span class="form-text text-success"></span>
+                                            <span class="form-text" id="upload_fee_url">
+                                            <?php
+                                            if ($uploaded_fee_image_path) {
+                                            ?>
+                                                <a href="<?= $feeImageUrl ?>?t=<?= time() ?>" target="_BLANK">ดูภาพต้นฉบับ</a> | <a href="<?= $feeImageUrl ?>?t=<?= time() ?>" download="">ดาวน์โหลด</a>
+                                            <?php
+                                            }
+                                            ?>
+                                            </span>
+                                        </div>
 
+
+                                        <?php
+                                        $filename = $auto_id . '_insurance';
+                                        $insuranceImageUrl = '';
+                                        $uploaded_Insurance_image_path = DIR_UPLOAD . $filename . ".jpg";
+                                        if (file_exists($uploaded_Insurance_image_path)) {
+                                            $insuranceImageUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/" . $filename . ".jpg";
+                                        } else {
+                                            $uploaded_Insurance_image_path = '';
+                                        }
+                                        ?>
+                                        <div class="col-xl-1 col-lg-3">
+                                            <div class="kt-avatar kt-avatar--outline">
+                                                <div class="kt-avatar__holder" id="upload_insurance_display" style="background-position: center; background-size: cover; background-image: url(<?php
+                                                echo ($uploaded_Insurance_image_path) ? $insuranceImageUrl : 'assets/media/users/default.jpg'; ?>)"></div>
+                                                <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="ยกเลิกหลักฐานการชำระเงิน"><i class="fa fa-times"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-5 col-lg-3">
+                                            <input type="file" id="upload_insurance" accept="image/jpg, image/jpeg, image/png"/><br>
+                                            <input type="button" value="แนบรูปค่าประกัน" id="button_upload_insurance"/>
+                                            <progress id="upload_insurance_progress" value="0" max="100" class="form-control"></progress>
+                                            <span class="form-text text-muted">รองรับไฟล์นามสกุล: png, jpg.</span>
+                                            <span class="form-text text-success"></span>
+                                            <span class="form-text" id="upload_insurance_url">
+                                            <?php
+                                            if ($uploaded_Insurance_image_path) {
+                                            ?>
+                                                <a href="<?= $insuranceImageUrl ?>?t=<?= time() ?>" target="_BLANK">ดูภาพต้นฉบับ</a> | <a href="<?= $insuranceImageUrl ?>?t=<?= time() ?>" download="">ดาวน์โหลด</a>
+                                            <?php
+                                            }
+                                            ?>
+                                            </span>
+                                        </div>
+
+                                        <?php
+                                    } ?>
+                                </div>
 
                                 <hr/>
                                 <div class="form-group row">
@@ -788,6 +861,90 @@ if ($auto_id && $token) {
             const update_target = $(this).attr('update_target');
             const date_finish = $('input[name="' + update_target + '"]');
             date_finish.val('');
+        });
+
+        $("#button_upload_fee").click(function () {
+            event.preventDefault();
+
+            var formData = new FormData();
+            formData.append('file', $('#upload_fee')[0].files[0]);
+            formData.append('id', '<?= $auto_id ?>');
+            formData.append('file_name', '<?= ($auto_id . '_fee') ?>');
+            formData.append('lineNotification', 0);
+
+            $.ajax({
+                xhr: function () {
+                    var myXhr = $.ajaxSettings.xhr();
+                    if (myXhr.upload) {
+                        // For handling the progress of the upload
+                        myXhr.upload.addEventListener('progress', function (e) {
+                            if (e.lengthComputable) {
+                                $('#upload_fee_progress').attr({
+                                    value: e.loaded,
+                                    max: e.total,
+                                });
+                            }
+                        }, false);
+                    }
+                    return myXhr;
+                },
+                type: 'POST',
+                url: "/meter/upload_file.php",
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    if (data) {
+                        $('#upload_fee_display').css('background-image', 'url(' + data.url + ')');
+                        $('#upload_fee_url').html('<a href="' + data.url + '" target="_BLANK">ดูภาพต้นฉบับ</a> | <a href="' + data.url + '" download="">ดาวน์โหลด</a>');
+                        alert("อัพโหลดสำเร็จ หลักฐานได้เข้าสู่ระบบแล้วเรียบร้อย");
+                    } else {
+                        alert("ไม่สามารถดำเนินการได้ โปรดติดต่อเจ้าหน้าที่เพื่อดำเนินการ");
+                    }
+                }
+            });
+        });
+
+        $("#button_upload_insurance").click(function () {
+            event.preventDefault();
+
+            var formData = new FormData();
+            formData.append('file', $('#upload_insurance')[0].files[0]);
+            formData.append('id', '<?= $auto_id ?>');
+            formData.append('file_name', '<?= ($auto_id . '_insurance') ?>');
+            formData.append('lineNotification', 0);
+
+            $.ajax({
+                xhr: function () {
+                    var myXhr = $.ajaxSettings.xhr();
+                    if (myXhr.upload) {
+                        // For handling the progress of the upload
+                        myXhr.upload.addEventListener('progress', function (e) {
+                            if (e.lengthComputable) {
+                                $('#upload_insurance_progress').attr({
+                                    value: e.loaded,
+                                    max: e.total,
+                                });
+                            }
+                        }, false);
+                    }
+                    return myXhr;
+                },
+                type: 'POST',
+                url: "/meter/upload_file.php",
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    if (data) {
+                        $('#upload_insurance_display').css('background-image', 'url(' + data.url + ')');
+                        $('#upload_insurance_url').html('<a href="' + data.url + '" target="_BLANK">ดูภาพต้นฉบับ</a> | <a href="' + data.url + '" download="">ดาวน์โหลด</a>');
+                        alert("อัพโหลดสำเร็จ หลักฐานได้เข้าสู่ระบบแล้วเรียบร้อย");
+                    } else {
+                        alert("ไม่สามารถดำเนินการได้ โปรดติดต่อเจ้าหน้าที่เพื่อดำเนินการ");
+                    }
+                }
+            });
         });
     });
 
