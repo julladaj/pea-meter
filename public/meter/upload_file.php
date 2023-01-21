@@ -6,7 +6,8 @@ $result = array();
 
 //file_put_contents( $_SERVER['DOCUMENT_ROOT'] . '/log/log.txt', print_r($_REQUEST, true));
 
-$id = (isset($_POST['id'])) ? $_POST['id'] : 0;
+$id = $_POST['id'] ?? 0;
+$file_name = ($_POST['file_name'] ?? $id);
 
 if (isset($_FILES['file'])) {
     file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/log/log.txt', "Log Clear!\n");
@@ -16,8 +17,8 @@ if (isset($_FILES['file'])) {
     if ($image_extension !== 'png') {
         $image_extension = 'jpg';
     }
-    $target_path = DIR_UPLOAD . $id . "." . $image_extension;
-    $url_name = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/$id.jpg?t=" . time();
+    $target_path = DIR_UPLOAD . $file_name . "." . $image_extension;
+    $url_name = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/$file_name.jpg?t=" . time();
 
     file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/log/log.txt', "\n" . __FILE__ . ' | Line: ' . __LINE__ . "\n" . '$target_path: ' . print_r($target_path, true), FILE_APPEND);
     file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/log/log.txt', "\n" . __FILE__ . ' | Line: ' . __LINE__ . "\n" . '$url_name: ' . print_r($url_name, true), FILE_APPEND);
@@ -50,7 +51,7 @@ if (isset($_FILES['file'])) {
             chmod($target_path, 0755); //Change the file permissions if allowed
             unlink($target_path); //remove the file
 
-            $target_path = DIR_UPLOAD . $id . ".jpg";
+            $target_path = DIR_UPLOAD . $file_name . ".jpg";
             imagejpeg($bg, $target_path, $quality);
             imagedestroy($bg);
         }

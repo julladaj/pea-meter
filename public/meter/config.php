@@ -4,13 +4,17 @@ define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'chai-van-pea');
 define('DB_PASSWORD', 'u3a2epe7a');
 
+define('DIR_ROOT', '/var/www/pea-meter.com/public_html/meter/');
+//define('DIR_ROOT', '/Users/devilpooh/www/pea-meter.test.com/public/meter/');
+define('ENABLE_SLIPT_UPLOAD', 1);
+
 switch ($_SERVER['SERVER_NAME']) {
     case 'pea-meter.com':
     case 'peachm02.pea-meter.com':
         define('DB_DATABASE', 'chai-van_pea');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคจังหวัดเชียงใหม่ 2');
         define('DIR_NAME', 'PEACHM02');
-        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEACHM02/');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEACHM02/');
         define('LINE_TOKEN', 'M6YvaNRBndeOGqZv1OOOMrB6UTW1fXVLdis38WAggRA');
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค จังหวัดเชียงใหม่ 2');
@@ -23,7 +27,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('DB_DATABASE', 'chai-van_peachm01');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคจังหวัดเชียงใหม่');
         define('DIR_NAME', 'PEACHM01');
-        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEACHM01/');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEACHM01/');
         define('LINE_TOKEN', 'tUNZYHJBuJlUfPWzKda0GiKM5HVyCajsPzoiMHrIVEI');
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค จังหวัดเชียงใหม่');
@@ -36,7 +40,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('DB_DATABASE', 'chai-van_peahad16');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอหางดง จังหวัดเชียงใหม่');
         define('DIR_NAME', 'PEAHAD16');
-        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEAHAD16/');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEAHAD16/');
         define('LINE_TOKEN', 'vP9b4mn2kB43qFXwZtDhqgjzYVUwI2UigddmTFQFZyi');
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอหางดง');
@@ -49,7 +53,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('DB_DATABASE', 'chai-van_peapas23');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอป่าซาง จังหวัดลำพูน');
         define('DIR_NAME', 'PEAPAS23');
-        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEAPAS23/');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEAPAS23/');
         define('LINE_TOKEN', '9ihMnG84Fvm5eJ64BttXLN4IKRUIiOipL2LHpTuk2yA');
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอป่าซาง');
@@ -62,7 +66,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('DB_DATABASE', 'chai-van_peadst01');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอดอยสะเก็ด จังหวัดเชียงใหม่');
         define('DIR_NAME', 'PEADST01');
-        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEADST01/');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEADST01/');
         define('LINE_TOKEN', 'jv8IRjAkypZot2FdHbHxWT5PdwCaBDycqZ8Vs4kLu4Z');
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค สาขาอำเภอดอยสะเก็ด');
@@ -75,7 +79,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('DB_DATABASE', 'chai-van_peanjd23');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค สาขาย่อยตำบลนครเจดีย์ อำเภอป่าซาง จังหวัดลำพูน');
         define('DIR_NAME', 'PEANJD23');
-        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEANJD23/');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEANJD23/');
         define('LINE_TOKEN', 'ZVVfbrCI4CLfpOdD8tp0ONL0h4fpJkqgkPQFl90aE1I');
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอป่าซาง');
@@ -88,7 +92,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('DB_DATABASE', 'chai-van_peangao37');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค สาขาอำเภองาว จังหวัดลำปาง');
         define('DIR_NAME', 'PEANGAO37');
-        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEANGAO37/');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEANGAO37/');
         define('LINE_TOKEN', '4u7EaZUN36l5VcTpKpwazWUleAxd8QpfnQhfNIgsWrR');
         define('BANK_NAME', 'ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภองาว');
@@ -101,7 +105,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('DB_DATABASE', 'chai-van_peakok131');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอเกาะคา จังหวัดลำปาง');
         define('DIR_NAME', 'PEAKOK131');
-        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEAKOK131/');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEAKOK131/');
         define('LINE_TOKEN', 'C55z757SMjwW0S4eqknQ5ogiCpvDGDEyVFheVXWg3kN');
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอเกาะคา');
@@ -110,11 +114,24 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_METER_PHONE', '054-284-838');
         define('PEA_EXTRA_PHONE', '054-284-807');
         break;
+    case 'peasaso01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peasaso01');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอสันทราย จังหวัดเชียงใหม่');
+        define('DIR_NAME', 'PEASASO01');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEASASO01/');
+        define('LINE_TOKEN', 'TUREBSGRR85oliScU8M5IyFaDaeikg3B6o2wMFQpLAJ');
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอสันทราย');
+        define('ACCOUNT_NO', '375-1-03390-4');
+        define('PEA_PHONE', 'โทร 053-492001');
+        define('PEA_METER_PHONE', '053-491-623');
+        define('PEA_EXTRA_PHONE', '053-492-001');
+        break;
     default:
         define('DB_DATABASE', 'chai-van_pea');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคจังหวัดเชียงใหม่ 2');
         define('DIR_NAME', 'PEACHM02');
-        define('DIR_UPLOAD', '/var/www/pea-meter.com/public_html/upload/PEACHM02/');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEACHM02/');
         define('LINE_TOKEN', 'M6YvaNRBndeOGqZv1OOOMrB6UTW1fXVLdis38WAggRA');
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค จังหวัดเชียงใหม่ 2');
@@ -123,10 +140,6 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_METER_PHONE', '053-896125');
         define('PEA_EXTRA_PHONE', '053-896020');
 }
-
-define('DIR_ROOT', '/var/www/pea-meter.com/public_html/meter/');
-//define('DIR_ROOT', '/Users/devilpooh/www/pea-meter.test.com/public/meter/');
-define('ENABLE_SLIPT_UPLOAD', 1);
 
 $thai_month = array(
     'มกราคม',
