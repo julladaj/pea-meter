@@ -5,8 +5,7 @@
 @require('class/MeterClient.php');
 
 $uploaded_image_path = '';
-$feeSliptUrl = '';
-$insuranceSliptUrl = '';
+$url_name = '';
 
 $meter_install_image_path = '';
 $meter_install_url = '';
@@ -35,8 +34,7 @@ if (isset($_POST['search']) && $_POST['search']) {
 
     $uploaded_image_path = DIR_UPLOAD . $result['auto_id'] . ".jpg";
     if (file_exists($uploaded_image_path)) {
-        $feeSliptUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/" . $result['auto_id'] . ".jpg";
-        $insuranceSliptUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/" . $result['auto_id'] . "_insurance.jpg";
+        $url_name = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/upload/" . DIR_NAME . "/" . $result['auto_id'] . ".jpg";
     } else {
         $uploaded_image_path = '';
     }
@@ -261,46 +259,31 @@ if (isset($_POST['search']) && $_POST['search']) {
                                         </div>
                                     </div>
                                     <div class="form-group row">
-<!--                                        <label class="col-xl-3 col-lg-3 col-form-label">แนบหลักฐานการชำระเงิน:<br>(กรุณาแนบหลักฐานการชำระเงิน เพื่อแจ้งให้เจ้าหน้าที่ดำเนินการต่อไป)</label>-->
+                                        <label class="col-xl-3 col-lg-3 col-form-label">แนบหลักฐานการชำระเงิน:<br>(กรุณาแนบหลักฐานการชำระเงิน เพื่อแจ้งให้เจ้าหน้าที่ดำเนินการต่อไป)</label>
                                         <div class="col-xl-1 col-lg-3">
                                             <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar_1">
-                                                <div class="kt-avatar__holder" id="fee_display" style="background-position: center; background-size: cover; background-image: url(<?php
-                                                echo ($uploaded_image_path) ? $feeSliptUrl : 'assets/media/users/default.jpg'; ?>)"></div>
+                                                <div class="kt-avatar__holder" id="silpt_display" style="background-position: center; background-size: cover; background-image: url(<?php
+                                                echo ($uploaded_image_path) ? $url_name : 'assets/media/users/default.jpg'; ?>)"></div>
+                                                <!--<label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="เปลี่ยนแปลงรูปหลักฐานการชำระเงิน">
+                                                    <i class="fa fa-pen"></i>
+                                                    <input type="file" name="profile_avatar" id="profile_avatar" accept=".png, .jpg">
+                                                </label>-->
                                                 <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="ยกเลิกหลักฐานการชำระเงิน">
 														<i class="fa fa-times"></i>
 													</span>
                                             </div>
+
                                         </div>
-                                        <div class="col-xl-5 col-lg-3">
+                                        <div class="col-xl-4 col-lg-6">
                                             <form action="upload_file.php" method="post" enctype="multipart/form-data">
-                                                <input type="file" name="file" id="upload_fee" accept="image/jpg, image/jpeg, image/png"/><br>
-                                                <input type="button" value="แนบรูปค่าธรรมเนียม" id="button_upload_fee"/>
+                                                <input type="file" name="file" id="upload_slipt" accept="image/jpg, image/jpeg, image/png"/><br>
+                                                <input type="button" value="แนบเอกสารชำระเงินให้แก่เจ้าหน้าที่" id="button_upload"/>
                                             </form>
-                                            <progress id="upload_fee_progress" value="0" max="100" class="form-control"></progress>
+                                            <progress value="0" max="100" class="form-control"></progress>
                                             <span class="form-text text-muted">รองรับไฟล์นามสกุล: png, jpg.</span>
-                                            <span class="form-text text-success" id="upload_fee_status"></span>
+                                            <span class="form-text text-success" id="upload_status"></span>
                                             <span class="form-text" id="upload_url"><?php
-                                                echo ($uploaded_image_path) ? '<a href="' . $feeSliptUrl . '?t=' . time() . '" target="_BLANK">' . $feeSliptUrl . '</a>' : ''; ?></span>
-                                        </div>
-                                        <div class="col-xl-1 col-lg-3">
-                                            <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar_1">
-                                                <div class="kt-avatar__holder" id="insurance_display" style="background-position: center; background-size: cover; background-image: url(<?php
-                                                echo ($uploaded_image_path) ? $insuranceSliptUrl : 'assets/media/users/default.jpg'; ?>)"></div>
-                                                <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="ยกเลิกหลักฐานการชำระเงิน">
-														<i class="fa fa-times"></i>
-													</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-5 col-lg-3">
-                                            <form action="upload_file.php" method="post" enctype="multipart/form-data">
-                                                <input type="file" name="file" id="upload_insurance" accept="image/jpg, image/jpeg, image/png"/><br>
-                                                <input type="button" value="แนบรูปค่าประกัน" id="button_upload_insurance"/>
-                                            </form>
-                                            <progress id="upload_insurance_progress" value="0" max="100" class="form-control"></progress>
-                                            <span class="form-text text-muted">รองรับไฟล์นามสกุล: png, jpg.</span>
-                                            <span class="form-text text-success" id="upload_insurance_status"></span>
-                                            <span class="form-text" id="upload_url"><?php
-                                                echo ($uploaded_image_path) ? '<a href="' . $insuranceSliptUrl . '?t=' . time() . '" target="_BLANK">' . $insuranceSliptUrl . '</a>' : ''; ?></span>
+                                                echo ($uploaded_image_path) ? '<a href="' . $url_name . '?t=' . time() . '" target="_BLANK">' . $url_name . '</a>' : ''; ?></span>
                                         </div>
                                     </div>
                                     <?php
@@ -383,7 +366,7 @@ if (isset($_POST['search']) && $_POST['search']) {
                                                 <input type="file" name="file" id="meter_installation_input" accept="image/jpg, image/jpeg, image/png"/><br>
                                                 <input type="button" value="แนบรูปการติดตั้งมิเตอร์" id="meter_installation_button"/>
                                             </form>
-                                            <progress id="meter_installation_progress" value="0" max="100" class="form-control" id="meter_installation_progress"></progress>
+                                            <progress value="0" max="100" class="form-control" id="meter_installation_progress"></progress>
                                             <span class="form-text text-muted">รองรับไฟล์นามสกุล: png, jpg.</span>
                                             <span class="form-text text-success" id="meter_installation_status"></span>
                                             <span class="form-text" id="meter_installation_url"><?= ($meter_install_image_path) ? '<a href="' . $meter_install_url . '?t=' . time() . '" target="_BLANK">ดูภาพต้นฉบับ</a>' : '' ?> | <?= ($meter_install_image_path) ? '<a href="' . $meter_install_url . '?t=' . time() . '" download>ดาวน์โหลด</a>' : '' ?></span>
@@ -708,7 +691,7 @@ if (isset($_POST['search']) && $_POST['search']) {
                 contentType: false,  // tell jQuery not to set contentType
                 success: function (data) {
                     if (data) {
-                        // $('#fee_display').css('background-image', 'url(' + data.url + ')');
+                        // $('#silpt_display').css('background-image', 'url(' + data.url + ')');
                         alert("อัพโหลดสำเร็จ หลักฐานได้เข้าสู่ระบบแล้วเรียบร้อย");
                     } else {
                         alert("ไม่สามารถดำเนินการได้ โปรดติดต่อเจ้าหน้าที่เพื่อดำเนินการ");
@@ -717,11 +700,11 @@ if (isset($_POST['search']) && $_POST['search']) {
             });
         });
 
-        $("#button_upload_fee").click(function () {
+        $("#button_upload").click(function () {
             event.preventDefault();
 
             var formData = new FormData();
-            formData.append('file', $('#upload_fee')[0].files[0]);
+            formData.append('file', $('#upload_slipt')[0].files[0]);
             formData.append('id', '<?php echo (isset($result['auto_id']) && $result['auto_id']) ? $result['auto_id'] : 0; ?>');
 
             $.ajax({
@@ -731,7 +714,7 @@ if (isset($_POST['search']) && $_POST['search']) {
                         // For handling the progress of the upload
                         myXhr.upload.addEventListener('progress', function (e) {
                             if (e.lengthComputable) {
-                                $('#upload_fee_progress').attr({
+                                $('progress').attr({
                                     value: e.loaded,
                                     max: e.total,
                                 });
@@ -747,47 +730,7 @@ if (isset($_POST['search']) && $_POST['search']) {
                 contentType: false,  // tell jQuery not to set contentType
                 success: function (data) {
                     if (data) {
-                        $('#fee_display').css('background-image', 'url(' + data.url + ')');
-                        alert("อัพโหลดสำเร็จ หลักฐานได้เข้าสู่ระบบแล้วเรียบร้อย");
-                    } else {
-                        alert("ไม่สามารถดำเนินการได้ โปรดติดต่อเจ้าหน้าที่เพื่อดำเนินการ");
-                    }
-                }
-            });
-        });
-
-        $("#button_upload_insurance").click(function () {
-            event.preventDefault();
-
-            var formData = new FormData();
-            formData.append('file', $('#upload_insurance')[0].files[0]);
-            formData.append('id', '<?php echo (isset($result['auto_id']) && $result['auto_id']) ? $result['auto_id'] : 0; ?>');
-            formData.append('file_name', '<?php echo (isset($result['auto_id']) && $result['auto_id']) ? $result['auto_id'] : ''; ?>_insurance');
-
-            $.ajax({
-                xhr: function () {
-                    var myXhr = $.ajaxSettings.xhr();
-                    if (myXhr.upload) {
-                        // For handling the progress of the upload
-                        myXhr.upload.addEventListener('progress', function (e) {
-                            if (e.lengthComputable) {
-                                $('#upload_insurance_progress').attr({
-                                    value: e.loaded,
-                                    max: e.total,
-                                });
-                            }
-                        }, false);
-                    }
-                    return myXhr;
-                },
-                type: 'POST',
-                url: "/meter/upload_file.php",
-                data: formData,
-                processData: false,  // tell jQuery not to process the data
-                contentType: false,  // tell jQuery not to set contentType
-                success: function (data) {
-                    if (data) {
-                        $('#insurance_display').css('background-image', 'url(' + data.url + ')');
+                        $('#silpt_display').css('background-image', 'url(' + data.url + ')');
                         alert("อัพโหลดสำเร็จ หลักฐานได้เข้าสู่ระบบแล้วเรียบร้อย");
                     } else {
                         alert("ไม่สามารถดำเนินการได้ โปรดติดต่อเจ้าหน้าที่เพื่อดำเนินการ");
