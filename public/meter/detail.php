@@ -691,11 +691,11 @@ if ($auto_id && $token) {
                                         </div>
                                     </div>
                                     <label for="account_accept_date"
-                                           class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label"><?= $REPORT_P3_LAST_ACCEPT_DATE; ?>จัดเก็บ:</label>
+                                           class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label"><?= $REPORT_P3_LAST_ACCEPT_DATE ?>จัดเก็บ:</label>
                                     <div class="col-xl-3 col-lg-4 col-md-10 col-sm-8">
                                         <div class="input-group">
                                             <input type="date" class="form-control"
-                                                   value="<?= $data['account_accept_date'] ?? '' ?>" <?= ($isAccounting) ? 'name="account_accept_date"' : '' ?>
+                                                   value="<?= $data['account_accept_date'] ?? '' ?>" <?= ($isAccounting || $isService) ? 'name="account_accept_date"' : '' ?>
                                                    readonly/>
                                             <?php
                                             if ($isAccounting) { ?>
