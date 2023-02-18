@@ -219,7 +219,7 @@ if ($auto_id && $token) {
                                     <label
                                             class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label">เบอร์โทร:</label>
                                     <div class="col-xl-3 col-lg-4 col-md-10 col-sm-8">
-                                        <input type="text"
+                                        <input type="text" maxlength="10"
                                                class="form-control" <?= ($isService) ? 'name="telephone"' : 'readonly' ?>
                                                value="<?= $data['telephone'] ?? '' ?>"/>
                                     </div>
@@ -698,7 +698,7 @@ if ($auto_id && $token) {
                                                    value="<?= $data['account_accept_date'] ?? '' ?>" <?= ($isAccounting || $isService) ? 'name="account_accept_date"' : '' ?>
                                                    readonly/>
                                             <?php
-                                            if ($isAccounting) { ?>
+                                            if ($isAccounting || $isService) { ?>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-warning clear-today-button" type="button"
                                                             update_target="account_accept_date">ยกเลิก
