@@ -219,7 +219,7 @@ if ($auto_id && $token) {
                                     <label
                                             class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label">เบอร์โทร:</label>
                                     <div class="col-xl-3 col-lg-4 col-md-10 col-sm-8">
-                                        <input type="text" maxlength="10"
+                                        <input type="text" maxlength="20"
                                                class="form-control" <?= ($isService) ? 'name="telephone"' : 'readonly' ?>
                                                value="<?= $data['telephone'] ?? '' ?>"/>
                                     </div>
