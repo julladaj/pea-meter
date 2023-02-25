@@ -131,6 +131,19 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_METER_PHONE', '053-491-623');
         define('PEA_EXTRA_PHONE', '053-492-001');
         break;
+    case 'pealpn01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_pealpn01');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค จังหวัดลำพูน');
+        define('DIR_NAME', 'PEALPN01');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEALPN01/');
+        define('LINE_TOKEN', 't8J0SJUTDz0DSon9DvECZWk2fPH6kwiKUeVHn3rKER0');
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค จังหวัดลำพูน');
+        define('ACCOUNT_NO', '511-1-20373-7');
+        define('PEA_PHONE', 'โทร 053-560-111, 082-182-2588');
+        define('PEA_METER_PHONE', '053-561-443');
+        define('PEA_EXTRA_PHONE', '053-560-111');
+        break;
     default:
         define('DB_DATABASE', 'chai-van_pea');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคจังหวัดเชียงใหม่ 2');
