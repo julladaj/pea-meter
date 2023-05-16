@@ -301,7 +301,7 @@ LEFT JOIN `installation_price` it ON
         );
 
         try {
-            $sql_command = "SELECT * FROM `meter_qc` ORDER BY `sort_index`";
+            $sql_command = "SELECT * FROM `meter_qc` WHERE `deleted` IS NULL ORDER BY `sort_index`";
 
             $rows = $this->getRowsWithPaginate($sql_command, $rows);
         } catch (Exception $e) {
