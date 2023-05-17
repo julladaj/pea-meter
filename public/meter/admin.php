@@ -25,6 +25,7 @@ if (isset($_POST['auto_id'], $_POST['token'])) {
 $meter_category = $meter->getMeterCategory();
 $meter_staff = $meter->getMeterStaff();
 $meter_qc = $meter->getMeterQC();
+$meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,6 +96,60 @@ $meter_qc = $meter->getMeterQC();
             background-color: #F3F6F9;
             border-color: #F3F6F9;
         }
+
+        .symbol {
+            display: inline-block;
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            position: relative;
+            border-radius: 0.42rem;
+        }
+
+        .symbol .symbol-label {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            font-weight: 500;
+            color: #3F4254;
+            background-color: #F3F6F9;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            border-radius: 0.42rem;
+        }
+
+        .symbol.symbol-lg-75 .symbol-label {
+            width: 75px;
+            height: 75px;
+        }
+
+        .symbol.symbol-primary .symbol-label {
+            background-color: #3699FF;
+            color: #FFFFFF;
+        }
+
+        .symbol.symbol-primary-active .symbol-label {
+            background-color: #FFFF00;
+            color: #000;
+        }
+
+        .font-size-h3 {
+            font-size: 1.5rem !important;
+        }
+
+        .font-size-h4 {
+            font-size: 1.35rem !important;
+        }
+        .flex-shrink-0 {
+            -ms-flex-negative: 0 !important;
+            flex-shrink: 0 !important;
+        }
     </style>
 </head>
 
@@ -118,13 +173,191 @@ $meter_qc = $meter->getMeterQC();
                 <!-- begin:: Content -->
                 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 
+                    <div class="row g-5 g-xl-10 mb-4">
+
+                        <div class="col-md-6 col-lg-4 col-xl-2 col-xxl-2">
+                            <div class="card card-custom gutter-b card-stretch">
+                                <!--begin::Body-->
+                                <div class="card-body pt-4 d-flex flex-column justify-content-between">
+                                    <!--begin::User-->
+                                    <div class="d-flex align-items-center mb-7">
+                                        <!--begin::Pic-->
+                                        <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+                                            <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "1") ? '-active' : '' ?>">
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['1']['count_id'] ?? 0 ?></span>
+                                            </div>
+                                        </div>
+                                        <!--end::Pic-->
+                                        <!--begin::Title-->
+                                        <div class="d-flex flex-column">
+                                            <a href="/meter/admin.php?filter_meter_qc=1" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">รอตรวจสอบ</a>
+                                            <?php if ($max_id = ($meter_dashboard['1']['max_id'] ?? 0)) { ?>
+                                                <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['1']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
+                                            <?php } ?>
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::User-->
+                                    <!--begin::Desc-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 col-xl-2 col-xxl-2">
+                            <div class="card card-custom gutter-b card-stretch">
+                                <!--begin::Body-->
+                                <div class="card-body pt-4 d-flex flex-column justify-content-between">
+                                    <!--begin::User-->
+                                    <div class="d-flex align-items-center mb-7">
+                                        <!--begin::Pic-->
+                                        <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+                                            <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "4") ? '-active' : '' ?>">
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['4']['count_id'] ?? 0 ?></span>
+                                            </div>
+                                        </div>
+                                        <!--end::Pic-->
+                                        <!--begin::Title-->
+                                        <div class="d-flex flex-column">
+                                            <a href="/meter/admin.php?filter_meter_qc=4" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">ขอให้แก้ไข</a>
+                                            <?php if ($max_id = ($meter_dashboard['4']['max_id'] ?? 0)) { ?>
+                                                <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['4']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
+                                            <?php } ?>
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::User-->
+                                    <!--begin::Desc-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 col-xl-2 col-xxl-2">
+                            <div class="card card-custom gutter-b card-stretch">
+                                <!--begin::Body-->
+                                <div class="card-body pt-4 d-flex flex-column justify-content-between">
+                                    <!--begin::User-->
+                                    <div class="d-flex align-items-center mb-7">
+                                        <!--begin::Pic-->
+                                        <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+                                            <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "11") ? '-active' : '' ?>">
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['11']['count_id'] ?? 0 ?></span>
+                                            </div>
+                                        </div>
+                                        <!--end::Pic-->
+                                        <!--begin::Title-->
+                                        <div class="d-flex flex-column">
+                                            <a href="/meter/admin.php?filter_meter_qc=11" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">อยู่ระหว่างขยายเขต</a>
+                                            <?php if ($max_id = ($meter_dashboard['11']['max_id'] ?? 0)) { ?>
+                                                <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['11']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
+                                            <?php } ?>
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::User-->
+                                    <!--begin::Desc-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 col-xl-2 col-xxl-2">
+                            <div class="card card-custom gutter-b card-stretch">
+                                <!--begin::Body-->
+                                <div class="card-body pt-4 d-flex flex-column justify-content-between">
+                                    <!--begin::User-->
+                                    <div class="d-flex align-items-center mb-7">
+                                        <!--begin::Pic-->
+                                        <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+                                            <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "3") ? '-active' : '' ?>">
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['3']['count_id'] ?? 0 ?></span>
+                                            </div>
+                                        </div>
+                                        <!--end::Pic-->
+                                        <!--begin::Title-->
+                                        <div class="d-flex flex-column">
+                                            <a href="/meter/admin.php?filter_meter_qc=3" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">รอชำระค่าธรรมเนียม</a>
+                                            <?php if ($max_id = ($meter_dashboard['3']['max_id'] ?? 0)) { ?>
+                                                <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['3']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
+                                            <?php } ?>
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::User-->
+                                    <!--begin::Desc-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 col-xl-2 col-xxl-2">
+                            <div class="card card-custom gutter-b card-stretch">
+                                <!--begin::Body-->
+                                <div class="card-body pt-4 d-flex flex-column justify-content-between">
+                                    <!--begin::User-->
+                                    <div class="d-flex align-items-center mb-7">
+                                        <!--begin::Pic-->
+                                        <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+                                            <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "2") ? '-active' : '' ?>">
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['2']['count_id'] ?? 0 ?></span>
+                                            </div>
+                                        </div>
+                                        <!--end::Pic-->
+                                        <!--begin::Title-->
+                                        <div class="d-flex flex-column">
+                                            <a href="/meter/admin.php?filter_meter_qc=2" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">ชำระแล้ว</a>
+                                            <?php if ($max_id = ($meter_dashboard['2']['max_id'] ?? 0)) { ?>
+                                                <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['2']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
+                                            <?php } ?>
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::User-->
+                                    <!--begin::Desc-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 col-xl-2 col-xxl-2">
+                            <div class="card card-custom gutter-b card-stretch">
+                                <!--begin::Body-->
+                                <div class="card-body pt-4 d-flex flex-column justify-content-between">
+                                    <!--begin::User-->
+                                    <div class="d-flex align-items-center mb-7">
+                                        <!--begin::Pic-->
+                                        <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+                                            <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "9") ? '-active' : '' ?>">
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['9']['count_id'] ?? 0 ?></span>
+                                            </div>
+                                        </div>
+                                        <!--end::Pic-->
+                                        <!--begin::Title-->
+                                        <div class="d-flex flex-column">
+                                            <a href="/meter/admin.php?filter_meter_qc=9" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">ติดตั้งแล้วเสร็จ</a>
+                                            <?php if ($max_id = ($meter_dashboard['9']['max_id'] ?? 0)) { ?>
+                                                <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['9']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
+                                            <?php } ?>
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::User-->
+                                    <!--begin::Desc-->
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                        </div>
+
+                    </div>
+
                     <div class="kt-portlet kt-portlet--mobile">
                         <div class="kt-portlet__head kt-portlet__head--lg">
                             <div class="kt-portlet__head-toolbar">
                                 <div class="kt-portlet__head-wrapper">
                                     <a href="/meter/admin.php" class="btn btn-success mr-1">
                                         <i class="fas fa-filter"></i>
-                                        กรองข้อมูลจากคำค้น
+                                        กรองข้อมูลจากคำค้น / แสดงทั้งหมด
                                     </a>
                                     <a href="/meter/export_excel.php" class="btn btn-success mr-1" data-toggle="modal"
                                        data-target="#modal_export_excel">
@@ -218,7 +451,9 @@ $meter_qc = $meter->getMeterQC();
                                         data-filter-data="var:employees" data-formatter="officer_name">ชื่อผู้ตรวจ
                                     </th>
                                     <th data-field="meter_qc_id" data-sortable="true" data-filter-control="select"
-                                        data-filter-data="var:meter_qc_list" data-formatter="meter_qc_detail">ผลการตรวจ
+                                        data-filter-data="var:meter_qc_list" data-formatter="meter_qc_detail"
+                                        <?= (empty($_GET['filter_meter_qc'])) ? '' : 'data-filter-default="' . $_GET['filter_meter_qc'] . '"' ?>
+                                    >ผลการตรวจ
                                     </th>
                                     <th data-field="cause" data-sortable="true" data-filter-control="input">
                                         สาเหตุที่ต้องแก้ไข
@@ -425,9 +660,9 @@ $meter_qc = $meter->getMeterQC();
 <!--begin::Page Vendors(used by this page) -->
 <script src="assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="assets/plugins/bootstrap-table/bootstrap-table-sticky-header.min.js" type="text/javascript"></script>
-<script src="assets/plugins/bootstrap-table/bootstrap-table-multiple-sort.js"></script>
+<script src="assets/plugins/bootstrap-table/bootstrap-table-multiple-sort.min.js"></script>
 <script src="assets/plugins/bootstrap-table/bootstrap-table-filter-control.min.js"></script>
-<script src="assets/plugins/bootstrap-table/bootstrap-table-cookie.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-table/bootstrap-table-cookie.min.js" type="text/javascript"></script>
 
 <!--end::Page Vendors -->
 

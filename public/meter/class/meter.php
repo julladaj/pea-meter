@@ -592,6 +592,53 @@ WHERE
         return $rows;
     }
 
-}
+    public function getMeterHeaderDashboard($ids = [])
+    {
+        /**
+         * 1 รอตรวจสอบ
+         * 4 ขอให้แก้ไข
+         * 11 อยู่ระหว่างขยายเขต
+         * 3 รอชำระค่าธรรมเนียม
+         * 2 ชำระแล้ว
+         * 9 ติดตั้งแล้วเสร็จ
+         */
+        $rows = [];
+        try {
+            $idFilter = '';
+            if (!empty($ids) && is_array($ids)) {
+                $implode = implode(",", $ids);
+                $idFilter = <<<SQL
+WHERE `meter_qc_id` IN ({$implode})
+SQL;
+            }
+            $sql_command = <<<SQL
+SELECT 
+	m2.*,
+    m1.`token`
+FROM (
+    SELECT 
+        `meter_qc_id`, 
+        COUNT(`auto_id`) AS `count_id`, 
+        MAX(`auto_id`) AS `max_id`
+    FROM `meter`
+    {$idFilter}
+    GROUP BY `meter_qc_id`
+) m2
+LEFT JOIN `meter` m1 ON m2.`max_id` = m1.`auto_id`;
+SQL;
+            $query = $this->mysqli->query($sql_command);
+            if (!$query) {
+                throw new Exception($this->mysqli->error);
+            }
+            while ($row = $query->fetch_array(MYSQLI_ASSOC)) {
+                $rows[$row['meter_qc_id']] = $row;
+            }
+        } catch (Exception $e) {
+            $_SESSION['error'][] = "log/class." . get_class() . "." . __FUNCTION__ . ".txt<br>" . $e->getMessage();
+            file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
+        }
+        return $rows;
 
-?>
+    }
+
+}
