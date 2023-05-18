@@ -482,7 +482,15 @@ LEFT JOIN `job_type` jt
 LEFT JOIN `installation_price` ip 
     ON ip.`job_type_id` = jt.`id`";
 
-            $implode = array();
+            $implodeWhere = array();
+
+            if (isset($filter['extra_filter'])) {
+                foreach ($filter['extra_filter'] as $field => $value) {
+                    $implodeWhere[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
+                    $implodeWhere[] = "YEAR(m.`date_add`) = '" . date("Y") . "'";
+                }
+            }
+
             if (isset($filter['filter'])) {
                 $filter['filter'] = json_decode($filter['filter'], true);
 
@@ -495,40 +503,40 @@ LEFT JOIN `installation_price` ip
                         case 'date_deathline':
                         case 'date_finish':
                             //$implode[] = "DATE_FORMAT(m.`" . $field . "`, '%m/%d/%Y') = '" . $this->mysqli->real_escape_string($value) . "'";
-                            $implode[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
+                        $implodeWhere[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
                         case 'date_workorder_start':
-                            $implode[] = "m.`date_workorder` >=  '" . $this->mysqli->real_escape_string($value) . "'";
+                            $implodeWhere[] = "m.`date_workorder` >=  '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
                         case 'date_workorder_end':
-                            $implode[] = "m.`date_workorder` <=  '" . $this->mysqli->real_escape_string($value) . "'";
+                            $implodeWhere[] = "m.`date_workorder` <=  '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
                         case 'job_type_enum':
-                            $implode[] = "jt.`enum` =  '" . $this->mysqli->real_escape_string($value) . "'";
+                            $implodeWhere[] = "jt.`enum` =  '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
                         case 'date_range':
                             $date_tange = explode(" | ", $value);
                             if (isset($date_tange[0], $date_tange[1])) {
-                                $implode[] = "m.`date_add` BETWEEN '" . $this->mysqli->real_escape_string($date_tange[0]) . "' AND '" . $this->mysqli->real_escape_string($date_tange[1]) . "' ";
+                                $implodeWhere[] = "m.`date_add` BETWEEN '" . $this->mysqli->real_escape_string($date_tange[0]) . "' AND '" . $this->mysqli->real_escape_string($date_tange[1]) . "' ";
                             }
                             break;
                         case 'recipient_id':
                         case 'officer_id':
                         case 'meter_qc_id':
                         case 'meter_category_id':
-                            $implode[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
+                        $implodeWhere[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
                             break;
                         default:
-                            $implode[] = "LOWER(`" . $field . "`) LIKE '%" . strtolower(
+                            $implodeWhere[] = "LOWER(`" . $field . "`) LIKE '%" . strtolower(
                                     $this->mysqli->real_escape_string($value)
                                 ) . "%'";
                             break;
                     }
                 }
+            }
 
-                if (count($implode)) {
-                    $sql_command .= " WHERE " . implode(" AND ", $implode);
-                }
+            if (count($implodeWhere)) {
+                $sql_command .= " WHERE " . implode(" AND ", $implodeWhere);
             }
 
             $implode = array();
@@ -608,24 +616,35 @@ WHERE
             if (!empty($ids) && is_array($ids)) {
                 $implode = implode(",", $ids);
                 $idFilter = <<<SQL
-WHERE `meter_qc_id` IN ({$implode})
+AND `meter_qc_id` IN ({$implode})
 SQL;
             }
+            $thisYear = date("Y");
             $sql_command = <<<SQL
 SELECT 
-	m2.*,
-    m1.`token`
+	`m_all`.*,
+    `m_this_year`.`count_id` AS `this_year_count_id`,
+    `m`.`token`
 FROM (
     SELECT 
         `meter_qc_id`, 
         COUNT(`auto_id`) AS `count_id`, 
         MAX(`auto_id`) AS `max_id`
     FROM `meter`
-    {$idFilter}
+    WHERE 1 {$idFilter}
     GROUP BY `meter_qc_id`
-) m2
-LEFT JOIN `meter` m1 ON m2.`max_id` = m1.`auto_id`;
+) `m_all`
+LEFT JOIN (
+    SELECT 
+        `meter_qc_id`, 
+        COUNT(`auto_id`) AS `count_id`
+    FROM `meter`
+    WHERE YEAR(`date_add`) = '$thisYear' {$idFilter}
+    GROUP BY `meter_qc_id`
+) `m_this_year` ON `m_this_year`.`meter_qc_id` = `m_all`.`meter_qc_id`
+LEFT JOIN `meter` `m` ON `m_all`.`max_id` = `m`.`auto_id`;
 SQL;
+
             $query = $this->mysqli->query($sql_command);
             if (!$query) {
                 throw new Exception($this->mysqli->error);

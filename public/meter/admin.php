@@ -184,7 +184,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--begin::Pic-->
                                         <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
                                             <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "1") ? '-active' : '' ?>">
-                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['1']['count_id'] ?? 0 ?></span>
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['1']['this_year_count_id'] ?? 0 ?></span>
                                             </div>
                                         </div>
                                         <!--end::Pic-->
@@ -194,6 +194,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                             <?php if ($max_id = ($meter_dashboard['1']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['1']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['1']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
                                     </div>
@@ -213,7 +214,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--begin::Pic-->
                                         <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
                                             <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "4") ? '-active' : '' ?>">
-                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['4']['count_id'] ?? 0 ?></span>
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['4']['this_year_count_id'] ?? 0 ?></span>
                                             </div>
                                         </div>
                                         <!--end::Pic-->
@@ -223,6 +224,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                             <?php if ($max_id = ($meter_dashboard['4']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['4']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['4']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
                                     </div>
@@ -242,7 +244,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--begin::Pic-->
                                         <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
                                             <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "11") ? '-active' : '' ?>">
-                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['11']['count_id'] ?? 0 ?></span>
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['11']['this_year_count_id'] ?? 0 ?></span>
                                             </div>
                                         </div>
                                         <!--end::Pic-->
@@ -252,6 +254,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                             <?php if ($max_id = ($meter_dashboard['11']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['11']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['11']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
                                     </div>
@@ -271,7 +274,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--begin::Pic-->
                                         <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
                                             <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "3") ? '-active' : '' ?>">
-                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['3']['count_id'] ?? 0 ?></span>
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['3']['this_year_count_id'] ?? 0 ?></span>
                                             </div>
                                         </div>
                                         <!--end::Pic-->
@@ -281,6 +284,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                             <?php if ($max_id = ($meter_dashboard['3']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['3']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['3']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
                                     </div>
@@ -300,7 +304,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--begin::Pic-->
                                         <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
                                             <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "2") ? '-active' : '' ?>">
-                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['2']['count_id'] ?? 0 ?></span>
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['2']['this_year_count_id'] ?? 0 ?></span>
                                             </div>
                                         </div>
                                         <!--end::Pic-->
@@ -310,6 +314,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                             <?php if ($max_id = ($meter_dashboard['2']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['2']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['2']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
                                     </div>
@@ -329,7 +334,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--begin::Pic-->
                                         <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
                                             <div class="symbol symbol-lg-75 symbol-primary<?= (isset($_GET['filter_meter_qc']) && $_GET['filter_meter_qc'] === "9") ? '-active' : '' ?>">
-                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['9']['count_id'] ?? 0 ?></span>
+                                                <span class="symbol-label font-size-h3 font-weight-boldest"><?= $meter_dashboard['9']['this_year_count_id'] ?? 0 ?></span>
                                             </div>
                                         </div>
                                         <!--end::Pic-->
@@ -339,6 +344,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                             <?php if ($max_id = ($meter_dashboard['9']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['9']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['9']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
                                     </div>
@@ -451,9 +457,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         data-filter-data="var:employees" data-formatter="officer_name">ชื่อผู้ตรวจ
                                     </th>
                                     <th data-field="meter_qc_id" data-sortable="true" data-filter-control="select"
-                                        data-filter-data="var:meter_qc_list" data-formatter="meter_qc_detail"
-                                        <?= (empty($_GET['filter_meter_qc'])) ? '' : 'data-filter-default="' . $_GET['filter_meter_qc'] . '"' ?>
-                                    >ผลการตรวจ
+                                        data-filter-data="var:meter_qc_list" data-formatter="meter_qc_detail">ผลการตรวจ
                                     </th>
                                     <th data-field="cause" data-sortable="true" data-filter-control="input">
                                         สาเหตุที่ต้องแก้ไข
@@ -660,9 +664,9 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
 <!--begin::Page Vendors(used by this page) -->
 <script src="assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="assets/plugins/bootstrap-table/bootstrap-table-sticky-header.min.js" type="text/javascript"></script>
-<script src="assets/plugins/bootstrap-table/bootstrap-table-multiple-sort.min.js"></script>
+<script src="assets/plugins/bootstrap-table/bootstrap-table-multiple-sort.js"></script>
 <script src="assets/plugins/bootstrap-table/bootstrap-table-filter-control.min.js"></script>
-<script src="assets/plugins/bootstrap-table/bootstrap-table-cookie.min.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-table/bootstrap-table-cookie.js" type="text/javascript"></script>
 
 <!--end::Page Vendors -->
 
@@ -709,6 +713,10 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
     }
 
     function ajaxRequest(params) {
+        <?php if (isset($_GET['filter_meter_qc'])) { ?>
+        params.data.extra_filter = <?= json_encode(['meter_qc_id' => $_GET['filter_meter_qc']]) ?>;
+        <?php } ?>
+
         $.ajax({
             type: "POST",
             url: "/meter/json_admin.php",
