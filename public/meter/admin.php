@@ -419,7 +419,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                    data-state-save-id-table="table_meter"
                                    data-cookie="true"
                                    data-cookie-expire="1m"
-                                   data-cookie-id-table="table_meter">
+                                   data-cookie-id-table="table_meter_2023_05_18">
                                 <thead>
                                 <tr>
                                     <th data-formatter="actionButton" data-switchable="false" class="width_60"></th>
@@ -664,9 +664,9 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
 <!--begin::Page Vendors(used by this page) -->
 <script src="assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="assets/plugins/bootstrap-table/bootstrap-table-sticky-header.min.js" type="text/javascript"></script>
-<script src="assets/plugins/bootstrap-table/bootstrap-table-multiple-sort.js"></script>
+<script src="assets/plugins/bootstrap-table/bootstrap-table-multiple-sort.min.js"></script>
 <script src="assets/plugins/bootstrap-table/bootstrap-table-filter-control.min.js"></script>
-<script src="assets/plugins/bootstrap-table/bootstrap-table-cookie.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-table/bootstrap-table-cookie.min.js" type="text/javascript"></script>
 
 <!--end::Page Vendors -->
 
@@ -789,6 +789,22 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                     }
                 });
                 $.fn.datepicker.defaults.format = "yyyy-mm-dd";
+
+                $(".filter-control select.form-control").each(function (i) {
+                    if ($(this).find(":selected").text()) {
+                        $(this).closest("th").addClass("highlight");
+                    } else {
+                        $(this).closest("th").removeClass("highlight");
+                    }
+                });
+
+                $('.date-filter-control').each(function (i) {
+                    if ($(this).val()) {
+                        $(this).closest("th").addClass("highlight");
+                    } else {
+                        $(this).closest("th").removeClass("highlight");
+                    }
+                });
             }
         });
 
