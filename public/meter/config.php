@@ -114,7 +114,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอเกาะคา');
         define('ACCOUNT_NO', '552-0-22593-1');
-        define('PEA_PHONE', 'โทร 054-284-807, 099-097-9008');
+        define('PEA_PHONE', 'โทร 054-284-807, 064-270-5920');
         define('PEA_METER_PHONE', '054-284-838');
         define('PEA_EXTRA_PHONE', '054-284-807');
         break;
