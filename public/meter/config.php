@@ -131,6 +131,19 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_METER_PHONE', '053-561-443');
         define('PEA_EXTRA_PHONE', '053-560-111');
         break;
+    case 'peahac01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peahac01');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค สาขาอำเภอห้างฉัตร');
+        define('DIR_NAME', 'PEAHAC01');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEAHAC01/');
+        define('LINE_TOKEN', 'ROWBLtXER1S0c3OGzysrYqQD5OIKTIOk0FflbR3yUPg');
+        define('BANK_NAME', 'ธนาคารออมสิน');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค สาขาอำเภอห้างฉัตร');
+        define('ACCOUNT_NO', '020391723879');
+        define('PEA_PHONE', 'โทร 054-339080');
+        define('PEA_METER_PHONE', '054-339080');
+        define('PEA_EXTRA_PHONE', '054-268721');
+        break;
     default:
         define('DB_DATABASE', 'chai-van_pea');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคจังหวัดเชียงใหม่ 2');
