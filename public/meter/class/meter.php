@@ -484,10 +484,17 @@ LEFT JOIN `installation_price` ip
 
             $implodeWhere = array();
 
+            $filter_year = (empty($filter['filter_year']['year']))
+                ? 0
+                : $filter['filter_year']['year'];
+
+            if ($filter_year) {
+                $implodeWhere[] = "YEAR(m.`date_add`) = '" . $filter_year . "'";
+            }
+
             if (isset($filter['extra_filter'])) {
                 foreach ($filter['extra_filter'] as $field => $value) {
                     $implodeWhere[] = "m.`" . $field . "` = '" . $this->mysqli->real_escape_string($value) . "'";
-                    $implodeWhere[] = "YEAR(m.`date_add`) = '" . date("Y") . "'";
                 }
             }
 
@@ -564,7 +571,7 @@ LEFT JOIN `installation_price` ip
             $rows = $this->getRowsWithPaginate($sql_command, $rows);
         } catch (Exception $e) {
             $_SESSION['error'][] = "log/class." . get_class() . "." . __FUNCTION__ . ".txt<br>" . $e->getMessage();
-            file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
+            file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", "\n\n" . $e->getMessage(), FILE_APPEND);
         }
 
         return $rows;
@@ -612,6 +619,8 @@ WHERE
          */
         $rows = [];
         try {
+            $yearFilter = $_GET['filter_year'] ?? date('Y');
+
             $idFilter = '';
             if (!empty($ids) && is_array($ids)) {
                 $implode = implode(",", $ids);
@@ -619,7 +628,6 @@ WHERE
 AND `meter_qc_id` IN ({$implode})
 SQL;
             }
-            $thisYear = date("Y");
             $sql_command = <<<SQL
 SELECT 
 	`m_all`.*,
@@ -639,7 +647,7 @@ LEFT JOIN (
         `meter_qc_id`, 
         COUNT(`auto_id`) AS `count_id`
     FROM `meter`
-    WHERE YEAR(`date_add`) = '$thisYear' {$idFilter}
+    WHERE YEAR(`date_add`) = '{$yearFilter}' {$idFilter}
     GROUP BY `meter_qc_id`
 ) `m_this_year` ON `m_this_year`.`meter_qc_id` = `m_all`.`meter_qc_id`
 LEFT JOIN `meter` `m` ON `m_all`.`max_id` = `m`.`auto_id`;

@@ -190,11 +190,16 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--end::Pic-->
                                         <!--begin::Title-->
                                         <div class="d-flex flex-column">
-                                            <a href="/meter/admin.php?filter_meter_qc=1" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">รอตรวจสอบ</a>
+                                            <?php
+                                            $params = $_GET;
+                                            $params['filter_meter_qc'] = 1;
+                                            ?>
+                                            <a href="/meter/admin.php?<?= http_build_query($params) ?>" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">รอตรวจสอบ</a>
                                             <?php if ($max_id = ($meter_dashboard['1']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['1']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
-                                            <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['1']['count_id'] ?? 0 ?></strong></span>
+                                            <span class="text-muted font-weight-bold">(ข้อมูลสรุปของปี <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_year_select">พ.ศ. <?= ((int)((empty($_GET['filter_year'])) ? date('Y') : $_GET['filter_year']) + 543) ?></a>)</span>
+                                            <span class="text-muted font-weight-bold">รวมคำร้องทุกปี: <strong><?= $meter_dashboard['1']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
                                     </div>
@@ -220,10 +225,15 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--end::Pic-->
                                         <!--begin::Title-->
                                         <div class="d-flex flex-column">
-                                            <a href="/meter/admin.php?filter_meter_qc=4" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">ขอให้แก้ไข</a>
+                                            <?php
+                                            $params = $_GET;
+                                            $params['filter_meter_qc'] = 4;
+                                            ?>
+                                            <a href="/meter/admin.php?<?= http_build_query($params) ?>" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">ขอให้แก้ไข</a>
                                             <?php if ($max_id = ($meter_dashboard['4']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['4']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">(ข้อมูลสรุปของปี <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_year_select">พ.ศ. <?= ((int)((empty($_GET['filter_year'])) ? date('Y') : $_GET['filter_year']) + 543) ?></a>)</span>
                                             <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['4']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
@@ -250,10 +260,15 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--end::Pic-->
                                         <!--begin::Title-->
                                         <div class="d-flex flex-column">
-                                            <a href="/meter/admin.php?filter_meter_qc=11" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">อยู่ระหว่างขยายเขต</a>
+                                            <?php
+                                            $params = $_GET;
+                                            $params['filter_meter_qc'] = 11;
+                                            ?>
+                                            <a href="/meter/admin.php?<?= http_build_query($params) ?>" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">อยู่ระหว่างขยายเขต</a>
                                             <?php if ($max_id = ($meter_dashboard['11']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['11']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">(ข้อมูลสรุปของปี <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_year_select">พ.ศ. <?= ((int)((empty($_GET['filter_year'])) ? date('Y') : $_GET['filter_year']) + 543) ?></a>)</span>
                                             <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['11']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
@@ -280,10 +295,15 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--end::Pic-->
                                         <!--begin::Title-->
                                         <div class="d-flex flex-column">
-                                            <a href="/meter/admin.php?filter_meter_qc=3" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">รอชำระค่าธรรมเนียม</a>
+                                            <?php
+                                            $params = $_GET;
+                                            $params['filter_meter_qc'] = 3;
+                                            ?>
+                                            <a href="/meter/admin.php?<?= http_build_query($params) ?>" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">รอชำระค่าธรรมเนียม</a>
                                             <?php if ($max_id = ($meter_dashboard['3']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['3']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">(ข้อมูลสรุปของปี <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_year_select">พ.ศ. <?= ((int)((empty($_GET['filter_year'])) ? date('Y') : $_GET['filter_year']) + 543) ?></a>)</span>
                                             <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['3']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
@@ -310,10 +330,15 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--end::Pic-->
                                         <!--begin::Title-->
                                         <div class="d-flex flex-column">
-                                            <a href="/meter/admin.php?filter_meter_qc=2" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">ชำระแล้ว</a>
+                                            <?php
+                                            $params = $_GET;
+                                            $params['filter_meter_qc'] = 2;
+                                            ?>
+                                            <a href="/meter/admin.php?<?= http_build_query($params) ?>" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">ชำระแล้ว</a>
                                             <?php if ($max_id = ($meter_dashboard['2']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['2']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">(ข้อมูลสรุปของปี <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_year_select">พ.ศ. <?= ((int)((empty($_GET['filter_year'])) ? date('Y') : $_GET['filter_year']) + 543) ?></a>)</span>
                                             <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['2']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
@@ -340,10 +365,15 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                                         <!--end::Pic-->
                                         <!--begin::Title-->
                                         <div class="d-flex flex-column">
-                                            <a href="/meter/admin.php?filter_meter_qc=9" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">ติดตั้งแล้วเสร็จ</a>
+                                            <?php
+                                            $params = $_GET;
+                                            $params['filter_meter_qc'] = 9;
+                                            ?>
+                                            <a href="/meter/admin.php?<?= http_build_query($params) ?>" class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">ติดตั้งแล้วเสร็จ</a>
                                             <?php if ($max_id = ($meter_dashboard['9']['max_id'] ?? 0)) { ?>
                                                 <span class="text-muted font-weight-bold">เลขคำร้องล่าสุด <a target="_blank" href="/meter/detail.php?auto_id=<?= $max_id ?>&token=<?= $meter_dashboard['9']['token'] ?? 0 ?>"><?= $max_id ?></a></span>
                                             <?php } ?>
+                                            <span class="text-muted font-weight-bold">(ข้อมูลสรุปของปี <a href="javascript:void(0);" data-toggle="modal" data-target="#modal_year_select">พ.ศ. <?= ((int)((empty($_GET['filter_year'])) ? date('Y') : $_GET['filter_year']) + 543) ?></a>)</span>
                                             <span class="text-muted font-weight-bold">รวมคำร้องทุกปี <strong><?= $meter_dashboard['9']['count_id'] ?? 0 ?></strong></span>
                                         </div>
                                         <!--end::Title-->
@@ -621,6 +651,41 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
     </div>
 </div>
 
+<div class="modal fade" id="modal_year_select" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">เลือกแสดงผลข้อมูลตามปี พ.ศ.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <form action="/meter/admin.php" method="GET">
+                <div class="modal-body">
+                    <label style="margin-top: 10px;"><b>แสดงข้อมูลสรุปตามปี พ.ศ.:</b></label>
+                    <div class='input-group'>
+                        <select class="form-control" name="filter_year">
+                            <option value="0">แสดงทุกปี</option>
+                            <?php
+                            $nextYear = ((int)date('Y')) + 1;
+                            $selectedYear = (int)($_GET['filter_year'] ?? 0);
+                            for ($i = 0; $i <= 5; $i++) {
+                                $year = $nextYear - $i;
+                                echo '<option value="' . $year . '" ' . ($selectedYear === $year ? 'selected' : '') . '>' . ($year + 543) . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิดหน้าต่าง</button>
+                    <button type="submit" class="btn btn-primary"><i class="far fa-file-pdf"></i> ยืนยัน
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- begin::Global Config(global config for global JS sciprts) -->
 <script>
     var KTAppOptions = {
@@ -716,6 +781,8 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
         <?php if (isset($_GET['filter_meter_qc'])) { ?>
         params.data.extra_filter = <?= json_encode(['meter_qc_id' => $_GET['filter_meter_qc']]) ?>;
         <?php } ?>
+
+        params.data.filter_year = <?= json_encode(['year' => $_GET['filter_year'] ?? 0]) ?>
 
         $.ajax({
             type: "POST",
