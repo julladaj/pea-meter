@@ -668,4 +668,119 @@ SQL;
 
     }
 
+    public function getMeterEvaluation(): array
+    {
+        $whereConditions = '';
+
+        if (!empty($_GET['filter_year'])) {
+            $whereConditions .= " AND YEAR(`date_add`) = '{$_GET['filter_year']}'";
+        }
+
+        $sql_command = <<<SQL
+SELECT 
+    `evaluation_score`, 
+    COUNT(`evaluation_score`) AS `count_evaluation_score`
+FROM `meter`
+WHERE 
+    `evaluation_score` IS NOT NULL 
+    {$whereConditions}
+GROUP BY `evaluation_score`;
+SQL;
+
+        $rows = [];
+        $evaluations = [
+            'participant' => 0,
+            'total_score' => 0,
+            'average' => 0,
+            'ratio' => 0,
+            'ratio_color' => 'black',
+            'ratio_emoji' => '😐',
+        ];
+        try {
+            $query = $this->mysqli->query($sql_command);
+            if (!$query) {
+                throw new Exception($this->mysqli->error);
+            }
+            while ($row = $query->fetch_array(MYSQLI_ASSOC)) {
+                if (!empty($row['evaluation_score'])) {
+                    $rows[(string)$row['evaluation_score']] = (int)$row['count_evaluation_score'];
+                }
+            }
+
+            foreach ($rows as $score => $value) {
+                $evaluations[$score] = $value;
+                $evaluations['participant'] += (int)$value;
+                $evaluations['total_score'] += (int)$score * (int)$value;
+            }
+
+            $evaluations['average'] = empty($evaluations['total_score']) || empty($evaluations['participant'])
+                ? 0
+                : round($evaluations['total_score'] / 5, 2);
+
+            $evaluations['ratio'] = empty($evaluations['average']) || empty($evaluations['participant'])
+                ? 0
+                : round($evaluations['total_score'] / $evaluations['participant'] / 5 * 100, 2);
+
+            if (!empty($evaluations['ratio'])) {
+                switch (true) {
+                    case $evaluations['ratio'] < 20:
+                        $evaluations['ratio_color'] = 'red';
+                        $evaluations['ratio_emoji'] = '😤';
+                        break;
+                    case $evaluations['ratio'] < 40:
+                        $evaluations['ratio_color'] = 'darkred';
+                        $evaluations['ratio_emoji'] = '🙁';
+                        break;
+                    case $evaluations['ratio'] < 60:
+                        $evaluations['ratio_color'] = 'black';
+                        $evaluations['ratio_emoji'] = '😐';
+                        break;
+                    case $evaluations['ratio'] < 80:
+                        $evaluations['ratio_color'] = 'darkolivegreen';
+                        $evaluations['ratio_emoji'] = '🙂';
+                        break;
+                    default:
+                        $evaluations['ratio_color'] = 'green';
+                        $evaluations['ratio_emoji'] = '😄';
+                        break;
+                }
+            }
+        } catch (Exception $e) {
+            $_SESSION['error'][] = "log/class." . get_class() . "." . __FUNCTION__ . ".txt<br>" . $e->getMessage();
+            file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
+        }
+        return $evaluations;
+    }
+
+    public function evaluation(array $data): array
+    {
+        $result = [];
+
+        if (empty($data['auto_id']) || empty($data['score'])) {
+            return $result;
+        }
+
+        try {
+            $sql_command = <<<SQL
+UPDATE `meter`
+SET 
+    `evaluation_score` = '{$this->mysqli->real_escape_string($data['score'])}',
+    `evaluation_time` = CURRENT_TIMESTAMP
+WHERE `auto_id` = '{$this->mysqli->real_escape_string($data['auto_id'])}'
+SQL;
+
+            $query = $this->mysqli->query($sql_command);
+            if ($query) {
+                $result['auto_id'] = $data['auto_id'];
+                $result['success'] = 1;
+            } else {
+                throw new Exception($this->mysqli->error);
+            }
+        } catch (Exception $e) {
+            $_SESSION['error'][] = "log/class." . get_class() . "." . __FUNCTION__ . ".txt<br>" . $e->getMessage();
+            file_put_contents(DIR_ROOT . "log/class." . get_class() . "." . __FUNCTION__ . ".txt", $e->getMessage());
+        }
+
+        return $result;
+    }
 }

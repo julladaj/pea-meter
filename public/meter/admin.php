@@ -26,6 +26,7 @@ $meter_category = $meter->getMeterCategory();
 $meter_staff = $meter->getMeterStaff();
 $meter_qc = $meter->getMeterQC();
 $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
+$meter_evaluation = $meter->getMeterEvaluation();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -387,6 +388,41 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
 
                     </div>
 
+                    <div class="row g-5 g-xl-10 mb-4">
+                        <div class="col-12">
+                            <table class="display table table-bordered table-hover text-center" style="background-color: #ddd;">
+                                <thead>
+                                <tr style="font-size: 12pt; background-color: #555; color: white;">
+                                    <th colspan="6" style="font-weight: 600;">จำนวนผู้ประเมิน</th>
+                                    <th colspan="6" style="font-weight: 600;">ระดับความพึงพอใจ</th>
+                                </tr>
+                                <tr style="font-size: 12pt;  background-color: #bbb;">
+                                    <th style="font-weight: 600; color: red;">1 ไม่พอใจมาก</th>
+                                    <th style="font-weight: 600; color: darkred;">2 ไม่พอใจ</th>
+                                    <th style="font-weight: 600;">3 ปานกลาง</th>
+                                    <th style="font-weight: 600; color: darkolivegreen;">4 พอใจ</th>
+                                    <th style="font-weight: 600; color: green;">5 พอใจมาก</th>
+                                    <th style="font-weight: 600;">ทั้งหมดราย</th>
+                                    <th style="font-weight: 600;">คะแนน</th>
+                                    <th style="font-weight: 600;">ร้อยละ</th>
+                                </tr>
+                                </thead>
+                                <tbody style="font-size: 10pt;">
+                                <tr>
+                                    <td style="color: red;"><?= $meter_evaluation['1'] ?? 0 ?></td>
+                                    <td style="color: darkred;"><?= $meter_evaluation['2'] ?? 0 ?></td>
+                                    <td><?= $meter_evaluation['3'] ?? 0 ?></td>
+                                    <td style="color: darkolivegreen;"><?= $meter_evaluation['4'] ?? 0 ?></td>
+                                    <td style="color: green;"><?= $meter_evaluation['5'] ?? 0 ?></td>
+                                    <td><?= $meter_evaluation['participant'] ?? 0 ?></td>
+                                    <td style="font-weight: 600;"><?= $meter_evaluation['total_score'] ?? 0 ?></td>
+                                    <td style="font-weight: 600; color: <?= $meter_evaluation['ratio_color'] ?? 'black' ?>;"><?= $meter_evaluation['ratio_emoji'] ?? '😐' ?> <?= $meter_evaluation['ratio'] ?? 0 ?></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <div class="kt-portlet kt-portlet--mobile">
                         <div class="kt-portlet__head kt-portlet__head--lg">
                             <div class="kt-portlet__head-toolbar">
@@ -666,7 +702,7 @@ $meter_dashboard = $meter->getMeterHeaderDashboard([1,4,11,3,2,9]);
                         <select class="form-control" name="filter_year">
                             <option value="0">แสดงทุกปี</option>
                             <?php
-                            $nextYear = ((int)date('Y')) + 1;
+                            $nextYear = ((int)date('Y'));
                             $selectedYear = (int)($_GET['filter_year'] ?? 0);
                             for ($i = 0; $i <= 5; $i++) {
                                 $year = $nextYear - $i;
