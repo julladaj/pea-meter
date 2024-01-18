@@ -415,8 +415,8 @@ $meter_evaluation = $meter->getMeterEvaluation();
                                     <td style="color: darkolivegreen;"><?= $meter_evaluation['4'] ?? 0 ?></td>
                                     <td style="color: green;"><?= $meter_evaluation['5'] ?? 0 ?></td>
                                     <td><?= $meter_evaluation['participant'] ?? 0 ?></td>
-                                    <td style="font-weight: 600;"><?= $meter_evaluation['total_score'] ?? 0 ?></td>
-                                    <td style="font-weight: 600; color: <?= $meter_evaluation['ratio_color'] ?? 'black' ?>;"><?= $meter_evaluation['ratio_emoji'] ?? '😐' ?> <?= $meter_evaluation['ratio'] ?? 0 ?></td>
+                                    <td style="font-weight: 600;"><?= number_format($meter_evaluation['total_score'] ?? 0, 2) ?></td>
+                                    <td style="font-weight: 600; color: <?= $meter_evaluation['ratio_color'] ?? 'black' ?>;"><?= $meter_evaluation['ratio_emoji'] ?? '😐' ?> <?= number_format($meter_evaluation['ratio'] ?? 0, 2) ?></td>
                                 </tr>
                                 </tbody>
                             </table>
