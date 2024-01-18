@@ -715,7 +715,7 @@ SQL;
 
             $evaluations['average'] = empty($evaluations['total_score']) || empty($evaluations['participant'])
                 ? 0
-                : round($evaluations['total_score'] / 5, 2);
+                : round($evaluations['total_score'] / $evaluations['participant'], 2);
 
             $evaluations['ratio'] = empty($evaluations['average']) || empty($evaluations['participant'])
                 ? 0
@@ -723,19 +723,19 @@ SQL;
 
             if (!empty($evaluations['ratio'])) {
                 switch (true) {
-                    case $evaluations['ratio'] < 20:
+                    case $evaluations['ratio'] <= 20:
                         $evaluations['ratio_color'] = 'red';
-                        $evaluations['ratio_emoji'] = '😤';
+                        $evaluations['ratio_emoji'] = '😡';
                         break;
-                    case $evaluations['ratio'] < 40:
+                    case $evaluations['ratio'] <= 40:
                         $evaluations['ratio_color'] = 'darkred';
                         $evaluations['ratio_emoji'] = '🙁';
                         break;
-                    case $evaluations['ratio'] < 60:
+                    case $evaluations['ratio'] <= 60:
                         $evaluations['ratio_color'] = 'black';
                         $evaluations['ratio_emoji'] = '😐';
                         break;
-                    case $evaluations['ratio'] < 80:
+                    case $evaluations['ratio'] <= 80:
                         $evaluations['ratio_color'] = 'darkolivegreen';
                         $evaluations['ratio_emoji'] = '🙂';
                         break;
