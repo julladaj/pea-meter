@@ -263,11 +263,7 @@ if (isset($_POST['search']) && $_POST['search']) {
                                         <div class="col-xl-1 col-lg-3">
                                             <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar_1">
                                                 <div class="kt-avatar__holder" id="slipt_display" style="background-position: center; background-size: cover; background-image: url(<?php
-                                                echo ($uploaded_image_path) ? $url_name : 'assets/media/users/default.jpg'; ?>)"></div>
-                                                <!--<label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="เปลี่ยนแปลงรูปหลักฐานการชำระเงิน">
-                                                    <i class="fa fa-pen"></i>
-                                                    <input type="file" name="profile_avatar" id="profile_avatar" accept=".png, .jpg">
-                                                </label>-->
+                                                echo ($uploaded_image_path) ? $url_name . '?t=' . time() : 'assets/media/users/default.jpg'; ?>)"></div>
                                                 <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="ยกเลิกหลักฐานการชำระเงิน">
 														<i class="fa fa-times"></i>
 													</span>
@@ -588,8 +584,6 @@ if (isset($_POST['search']) && $_POST['search']) {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">อัพโหลดสำเร็จ</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
             </div>
             <form id="form_evaluation">
                 <input type="hidden" name="auto_id" value="<?= $result['auto_id'] ?>" />
@@ -599,18 +593,8 @@ if (isset($_POST['search']) && $_POST['search']) {
 
                     <div style="padding-left: 2rem;">
                         <div>
-                            <input type="radio" id="evaluation_1" name="score" value="1">
-                            <label for="evaluation_1">1 ไม่พอใจมาก</label>
-                        </div>
-
-                        <div>
-                            <input type="radio" id="evaluation_2" name="score" value="2">
-                            <label for="evaluation_2">2 ไม่พอใจ</label>
-                        </div>
-
-                        <div>
-                            <input type="radio" id="evaluation_3" name="score" value="3">
-                            <label for="evaluation_3">3 ปานกลาง</label>
+                            <input type="radio" id="evaluation_5" name="score" value="5" checked>
+                            <label for="evaluation_5">5 พอใจมาก</label>
                         </div>
 
                         <div>
@@ -619,13 +603,23 @@ if (isset($_POST['search']) && $_POST['search']) {
                         </div>
 
                         <div>
-                            <input type="radio" id="evaluation_5" name="score" value="5">
-                            <label for="evaluation_5">5 พอใจมาก</label>
+                            <input type="radio" id="evaluation_3" name="score" value="3">
+                            <label for="evaluation_3">3 ปานกลาง</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" id="evaluation_2" name="score" value="2">
+                            <label for="evaluation_2">2 ไม่พอใจ</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" id="evaluation_1" name="score" value="1">
+                            <label for="evaluation_1">1 ไม่พอใจมาก</label>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="button_submit_evaluation">ยืนยัน</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">ยืนยัน</button>
                 </div>
             </form>
         </div>
@@ -826,7 +820,7 @@ if (isset($_POST['search']) && $_POST['search']) {
             });
         });
 
-        $("#button_submit_evaluation").click(function () {
+        $('#modal_evaluation').on('hidden.bs.modal', function (e) {
             const form_evaluation = document.getElementById('form_evaluation');
             const formData = new FormData(form_evaluation);
 
@@ -840,10 +834,11 @@ if (isset($_POST['search']) && $_POST['search']) {
                     if (data.success) {
                         $("#modal_evaluation").modal("hide");
                         alert("ขอบคุณสำหรับการประเมินความพึงพอใจ");
+                        window.location.href = "/meter/";
                     }
                 }
             });
-        });
+        })
 
         <?php if (isset($result['auto_id']) && $result['auto_id']) { ?>
         $("#button_recheck_request").on('click', function () {
