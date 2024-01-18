@@ -392,9 +392,9 @@ $meter_evaluation = $meter->getMeterEvaluation();
                         <div class="col-12">
                             <table class="display table table-bordered table-hover text-center" style="background-color: #ddd;">
                                 <thead>
-                                <tr style="font-size: 12pt; background-color: #555; color: white;">
-                                    <th colspan="6" style="font-weight: 600;">จำนวนผู้ประเมิน</th>
-                                    <th colspan="6" style="font-weight: 600;">ระดับความพึงพอใจ</th>
+                                <tr style="font-size: 12pt; color: white;">
+                                    <th colspan="6" style="font-weight: 600; background-color: #555;">จำนวนผู้ประเมิน</th>
+                                    <th colspan="6" style="font-weight: 600; background-color: <?= $meter_evaluation['ratio_color'] ?? '#555' ?>;">ระดับความพึงพอใจ</th>
                                 </tr>
                                 <tr style="font-size: 12pt;  background-color: #bbb;">
                                     <th style="font-weight: 600; color: red;">1 ไม่พอใจมาก</th>
