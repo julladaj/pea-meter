@@ -394,7 +394,7 @@ $meter_evaluation = $meter->getMeterEvaluation();
                                 <thead>
                                 <tr style="font-size: 12pt; color: white;">
                                     <th colspan="6" style="font-weight: 600; background-color: #555;">จำนวนผู้ประเมิน</th>
-                                    <th colspan="6" style="font-weight: 600; background-color: <?= $meter_evaluation['ratio_color'] ?? '#555' ?>;">ระดับความพึงพอใจ</th>
+                                    <th colspan="6" style="font-weight: 600; background-color: <?= $meter_evaluation['ratio_color'] ?? '#555' ?>;">ระดับความพึงพอใจ <?= $meter_evaluation['ratio_emoji'] ?? '😐' ?></th>
                                 </tr>
                                 <tr style="font-size: 12pt;  background-color: #bbb;">
                                     <th style="font-weight: 600; color: red;">1 ไม่พอใจมาก</th>
@@ -416,7 +416,7 @@ $meter_evaluation = $meter->getMeterEvaluation();
                                     <td style="color: green;"><?= $meter_evaluation['5'] ?? 0 ?></td>
                                     <td><?= $meter_evaluation['participant'] ?? 0 ?></td>
                                     <td style="font-weight: 600;"><?= number_format($meter_evaluation['average'] ?? 0, 2) ?></td>
-                                    <td style="font-weight: 600; color: <?= $meter_evaluation['ratio_color'] ?? 'black' ?>;"><?= $meter_evaluation['ratio_emoji'] ?? '😐' ?> <?= number_format($meter_evaluation['ratio'] ?? 0, 2) ?></td>
+                                    <td style="font-weight: 600; color: <?= $meter_evaluation['ratio_color'] ?? 'black' ?>;"><?= number_format($meter_evaluation['ratio'] ?? 0, 2) ?></td>
                                 </tr>
                                 </tbody>
                             </table>
