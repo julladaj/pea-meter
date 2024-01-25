@@ -69,7 +69,7 @@
 						<td><?php echo $data['number2']; ?></td>
 						<td><?php echo $data['date_finish']; ?></td>
 						<td><?php echo $data['evaluation_score']; ?></td>
-						<td><?php echo $data['evaluation_time']; ?></td>
+						<td><?php echo empty($data['evaluation_score']) ? '' : $data['evaluation_time']; ?></td>
 					</tr>
 <?php
 		}						
