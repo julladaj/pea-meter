@@ -617,6 +617,11 @@ if (isset($_POST['search']) && $_POST['search']) {
                             <label for="evaluation_1">1 ไม่พอใจมาก</label>
                         </div>
                     </div>
+
+                    <div>
+                        <label for="evaluation_comment"><b>ข้อเสนอแนะเพิ่มเติม</b></label>
+                        <textarea id="evaluation_comment" class="form-control" name="evaluation_comment"></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">ยืนยัน</button>

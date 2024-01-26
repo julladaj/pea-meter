@@ -760,12 +760,15 @@ SQL;
             return $result;
         }
 
+        $comment = $data['evaluation_comment'] ?? '';
+
         try {
             $sql_command = <<<SQL
 UPDATE `meter`
 SET 
     `evaluation_score` = '{$this->mysqli->real_escape_string($data['score'])}',
-    `evaluation_time` = CURRENT_TIMESTAMP
+    `evaluation_time` = CURRENT_TIMESTAMP,
+    `evaluation_comment` = '{$comment}'
 WHERE `auto_id` = '{$this->mysqli->real_escape_string($data['auto_id'])}'
 SQL;
 
