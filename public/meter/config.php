@@ -144,6 +144,58 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_METER_PHONE', '054-339080');
         define('PEA_EXTRA_PHONE', '054-268721');
         break;
+    case 'peapan01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peapan01');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคอำเภอพาน จังหวัดเชียงราย');
+        define('DIR_NAME', 'PEAPAN01');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEAPAN01/');
+        define('LINE_TOKEN', 'GkvwN44aaDWtbCUckY4CFeaAK5JnuVcav6ZFaJKn4KV');
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอพาน');
+        define('ACCOUNT_NO', '522-1-03470-0');
+        define('PEA_PHONE', 'โทร 053-723043');
+        define('PEA_METER_PHONE', '053-721514');
+        define('PEA_EXTRA_PHONE', '053-723043');
+        break;
+    case 'peamas01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peamas01');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคอำเภอแม่สาย จังหวัดเชียงราย');
+        define('DIR_NAME', 'PEAMAS01');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEAMAS01/');
+        define('LINE_TOKEN', '37JVo1zbVS2ydLDtGoDiwch7o8vzjDLFEAcwtIW7isH');
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาคอำเภอแม่สาย');
+        define('ACCOUNT_NO', '505-1-08817-1');
+        define('PEA_PHONE', 'โทร 053-642507');
+        define('PEA_METER_PHONE', '053-731714');
+        define('PEA_EXTRA_PHONE', '053-642507');
+        break;
+    case 'peadkt01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peadkt01');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคอำเภอดอกคำใต้ จังหวัดพะเยา');
+        define('DIR_NAME', 'PEADKT01');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEADKT01/');
+        define('LINE_TOKEN', 'DrD55dompSJk6cNoHFVPHPWjZb766zfGCfSc999RV17');
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาคสาขาอำเภอดอกคำใต้');
+        define('ACCOUNT_NO', '541-0-23271-2');
+        define('PEA_PHONE', 'โทร 054-491008');
+        define('PEA_METER_PHONE', '054-491008');
+        define('PEA_EXTRA_PHONE', '054-491008');
+        break;
+    case 'peawpp01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_peawpp01');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคอำเภอเวียงป่าเป้า จังหวัดเชียงราย');
+        define('DIR_NAME', 'PEAWPP01');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEAWPP01/');
+        define('LINE_TOKEN', '8LzFfTQudZe7mYIZN1GXy5icm0NcBuTXioVtxhGZJzc');
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาคสาขาอำเภอเวียงป่าเป้า');
+        define('ACCOUNT_NO', '980-6-57605-5');
+        define('PEA_PHONE', 'โทร 053-952028');
+        define('PEA_METER_PHONE', '053-952354');
+        define('PEA_EXTRA_PHONE', '053-952028');
+        break;
     default:
         define('DB_DATABASE', 'chai-van_pea');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคจังหวัดเชียงใหม่ 2');
