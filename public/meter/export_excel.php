@@ -43,6 +43,9 @@
 						<th>ติดตั้งไม่เกินวันที่</th>
 						<th>หมายเลขเครื่องวัด</th>
 						<th>วันที่ติดตั้ง แล้วเสร็จ</th>
+						<th>ระดับความพึงพอใจ</th>
+						<th>วันที่ประเมิน</th>
+						<th>ข้อเสนอแนะเพิ่มเติม</th>
 					</tr>
 <?php
 		foreach ($rows['items'] as $data) {
@@ -66,15 +69,18 @@
 						<td><?php echo $data['date_deathline']; ?></td>
 						<td><?php echo $data['number2']; ?></td>
 						<td><?php echo $data['date_finish']; ?></td>
+						<td><?php echo $data['evaluation_score']; ?></td>
+						<td><?php echo empty($data['evaluation_score']) ? '' : $data['evaluation_time']; ?></td>
+						<td><?php echo empty($data['evaluation_score']) ? '' : $data['evaluation_comment']; ?></td>
 					</tr>
 <?php
 		}						
 ?>
 				</table>
 			</div>
-			<script>
-				window.onbeforeunload = function(){return false;};
-				setTimeout(function(){window.close();}, 10000);
-			</script>
+<!--			<script>-->
+<!--				window.onbeforeunload = function(){return false;};-->
+<!--				setTimeout(function(){window.close();}, 10000);-->
+<!--			</script>-->
 		</body>
 	</html>			

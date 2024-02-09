@@ -262,12 +262,8 @@ if (isset($_POST['search']) && $_POST['search']) {
                                         <label class="col-xl-3 col-lg-3 col-form-label">แนบหลักฐานการชำระเงิน:<br>(กรุณาแนบหลักฐานการชำระเงิน เพื่อแจ้งให้เจ้าหน้าที่ดำเนินการต่อไป)</label>
                                         <div class="col-xl-1 col-lg-3">
                                             <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar_1">
-                                                <div class="kt-avatar__holder" id="silpt_display" style="background-position: center; background-size: cover; background-image: url(<?php
-                                                echo ($uploaded_image_path) ? $url_name : 'assets/media/users/default.jpg'; ?>)"></div>
-                                                <!--<label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="เปลี่ยนแปลงรูปหลักฐานการชำระเงิน">
-                                                    <i class="fa fa-pen"></i>
-                                                    <input type="file" name="profile_avatar" id="profile_avatar" accept=".png, .jpg">
-                                                </label>-->
+                                                <div class="kt-avatar__holder" id="slipt_display" style="background-position: center; background-size: cover; background-image: url(<?php
+                                                echo ($uploaded_image_path) ? $url_name . '?t=' . time() : 'assets/media/users/default.jpg'; ?>)"></div>
                                                 <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="ยกเลิกหลักฐานการชำระเงิน">
 														<i class="fa fa-times"></i>
 													</span>
@@ -583,34 +579,57 @@ if (isset($_POST['search']) && $_POST['search']) {
 
 <!-- end::Scrolltop -->
 
-<div class="modal fade" id="kt_modal_4_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+<div class="modal fade" id="modal_evaluation" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
+                <h5 class="modal-title">อัพโหลดสำเร็จ</h5>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="form-control-label">Recipient:</label>
-                        <input type="text" class="form-control" id="recipient-name">
+            <form id="form_evaluation">
+                <input type="hidden" name="auto_id" value="<?= $result['auto_id'] ?>" />
+                <div class="modal-body" style="font-size: 12pt;">
+                    <label style="margin-top: 10px; font-size: 14pt;"><b>✅ อัพโหลดสำเร็จ หลักฐานได้เข้าสู่ระบบแล้วเรียบร้อย</b></label><br>
+                    <label style="margin-top: 10px; font-size: 12pt;"><b>กรุณาประเมินความพึงพอใจต่อการขอใช้ไฟครั้งนี้</b></label><br>
+
+                    <div style="padding-left: 2rem;">
+                        <div>
+                            <input type="radio" id="evaluation_5" name="score" value="5" checked>
+                            <label for="evaluation_5">5 พอใจมาก</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" id="evaluation_4" name="score" value="4">
+                            <label for="evaluation_4">4 พอใจ</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" id="evaluation_3" name="score" value="3">
+                            <label for="evaluation_3">3 ปานกลาง</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" id="evaluation_2" name="score" value="2">
+                            <label for="evaluation_2">2 ไม่พอใจ</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" id="evaluation_1" name="score" value="1">
+                            <label for="evaluation_1">1 ไม่พอใจมาก</label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="message-text" class="form-control-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+
+                    <div>
+                        <label for="evaluation_comment"><b>ข้อเสนอแนะเพิ่มเติม</b></label>
+                        <textarea id="evaluation_comment" class="form-control" name="evaluation_comment"></textarea>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">ยืนยัน</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
 
 <!-- begin::Global Config(global config for global JS sciprts) -->
 <script>
@@ -655,7 +674,7 @@ if (isset($_POST['search']) && $_POST['search']) {
 <!--begin::Page Vendors(used by this page) -->
 <script src="assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="assets/plugins/bootstrap-table/bootstrap-table-filter-control.min.js"></script>
-<script src="assets/plugins/bootstrap-table/bootstrap-table-cookie.js" type="text/javascript"></script>
+<!--<script src="assets/plugins/bootstrap-table/bootstrap-table-cookie.js" type="text/javascript"></script>-->
 <script src="assets/js/pages/crud/file-upload/ktavatar.js" type="text/javascript"></script>
 <!--<script src="assets/plugins/bootstrap-table/bootstrap-table-th-TH.js" type="text/javascript"></script>-->
 <!--end::Page Vendors -->
@@ -758,7 +777,7 @@ if (isset($_POST['search']) && $_POST['search']) {
                 contentType: false,  // tell jQuery not to set contentType
                 success: function (data) {
                     if (data) {
-                        // $('#silpt_display').css('background-image', 'url(' + data.url + ')');
+                        // $('#slipt_display').css('background-image', 'url(' + data.url + ')');
                         alert("อัพโหลดสำเร็จ หลักฐานได้เข้าสู่ระบบแล้วเรียบร้อย");
                     } else {
                         alert("ไม่สามารถดำเนินการได้ โปรดติดต่อเจ้าหน้าที่เพื่อดำเนินการ");
@@ -770,7 +789,7 @@ if (isset($_POST['search']) && $_POST['search']) {
         $("#button_upload").click(function () {
             event.preventDefault();
 
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append('file', $('#upload_slipt')[0].files[0]);
             formData.append('id', '<?php echo (isset($result['auto_id']) && $result['auto_id']) ? $result['auto_id'] : 0; ?>');
 
@@ -796,15 +815,35 @@ if (isset($_POST['search']) && $_POST['search']) {
                 processData: false,  // tell jQuery not to process the data
                 contentType: false,  // tell jQuery not to set contentType
                 success: function (data) {
-                    if (data) {
-                        $('#silpt_display').css('background-image', 'url(' + data.url + ')');
-                        alert("อัพโหลดสำเร็จ หลักฐานได้เข้าสู่ระบบแล้วเรียบร้อย");
+                    if (data.success) {
+                        $('#slipt_display').css('background-image', 'url(' + data.url + ')');
+                        $("#modal_evaluation").modal("show");
                     } else {
                         alert("ไม่สามารถดำเนินการได้ โปรดติดต่อเจ้าหน้าที่เพื่อดำเนินการ");
                     }
                 }
             });
         });
+
+        $('#modal_evaluation').on('hidden.bs.modal', function (e) {
+            const form_evaluation = document.getElementById('form_evaluation');
+            const formData = new FormData(form_evaluation);
+
+            $.ajax({
+                type: 'POST',
+                url: "/meter/evaluation.php",
+                data: formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    if (data.success) {
+                        $("#modal_evaluation").modal("hide");
+                        alert("ขอบคุณสำหรับการประเมินความพึงพอใจ");
+                        window.location.href = "/meter/";
+                    }
+                }
+            });
+        })
 
         <?php if (isset($result['auto_id']) && $result['auto_id']) { ?>
         $("#button_recheck_request").on('click', function () {
@@ -827,11 +866,16 @@ if (isset($_POST['search']) && $_POST['search']) {
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        meter_installation_input.onchange = evt => {
-            const [file] = meter_installation_input.files;
-            if (file) {
-                meter_installation_preview.style.backgroundImage = "url('" + URL.createObjectURL(file) + "')";
-            }
+        const meter_installation_input = document.getElementById('meter_installation_input');
+        const meter_installation_preview = document.getElementById('meter_installation_preview');
+
+        if (meter_installation_input) {
+            meter_installation_input.addEventListener("change", (event) => {
+                const [file] = meter_installation_input.files;
+                if (file) {
+                    meter_installation_preview.style.backgroundImage = "url('" + URL.createObjectURL(file) + "')";
+                }
+            });
         }
     });
 </script>
