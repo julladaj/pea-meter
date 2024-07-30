@@ -272,8 +272,9 @@ if (isset($_POST['search']) && $_POST['search']) {
                                         </div>
                                         <div class="col-xl-4 col-lg-6">
                                             <form action="upload_file.php" method="post" enctype="multipart/form-data">
-                                                <input type="file" name="file" id="upload_slipt" accept="image/jpg, image/jpeg, image/png"/><br>
-                                                <input type="button" value="แนบเอกสารชำระเงินให้แก่เจ้าหน้าที่" id="button_upload"/>
+                                                <label class="btn btn-primary mb-1" for="upload_slipt">1. เลือกไฟล์รูปที่ต้องการแนบ</label>
+                                                <input type="file" name="file" class="btn btn-primary mb-1 d-none" id="upload_slipt" accept="image/jpg, image/jpeg, image/png"/><br>
+                                                <input type="button" class="btn btn-success" value="2. แนบเอกสารชำระเงินให้แก่เจ้าหน้าที่" id="button_upload"/>
                                             </form>
                                             <progress value="0" max="100" class="form-control"></progress>
                                             <span class="form-text text-muted">รองรับไฟล์นามสกุล: png, jpg.</span>
@@ -377,6 +378,7 @@ if (isset($_POST['search']) && $_POST['search']) {
                                     <?php
                                 } ?>
 
+                                <?php if ($result['meter_qc_detail'] !== 'รอชำระค่าธรรมเนียม') { ?>
                                 <hr/>
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-xl-1 col-lg-2 col-md-2 col-sm-4 col-form-label"></label>
@@ -409,9 +411,10 @@ if (isset($_POST['search']) && $_POST['search']) {
                                         </form>
                                     </div>
                                 </div>
+                                <?php } ?>
 
                                 <?php
-                                if ($number2) { ?>
+                                if (isset($number2) && $number2) { ?>
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">แนบรูปการติดตั้งมิเตอร์:</label>
                                         <div class="col-xl-1 col-lg-3">

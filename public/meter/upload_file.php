@@ -68,8 +68,9 @@ if (isset($_FILES['file'])) {
 curl -X POST -H 'Authorization: Bearer {$line_token}' -F 'message={$message}' https://notify-api.line.me/api/notify
 EOD;
 
-        if (LINE_NOTIFICATION && $lineNotification) {
+        if (defined('LINE_NOTIFICATION') && LINE_NOTIFICATION && $lineNotification) {
             exec($command, $result);
+            $result['line_success'] = 1;
         }
 
         $result = array(
