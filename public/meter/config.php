@@ -40,30 +40,31 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_EXTRA_PHONE', '053-241266');
         break;
     case 'peachm01.pea-meter.com':
-        define('DB_DATABASE', 'chai-van_pea');
+        define('DB_DATABASE', 'chai-van_peachm01');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคจังหวัดเชียงใหม่ 1');
         define('DIR_NAME', 'PEACHM01');
         define('DIR_UPLOAD', DIR_ROOT . '../upload/PEACHM01/');
-        define('LINE_TOKEN', '');
+        define('LINE_TOKEN', 'OYPBGplJKLsBWUzAxLnXxwc9fL5WIHjRy6CUBEu31iU');
         define('BANK_NAME', '');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค จังหวัดเชียงใหม่ 1');
         define('ACCOUNT_NO', '');
         define('PEA_PHONE', 'โทร ');
         define('PEA_METER_PHONE', '');
         define('PEA_EXTRA_PHONE', '');
+        define('EXPIRES', 1);
         break;
     case 'peakok131.pea-meter.com':
-        define('DB_DATABASE', 'chai-van_pea');
+        define('DB_DATABASE', 'chai-van_peakok131');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคอำเภอเกาะคา จังหวัดลำปาง');
         define('DIR_NAME', 'PEAKOK131');
         define('DIR_UPLOAD', DIR_ROOT . '../upload/PEAKOK131/');
-        define('LINE_TOKEN', '');
-        define('BANK_NAME', '');
+        define('LINE_TOKEN', 'bMU2RlQlLwmbpr3lyJ2H2tG0YGIDMogoLtr4nhsPPcF');
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
         define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาคอำเภอเกาะคา จังหวัดลำปาง');
-        define('ACCOUNT_NO', '');
-        define('PEA_PHONE', 'โทร ');
-        define('PEA_METER_PHONE', '');
-        define('PEA_EXTRA_PHONE', '');
+        define('ACCOUNT_NO', '552-0-22593-1');
+        define('PEA_PHONE', 'โทร 054-284807');
+        define('PEA_METER_PHONE', '054-284838');
+        define('PEA_EXTRA_PHONE', '054-284807');
         break;
     case 'peahad16.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peahad16');

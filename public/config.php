@@ -49,6 +49,9 @@ switch ($_SERVER['SERVER_NAME']) {
     case 'peawpp01.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peawpp01');
         break;
+    case 'pealpg01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_pealpg01');
+        break;
     default:
         define('DB_DATABASE', 'chai-van_pea');
 }
