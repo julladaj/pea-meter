@@ -39,6 +39,32 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_METER_PHONE', '053-243064');
         define('PEA_EXTRA_PHONE', '053-241266');
         break;
+    case 'peachm01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_pea');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคจังหวัดเชียงใหม่ 1');
+        define('DIR_NAME', 'PEACHM01');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEACHM01/');
+        define('LINE_TOKEN', '');
+        define('BANK_NAME', '');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค จังหวัดเชียงใหม่ 1');
+        define('ACCOUNT_NO', '');
+        define('PEA_PHONE', 'โทร ');
+        define('PEA_METER_PHONE', '');
+        define('PEA_EXTRA_PHONE', '');
+        break;
+    case 'peakok131.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_pea');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคอำเภอเกาะคา จังหวัดลำปาง');
+        define('DIR_NAME', 'PEAKOK131');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEAKOK131/');
+        define('LINE_TOKEN', '');
+        define('BANK_NAME', '');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาคอำเภอเกาะคา จังหวัดลำปาง');
+        define('ACCOUNT_NO', '');
+        define('PEA_PHONE', 'โทร ');
+        define('PEA_METER_PHONE', '');
+        define('PEA_EXTRA_PHONE', '');
+        break;
     case 'peahad16.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peahad16');
         define('PEANAME', 'การไฟฟ้าส่วนภูมิภาค อำเภอหางดง จังหวัดเชียงใหม่');
@@ -195,6 +221,19 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_PHONE', 'โทร 053-952028');
         define('PEA_METER_PHONE', '053-952354');
         define('PEA_EXTRA_PHONE', '053-952028');
+        break;
+    case 'pealpg01.pea-meter.com':
+        define('DB_DATABASE', 'chai-van_pealpg01');
+        define('PEANAME', 'การไฟฟ้าส่วนภูมิภาคสาขาเมืองลำปาง');
+        define('DIR_NAME', 'PEALPG01');
+        define('DIR_UPLOAD', DIR_ROOT . '../upload/PEALPG01/');
+        define('LINE_TOKEN', 'IfiO2SxXkZELQaEoS5aeecdtDvHeiuaO3uvPsneKp2k');
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาคจังหวัดลำปาง');
+        define('ACCOUNT_NO', '552-1-00600-1');
+        define('PEA_PHONE', 'โทร 054-250009');
+        define('PEA_METER_PHONE', '054-250444');
+        define('PEA_EXTRA_PHONE', '054-250009');
         break;
     default:
         define('DB_DATABASE', 'chai-van_pea');
