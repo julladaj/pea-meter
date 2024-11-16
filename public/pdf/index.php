@@ -76,7 +76,7 @@ $html = <<<EOD
 <table border="0" cellpadding="2" cellspacing="0">
 <thead>
 	<tr>
-		<td colspan="2" rowspan="2" style="border-top: 1px solid black; border-left: 1px solid black;"><img src="/upload/pea_logo_100x100.png" /></td>
+		<td colspan="2" rowspan="2" style="border-top: 1px solid black; border-left: 1px solid black;"><img src="/upload/pea_logo_100x100.jpg" /></td>
 		<td colspan="5" style="border-top: 1px solid black;"></td>
 		<td colspan="5" style="border-left: 1px solid black; border-top: 1px solid black; border-right: 1px solid black;"></td>
  </tr>
