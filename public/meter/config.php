@@ -45,13 +45,12 @@ switch ($_SERVER['SERVER_NAME']) {
         define('DIR_NAME', 'PEACHM01');
         define('DIR_UPLOAD', DIR_ROOT . '../upload/PEACHM01/');
         define('LINE_TOKEN', 'OYPBGplJKLsBWUzAxLnXxwc9fL5WIHjRy6CUBEu31iU');
-        define('BANK_NAME', '');
-        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค จังหวัดเชียงใหม่ 1');
-        define('ACCOUNT_NO', '');
-        define('PEA_PHONE', 'โทร ');
-        define('PEA_METER_PHONE', '');
-        define('PEA_EXTRA_PHONE', '');
-        define('EXPIRES', 1);
+        define('BANK_NAME', 'ธนาคารกรุงไทย');
+        define('ACCOUNT_NAME', 'การไฟฟ้าส่วนภูมิภาค จังหวัดเชียงใหม่ สาขาท่าแพ');
+        define('ACCOUNT_NO', '501-1-13664-7');
+        define('PEA_PHONE', 'โทร 053 241266');
+        define('PEA_METER_PHONE', '053 243064');
+        define('PEA_EXTRA_PHONE', '053 241266');
         break;
     case 'peakok131.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peakok131');
