@@ -72,6 +72,55 @@ $PEA_METER_PHONE = PEA_METER_PHONE;
 $PEA_EXTRA_PHONE = PEA_EXTRA_PHONE;
 
 $y = 10;
+
+switch ($_SERVER['SERVER_NAME']) {
+    case 'peakok131.pea-meter.com':
+        $feePrice = <<<EOD
+		<tr>
+			<td>5 (15)</td>
+			<td>1</td>
+			<td style="text-align:right;">900.-</td>
+			<td style="text-align:right;">900.-</td>
+		</tr>
+		<tr>
+			<td>15 (45)</td>
+			<td>1</td>
+			<td style="text-align:right;">6,000.-</td>
+			<td style="text-align:right;">6,000.-</td>
+		</tr>
+		<tr>
+			<td>15 (45)</td>
+			<td>3</td>
+			<td style="text-align:right;">18,000.-</td>
+			<td style="text-align:right;">18,000.-</td>
+		</tr>
+EOD;
+
+        break;
+    default:
+        $feePrice = <<<EOD
+		<tr>
+			<td>5 (15)</td>
+			<td>1</td>
+			<td style="text-align:right;">600.-</td>
+			<td style="text-align:right;">600.-</td>
+		</tr>
+		<tr>
+			<td>15 (45)</td>
+			<td>1</td>
+			<td style="text-align:right;">4,000.-</td>
+			<td style="text-align:right;">4,000.-</td>
+		</tr>
+		<tr>
+			<td>15 (45)</td>
+			<td>3</td>
+			<td style="text-align:right;">12,000.-</td>
+			<td style="text-align:right;">12,000.-</td>
+		</tr>
+EOD;
+
+}
+
 $html = <<<EOD
 <table border="0" cellpadding="2" cellspacing="0">
 <thead>
@@ -191,24 +240,7 @@ $html = <<<EOD
 			<td><b>ค่าประกันการใช้ไฟ</b></td>
 			<td><b>รวม (บาท)</b></td>
 		</tr>
-		<tr>
-			<td>5 (15)</td>
-			<td>1</td>
-			<td style="text-align:right;">600.-</td>
-			<td style="text-align:right;">600.-</td>
-		</tr>
-		<tr>
-			<td>15 (45)</td>
-			<td>1</td>
-			<td style="text-align:right;">4,000.-</td>
-			<td style="text-align:right;">4,000.-</td>
-		</tr>
-		<tr>
-			<td>15 (45)</td>
-			<td>3</td>
-			<td style="text-align:right;">12,000.-</td>
-			<td style="text-align:right;">12,000.-</td>
-		</tr>
+		{$feePrice}
 		</table>
 	</td>
 	<td colspan="6" style="border-top: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
