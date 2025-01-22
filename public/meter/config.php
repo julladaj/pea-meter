@@ -182,6 +182,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_PHONE', 'โทร 053-723043');
         define('PEA_METER_PHONE', '053-721514');
         define('PEA_EXTRA_PHONE', '053-723043');
+        define('EXPIRES', 1);
         break;
     case 'peamas01.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peamas01');
@@ -208,6 +209,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_PHONE', 'โทร 054-491008');
         define('PEA_METER_PHONE', '054-491008');
         define('PEA_EXTRA_PHONE', '054-491008');
+        define('EXPIRES', 1);
         break;
     case 'peawpp01.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peawpp01');
@@ -221,6 +223,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_PHONE', 'โทร 053-952028');
         define('PEA_METER_PHONE', '053-952354');
         define('PEA_EXTRA_PHONE', '053-952028');
+        define('EXPIRES', 1);
         break;
     case 'pealpg01.pea-meter.com':
         define('DB_DATABASE', 'chai-van_pealpg01');
