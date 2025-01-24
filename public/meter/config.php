@@ -156,6 +156,7 @@ switch ($_SERVER['SERVER_NAME']) {
         define('PEA_PHONE', 'โทร 053-560-111, 082-182-2588');
         define('PEA_METER_PHONE', '053-561-443');
         define('PEA_EXTRA_PHONE', '053-560-111');
+        define('EXPIRES', 1);
         break;
     case 'peahac01.pea-meter.com':
         define('DB_DATABASE', 'chai-van_peahac01');
