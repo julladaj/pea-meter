@@ -1,10 +1,9 @@
 <?php
 
-$PEACHM01_token = 'tUNZYHJBuJlUfPWzKda0GiKM5HVyCajsPzoiMHrIVEI';
-$PEACHM02_token = 'M6YvaNRBndeOGqZv1OOOMrB6UTW1fXVLdis38WAggRA';
+@require_once('../config.php');
 
-$message = 'https://pea.g-net.co.th/meter/?id=640537';
-$qr_code = 'https://qrcode.g-net.co.th/png/f42806543246709489d1687b7af96f89.png';
+$message = 'ทดสอบการส่งข้อความอัตโนมัติผ่านไลน์';
+//$qr_code = 'https://qrcode.g-net.co.th/png/77e62276bb568665f5f39bac8347b545.png';
 
 $token = LINE_TOKEN;
 
