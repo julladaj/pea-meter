@@ -58,14 +58,26 @@ if (isset($_FILES['file'])) {
         }
 
         $message = "หมายเลขคำร้อง *$id* ได้ทำการแนบหลักฐานการชำระเงิน\nสามารถตรวจสอบเอกสารได้ที่\n$url_name";
-        //$qr_code = 'https://qrcode.g-net.co.th/png/f42806543246709489d1687b7af96f89.png';
-        $line_token = LINE_TOKEN;
-//        $command = <<<EOD
-//curl -X POST -H 'Authorization: Bearer {$line_token}' -F 'message={$message}' -F 'imageThumbnail={$url_name}' -F 'imageFullsize={$url_name}' https://notify-api.line.me/api/notify
-//EOD;
+        $token = LINE_TOKEN;
+
+        $dataStructure = [
+            "to" => LINE_GROUP_ID,
+            "messages" => [
+                [
+                    "type" => "text",
+                    "text" => $message,
+                ]
+            ]
+        ];
+
+        // Convert to JSON safely
+        $json = json_encode($dataStructure, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
         $command = <<<EOD
-curl -X POST -H 'Authorization: Bearer {$line_token}' -F 'message={$message}' https://notify-api.line.me/api/notify
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {$token}' \
+-d '{$json}'
 EOD;
 
         if (defined('LINE_NOTIFICATION') && LINE_NOTIFICATION && $lineNotification) {
@@ -82,4 +94,3 @@ EOD;
 
 header('Content-Type: application/json');
 echo json_encode($result);
-?>

@@ -15,13 +15,31 @@
 
 			$message = "หมายเลขคำร้อง *$id*\nได้ทำการแก้ไขแล้วเสร็จ และขอนัดตรวจใหม่";
 		//$qr_code = 'https://qrcode.g-net.co.th/png/f42806543246709489d1687b7af96f89.png';
-			$line_token = LINE_TOKEN;
+            $token = LINE_TOKEN;
 
-			$command = <<<EOD
-curl -X POST -H 'Authorization: Bearer {$line_token}' -F 'message={$message}' https://notify-api.line.me/api/notify
+            $dataStructure = [
+                "to" => LINE_GROUP_ID,
+                "messages" => [
+                    [
+                        "type" => "text",
+                        "text" => $message,
+                    ]
+                ]
+            ];
+
+            // Convert to JSON safely
+            $json = json_encode($dataStructure, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+            $command = <<<EOD
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {$token}' \
+-d '{$json}'
 EOD;
-	
-			exec($command, $result);
+
+            if (defined('LINE_NOTIFICATION') && LINE_NOTIFICATION) {
+                exec($command, $result);
+            }
 		} catch (Exception $e) {
 			$result['success'] = 0;
 			$result['error'] = $e->getMessage();
@@ -30,4 +48,3 @@ EOD;
 
 	header('Content-Type: application/json');
  echo json_encode($result);
-?>
