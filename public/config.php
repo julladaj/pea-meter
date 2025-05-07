@@ -2,7 +2,7 @@
 
 define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'chai-van-pea');
-define('DB_PASSWORD', 'u3a2epe7a');
+define('DB_PASSWORD', '');
 
 
 switch ($_SERVER['SERVER_NAME']) {

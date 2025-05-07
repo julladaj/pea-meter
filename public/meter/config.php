@@ -2,7 +2,7 @@
 
 define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'chai-van-pea');
-define('DB_PASSWORD', 'u3a2epe7a');
+define('DB_PASSWORD', '');
 
 define('DIR_ROOT', __DIR__ . DIRECTORY_SEPARATOR);
 //define('DIR_ROOT', '/Users/devilpooh/www/pea-meter.test.com/public/meter/');
